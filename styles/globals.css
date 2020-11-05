@@ -1,9 +1,17 @@
+:root {
+  --color-primary: #8D47B2;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #EAEAEA;
+
+  --color-background: #F7F7F7;
+  --color-text-contrast: #7D8084;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Roboto, Oxygen, sans-serif;
 }
 
 a {
