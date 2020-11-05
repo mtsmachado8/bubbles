@@ -5,9 +5,11 @@
 
 ## The Problem explained, Concept and Benchmarking (only available in pt-br)
 https://www.notion.so/Bubbles-9f62cfeb5e8a4999adf7bdf5af8f359f
-Please leave your comments, feedback and feature ideas on the document.
 
-**Note:** soon we can make a Bubble for that kind of thing =)
+
+Please leave your comments, feedback and feature ideas on the document (soon we can make a Bubble for that kind of thing 😄)
+
+**Note:** 
 
 ## Up and running
 
