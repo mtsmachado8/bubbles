@@ -1,18 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Up and running
 
-## Getting Started
-
-First, run the development server:
+First, install dependencies
 
 ```bash
-npm run dev
-# or
+yarn
+```
+Then run your migrations to dabase (heroku for now)
+
+```bash
+yarn migrate:up
+```
+Then, start your development server
+
+```bash
 yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+
+## Prisma
+To map your data model to the database schema, you need to use the prisma migrate
+```bash
+npx prisma migrate save --name "name-of-the-migration" --experimental
+yarn migrate:up
+```
 
 ## Learn More
 
@@ -21,15 +34,4 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## Prisma
-To map your data model to the database schema, you need to use the prisma migrate
-```npx prisma migrate save --name init --experimental````
-```npx prisma migrate up --experimental```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/)
