@@ -1,6 +1,7 @@
+# Bubbles
 ## The future of Bubbles 🚀
 ![bubbles](https://user-images.githubusercontent.com/11022437/98303172-726c6e00-1f9c-11eb-87df-975b23f7526b.gif)
-Obs: the deign will change a bit.
+**Obs:** the deign will change a bit.
 
 
 ## Up and running
