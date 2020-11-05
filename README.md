@@ -3,7 +3,7 @@
 ![bubbles](https://user-images.githubusercontent.com/11022437/98303172-726c6e00-1f9c-11eb-87df-975b23f7526b.gif)
 **Obs:** the design will change a bit.
 
-## The Problem explained, the Concept and Benchmarking (only available in pt-br)
+## The Problem explained, Concept and Benchmarking (only available in pt-br)
 https://www.notion.so/Bubbles-9f62cfeb5e8a4999adf7bdf5af8f359f
 
 ## Up and running
