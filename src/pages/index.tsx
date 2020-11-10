@@ -1,9 +1,11 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import BubbleListItem from "../components/BubbleListItem";
+import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
 import Router from "next/router";
-import DBClient from '../prisma/client';
+import DBClient from '../../prisma/client';
 import { Bubble } from "@prisma/client";
+import Header from '../components/Header/Header';
+import styles from './_home.module.css';
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -39,16 +41,17 @@ type Props = {
 };
 
 const HomePage: React.FC<Props> = (props: Props) => (
-  <>
-    <div className="home-page">
-      <h1>Bubbles</h1>
-      <main>
-        {props.bubbles.map((bubble) => (
-          <BubbleListItem key={bubble.id} onClick={() => Router.push("/bubbles/[id]", `/bubbles/${bubble.id}`)} bubble={bubble} />
-        ))}
-      </main>
-    </div>
-  </>
+  <div className={styles.homePage}>
+    <main className={styles.container}>
+      <Header/>
+      {props.bubbles.map((bubble) => (
+        <BubbleListItem key={bubble.id} onClick={() => Router.push("/bubbles/[id]", `/bubbles/${bubble.id}`)} bubble={bubble} />
+      ))}
+    </main>
+    <aside className={styles.menu}>
+
+    </aside>
+  </div>
 );
 
 export default HomePage;
