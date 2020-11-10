@@ -1,0 +1,27 @@
+version: "3"
+
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose
+  
+services:
+  postgres:
+    image: postgres
+    env_file:
+      - database.env # configure postgres
+    volumes:
+    - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+    environment:
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_USER: geokeg
+      POSTGRES_DB: geokeg
+    ports:
+      - "5432:5432"
+    restart: always
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"

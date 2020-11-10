@@ -33,6 +33,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
+## Database
+You can start the database locally by using
+```
+docker-compose up
+```
+To tell Docker-Compose to destroy the volumes and its data, you need to use:
+```
+docker-compose down --volumes
+```
+
 ## Prisma
 To map your data model to the database schema, you need to use the prisma migrate
 ```bash
