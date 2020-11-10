@@ -1,0 +1,31 @@
+.bubbleContainer {
+  width: 100%;
+  background-color: #FFFFFF;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 5px 40px;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -15px;
+}
+
+.title h2 {
+  color: var(--color-text-contrast);
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.title p {
+  font-size: 14px;
+  background-color: chocolate;
+  color: white;
+  width: 120px;
+  height: 25px;
+  padding-top: 5px;
+  text-align: center;
+  border-radius: 30px;
+}

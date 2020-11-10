@@ -1,7 +1,8 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Bubble } from "@prisma/client";
-import DBClient from '../../prisma/client';
+import DBClient from '../../../prisma/client';
+import styles from './_bubbles.module.css';
 
 const prisma = DBClient.getInstance().prisma;
 
