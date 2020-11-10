@@ -2,7 +2,7 @@ version: "3"
 
 volumes:
   database-data: # named volumes can be managed easier using docker-compose
-  
+
 services:
   postgres:
     image: postgres
@@ -10,10 +10,6 @@ services:
       - database.env # configure postgres
     volumes:
     - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
-    environment:
-      POSTGRES_PASSWORD: secretpassword
-      POSTGRES_USER: geokeg
-      POSTGRES_DB: geokeg
     ports:
       - "5432:5432"
     restart: always
