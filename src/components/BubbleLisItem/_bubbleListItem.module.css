@@ -1,31 +1,91 @@
 .bubbleContainer {
   width: 100%;
-  background-color: #FFFFFF;
+  min-width: 300px;
+  max-height: 180px;
+  background-color: var(--color-object-background);
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-  padding: 5px 40px;
+  padding: 5px 15px;
+  display: flex;
 }
 
-.title {
+.image {
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--color-object-background);
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+  margin-right: 40px;
+  margin-top: 5px;
+}
+
+.textContent {
+  width: 100%;
+}
+
+.textContent .title {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: -15px;
 }
 
-.title h2 {
+.textContent .title h2 {
   color: var(--color-text-contrast);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: bold;
+  margin: 15px 0;
 }
 
-.title p {
-  font-size: 14px;
-  background-color: chocolate;
-  color: white;
-  width: 120px;
-  height: 25px;
-  padding-top: 5px;
-  text-align: center;
-  border-radius: 30px;
+.textContent .title p {
+  opacity: 0;
+}
+
+.textContent .description {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 24px;
+  margin-top: 0;
+  color: var(--color-text-contrast);
+}
+
+.textContent .date {
+  text-align: right;
+  font-size: 10px;
+  color: var(--color-text-contrast);
+  margin: 10px 0 5px;
+}
+
+@media (min-width: 900px) {
+  .bubbleContainer {
+    padding: 5px 20px;
+    max-height: 220px;
+  }
+
+  .image {
+    height: 55px;
+  }
+  
+  .textContent .title h2 {
+    font-size: 28px;
+  }
+  
+  .textContent .title p {
+    opacity: 1;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: var(--color-brown);
+    color: var(--color-text-primary);
+    width: 120px;
+    height: 22px;
+    padding-top: 3px;
+    text-align: center;
+    border-radius: 30px;
+  }
+
+  .textContent .description {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .textContent .date {
+    font-size: 12px;
+  }
 }

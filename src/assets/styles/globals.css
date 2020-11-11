@@ -1,17 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
 :root {
   --color-primary: #8D47B2;
+  --color-chocolate: #d2691e;
+  --color-brown: #6C453B;
+  --color-green: #1FE636;
+  --color-blue: #3954eb;
+
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #EAEAEA;
-
-  --color-background: #F7F7F7;
   --color-text-contrast: #7D8084;
+
+  --color-background: #F0F0F7;
+  --color-object-background: #FFFFFF;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Roboto, Oxygen, sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 a {
