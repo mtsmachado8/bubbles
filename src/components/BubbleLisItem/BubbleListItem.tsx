@@ -15,15 +15,9 @@ type Props = {
 };
 
 const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) => {
-  function Avatar() {
-    const avatar = bubble.author?.avatarUrl;
-  
-    if(avatar == null) {
-      return 'https://winaero.com/blog/wp-content/uploads/2019/09/Chrome-Incognito-Mode-Icon-256.png'
-    };
-  };
-
-  const authorAvatar = Avatar();
+  const authorAvatar = bubble?.author?.avatarUrl 
+    ? bubble.author.avatarUrl
+    : '/no-image.jpg';
 
   return (
     <div onClick={onClick} {...props} className={styles.bubbleContainer}>
