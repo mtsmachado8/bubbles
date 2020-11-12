@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetStaticProps } from "next";
-import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
 import Router from "next/router";
+
 import DBClient from '../../prisma/client';
 import { Bubble } from "@prisma/client";
+
 import Header from '../components/Header/Header';
+import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
+import FloatingButton from '../components/FloatingButton/FloatingButton';
+
 import styles from './_home.module.css';
+import Modal from "../components/Modal/Modal";
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -40,18 +45,30 @@ type Props = {
   })[]
 };
 
-const HomePage: React.FC<Props> = (props: Props) => (
-  <div className={styles.homePage}>
-    <main className={styles.container}>
-      <Header/>
-      {props.bubbles.map((bubble) => (
-        <BubbleListItem key={bubble.id} onClick={() => Router.push("/bubbles/[id]", `/bubbles/${bubble.id}`)} bubble={bubble} />
-      ))}
-    </main>
-    <aside className={styles.menu}>
+const HomePage: React.FC<Props> = (props: Props) => {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
 
-    </aside>
-  </div>
-);
+  return (
+    <div className={styles.homePage}>
+      <main className={styles.container}>
+        <Header/>
+        {props.bubbles.map((bubble) => (
+          <BubbleListItem key={bubble.id} onClick={() => Router.push("/bubbles/[id]", `/bubbles/${bubble.id}`)} bubble={bubble} />
+        ))}
+
+        <FloatingButton onClick={() => setModalIsVisible(true)} />
+      </main>
+      <aside className={styles.menu}>
+
+      </aside>
+
+      {modalIsVisible ?
+        <Modal onClose={() => setModalIsVisible(false)}>
+          
+        </Modal>
+      : null}
+    </div>
+  );
+};
 
 export default HomePage;
