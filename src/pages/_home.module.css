@@ -13,6 +13,7 @@
   background-color: var(--color-background);
   border: 1px solid #707070;
   padding: 0 15px;
+  position: relative;
 }
 
 .menu {

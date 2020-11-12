@@ -7,6 +7,12 @@
   border-radius: 10px;
   padding: 5px 15px;
   display: flex;
+  transition: 200ms;
+}
+
+.bubbleContainer:hover {
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
 }
 
 .image {

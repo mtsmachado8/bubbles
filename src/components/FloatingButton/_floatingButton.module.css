@@ -1,0 +1,37 @@
+.plusContainer {
+  position: absolute;
+  display: flex;
+  text-align: center;
+  justify-content: right;
+  width: 90%;
+  bottom: 15px;
+}
+
+.plusContainer p {
+  font-size: 42px;
+  width: 50px;
+  border-radius: 50%;
+  margin: 0;
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+  transition: 200ms;
+}
+
+.plusContainer p:hover {
+  background-color: var(--color-primary-light);
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+
+@media (min-width: 900px) {
+  .plusContainer {
+    width: 93%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .plusContainer {
+    width: 95%;
+  }
+}
