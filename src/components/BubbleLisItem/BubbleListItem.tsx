@@ -17,7 +17,7 @@ type Props = {
 const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) => {
   const authorAvatar = bubble?.author?.avatarUrl 
     ? bubble.author.avatarUrl
-    : '/no-image.jpg';
+    : '/anonymous-image.png';
 
   return (
     <div onClick={onClick} {...props} className={styles.bubbleContainer}>

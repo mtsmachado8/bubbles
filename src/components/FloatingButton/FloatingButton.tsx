@@ -10,7 +10,7 @@ type Props = {
 const FloatingButton: React.FC<Props> = ({onClick}: Props) => {
   return (
     <div className={styles.plusContainer} onClick={onClick}>
-      <p>+</p>
+      <button type="button">+</button>
     </div>
   );
 };
