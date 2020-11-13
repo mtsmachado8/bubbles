@@ -48,7 +48,7 @@ type Props = {
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [bubbleDetails, setBubbleDetails] = useState(false)
+  const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false)
 
   return (
     <div className={styles.homePage}>
@@ -60,22 +60,22 @@ const HomePage: React.FC<Props> = (props: Props) => {
           {props.bubbles.map((bubble) => (
             <div>
               <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} key={bubble.id}>
-                <BubbleListItem onClick={() => setBubbleDetails(true)} bubble={bubble} />
+                <BubbleListItem onClick={() => setIsBubbleDetailsVisible(true)} bubble={bubble} />
               </Link>
 
-              {bubbleDetails ?
+              {isBubbleDetailsVisible ?
                   <BubbleDetails
-                    onClose={() => {setBubbleDetails(false); Router.back();}}
+                    onClose={() => {setIsBubbleDetailsVisible(false); Router.back();}}
                     bubble={bubble}
                   />
-                : null}
+              : null}
             </div>
           ))}
 
         </div>
 
         <Link href={'/?new'} as={`/bubbles/new`}>
-          <FloatingButton onClick={() => setBubbleDetails(true)} />
+          <FloatingButton onClick={() => setIsBubbleDetailsVisible(true)} />
         </Link>
 
       </main>

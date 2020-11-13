@@ -1,9 +1,9 @@
 import React from "react";
-import { Bubble } from "@prisma/client";
+import { Bubble, Label } from "@prisma/client";
 import styles from './_bubbleListItem.module.css';
 
 type BubbleProps = Bubble & {
-  labels: [];
+  labels: Array<Label>;
   author: {
       avatarUrl: string;
   };
@@ -21,10 +21,8 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) =
     : '/anonymous-image.png';
 
   const label = bubble?.labels
-    ? bubble.labels.slice(0)
+    ? bubble.labels[0]
     : 'Sem categoria';
-
-  console.log (label);
 
   return (
     <div onClick={onClick} {...props} className={styles.bubbleContainer}>
