@@ -1,8 +1,12 @@
 import React from "react";
+import Router from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
+
 import { Bubble } from "@prisma/client";
 import DBClient from '../../../prisma/client';
+
 import styles from './_bubbles.module.css';
+import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -41,20 +45,20 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return { props: { bubble: serializableBubble } }
 }
 
-type Props = {
-  bubble: Bubble;
+type BubbleProps = Bubble & {
+  author: {
+      avatarUrl: string;
+  };
 };
 
-const BubblePage: React.FC<Props> = ({ bubble }: Props) => (
-  <>
-    TO DO - render Bubble
-    <p>{bubble.id}</p>
-    <p>{bubble.title}</p>
-    <p>{bubble.authorId}</p>
-    <p>{bubble.content}</p>
-    <p>{bubble.createdAt}</p>
-    <p>{bubble.description}</p>
-  </>
-);
+type Props = {
+  bubble: BubbleProps,
+};
+
+const BubblePage: React.FC<Props> = ({ bubble }: Props) => {
+  return(
+    <BubbleDetails onClose={() => Router.push('/')} bubble={bubble} />
+  );
+};
 
 export default BubblePage

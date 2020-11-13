@@ -1,7 +1,11 @@
+.plusContainer {
+  display: grid;
+  justify-content: right;
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
 .plusContainer button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   font-size: 42px;
   width: 52px;
   border: none;

@@ -11,7 +11,7 @@ import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
 
 import styles from './_home.module.css';
-import Modal from "../components/Modal/Modal";
+import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -40,6 +40,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 type Props = {
   bubbles: (Bubble & {
+    labels: [];
     author: {
         avatarUrl: string;
     };
@@ -47,27 +48,35 @@ type Props = {
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [modalIsVisible, setModalIsVisible] = useState(false)
+  const [bubbleDetails, setBubbleDetails] = useState(false)
 
   return (
     <div className={styles.homePage}>
       <main className={styles.container}>
         <Header/>
-        {props.bubbles.map((bubble) => (
-          <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} key={bubble.id}>
-            <BubbleListItem onClick={() => setModalIsVisible(true)} bubble={bubble} />
-          </Link>
-        ))}
-        <Link href={'/?new'} as={`/bubbles/new`}>
-          <FloatingButton onClick={() => setModalIsVisible(true)} />
-        </Link>
 
-        {modalIsVisible ?
-          <Modal
-            onClose={() => {setModalIsVisible(false); Router.back();}}
-          >
-          </Modal>
-        : null}
+        <div className={styles.bubblesContainer}>
+
+          {props.bubbles.map((bubble) => (
+            <div>
+              <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} key={bubble.id}>
+                <BubbleListItem onClick={() => setBubbleDetails(true)} bubble={bubble} />
+              </Link>
+
+              {bubbleDetails ?
+                  <BubbleDetails
+                    onClose={() => {setBubbleDetails(false); Router.back();}}
+                    bubble={bubble}
+                  />
+                : null}
+            </div>
+          ))}
+
+        </div>
+
+        <Link href={'/?new'} as={`/bubbles/new`}>
+          <FloatingButton onClick={() => setBubbleDetails(true)} />
+        </Link>
 
       </main>
       <aside className={styles.menu}>
