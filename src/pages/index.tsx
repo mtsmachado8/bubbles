@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GetStaticProps } from "next";
 import Router from "next/router";
+import Link from 'next/link';
 
 import DBClient from '../../prisma/client';
 import { Bubble } from "@prisma/client";
@@ -46,27 +47,32 @@ type Props = {
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [modalIsVisible, setModalIsVisible] = useState(false)
 
   return (
     <div className={styles.homePage}>
       <main className={styles.container}>
         <Header/>
         {props.bubbles.map((bubble) => (
-          <BubbleListItem key={bubble.id} onClick={() => Router.push("/bubbles/[id]", `/bubbles/${bubble.id}`)} bubble={bubble} />
+          <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} key={bubble.id}>
+            <BubbleListItem onClick={() => setModalIsVisible(true)} bubble={bubble} />
+          </Link>
         ))}
+        <Link href={'/?new'} as={`/bubbles/new`}>
+          <FloatingButton onClick={() => setModalIsVisible(true)} />
+        </Link>
 
-        <FloatingButton onClick={() => setModalIsVisible(true)} />
+        {modalIsVisible ?
+          <Modal
+            onClose={() => {setModalIsVisible(false); Router.back();}}
+          >
+          </Modal>
+        : null}
+
       </main>
       <aside className={styles.menu}>
 
       </aside>
-
-      {modalIsVisible ?
-        <Modal onClose={() => setModalIsVisible(false)}>
-          
-        </Modal>
-      : null}
     </div>
   );
 };
