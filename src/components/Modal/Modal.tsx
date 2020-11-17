@@ -16,7 +16,6 @@ const Modal: React.FC<Props> = ({children, onClose, id = 'modal'}: Props) => {
   return (
     <div id={id} className={styles.modalOverlay} onClick={handleOutsideClick}>
       <div className={styles.modal}>
-        <p className={styles.closeModal} onClick={onClose}>X</p>
         <div className={styles.modalContainer}>
           { children }
         </div>

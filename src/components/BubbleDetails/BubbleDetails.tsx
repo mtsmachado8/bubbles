@@ -26,12 +26,20 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, ...props }: Props) =>
     <Modal onClose={onClose}>
       <div className={styles.detailsPage} {...props}>
         <img src={authorAvatar} alt="Avatar"/>
+        <div className={styles.square}></div>
         <div className={styles.bubbleDetails}>
           <div className={styles.titleContainer}>
             <h2>{bubble.title}</h2>
             <p>{bubble.description}</p>
           </div>
-          
+          <div className={styles.textContent}>
+            <div className={styles.typeText}>
+              <p>Preview</p>
+            </div>
+            <div className={styles.textArea}>
+              <p>{bubble.content}</p>
+            </div>
+          </div>
         </div>
       </div>
     </Modal>

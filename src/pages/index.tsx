@@ -58,7 +58,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
         <div className={styles.bubblesContainer}>
 
           {props.bubbles.map((bubble) => (
-            <div>
+            <div key={bubble.id}>
               <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} key={bubble.id}>
                 <BubbleListItem onClick={() => setIsBubbleDetailsVisible(true)} bubble={bubble} />
               </Link>
