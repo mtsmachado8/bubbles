@@ -34,7 +34,7 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, ...props }: Props) =>
           </div>
           <div className={styles.textContent}>
             <div className={styles.typeText}>
-              <p>Preview</p>
+              <p>Write</p>
             </div>
             <div className={styles.textArea}>
               <p>{bubble.content}</p>

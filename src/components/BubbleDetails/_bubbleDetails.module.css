@@ -71,7 +71,7 @@
   overflow: auto;
   background-color: var(--color-background);
   width: 100%;
-  max-height: 300px;
+  max-height: 292px;
   padding: 15px 20px 10px;
   border-radius: 0 8px 8px 8px;
 }
@@ -89,10 +89,6 @@
   width: 6px;
   border-radius: 15px;
   background: #F4F4F4;
-}
-
-.detailsPage .bubbleDetails .textContent .textArea::-webkit-resizer {
-  display: none;
 }
 
 .detailsPage .bubbleDetails .textContent .textArea::-webkit-scrollbar-thumb {

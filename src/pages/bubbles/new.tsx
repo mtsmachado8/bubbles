@@ -1,11 +1,20 @@
 import React from 'react';
+import Router from 'next/router';
 
-import styles from './_new.module.css';
+import { Bubble } from '@prisma/client';
 
-const NewBubble: React.FC = () => {
+import NewBubbleModal from '../../components/NewBubbleModal/NewBubbleModal';
+
+type Props = {
+  newBubble: Bubble;
+}
+
+const NewBubble: React.FC<Props> = ({ newBubble }: Props) => {
+
   return (
-    <>
-    </>
+    <NewBubbleModal 
+      onClose={() => Router.push('/')} 
+    />
   );
 };
 

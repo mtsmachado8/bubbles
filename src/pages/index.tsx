@@ -3,15 +3,16 @@ import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
 
-import DBClient from '../../prisma/client';
 import { Bubble } from "@prisma/client";
+import DBClient from '../../prisma/client';
 
 import Header from '../components/Header/Header';
 import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
+import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
+import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 
 import styles from './_home.module.css';
-import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -49,6 +50,7 @@ type Props = {
 
 const HomePage: React.FC<Props> = (props: Props) => {
   const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false)
+  const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false)
 
   return (
     <div className={styles.homePage}>
@@ -59,24 +61,30 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
           {props.bubbles.map((bubble) => (
             <div key={bubble.id}>
-              <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} key={bubble.id}>
+              <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`}>
                 <BubbleListItem onClick={() => setIsBubbleDetailsVisible(true)} bubble={bubble} />
               </Link>
 
               {isBubbleDetailsVisible ?
-                  <BubbleDetails
-                    onClose={() => {setIsBubbleDetailsVisible(false); Router.back();}}
-                    bubble={bubble}
-                  />
+                <BubbleDetails
+                  onClose={() => {setIsBubbleDetailsVisible(false); Router.back();}}
+                  bubble={bubble}
+                />
               : null}
             </div>
           ))}
 
         </div>
 
-        <Link href={'/?new'} as={`/bubbles/new`}>
-          <FloatingButton onClick={() => setIsBubbleDetailsVisible(true)} />
+        <Link href={'/'} as={`/bubbles/new`}>
+          <FloatingButton onClick={() => setIsNewBubbleModalVisible(true)} />
         </Link>
+
+        {isNewBubbleModalVisible ?
+          <NewBubbleModal
+            onClose={() => {setIsNewBubbleModalVisible(false); Router.back();}}
+          />
+        : null}
 
       </main>
       <aside className={styles.menu}>

@@ -5,7 +5,6 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Bubble } from "@prisma/client";
 import DBClient from '../../../prisma/client';
 
-import styles from './_bubbles.module.css';
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
 const prisma = DBClient.getInstance().prisma;
