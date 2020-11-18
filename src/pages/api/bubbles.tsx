@@ -9,9 +9,9 @@ export default async (req, res) => {
     
     const createdBubble = await prisma.bubble.create({
       data: {
-        title: title,
-        description: description,
-        content: content,
+        title,
+        description,
+        content,
       },
     });
     res.statusCode = 200;

@@ -58,21 +58,20 @@ const HomePage: React.FC<Props> = (props: Props) => {
     const title = e.target.title.value;
     const description = e.target.description.value;
     const content = e.target.content.value;
-    
-    await api.post('/bubbles', {
-      title,
-      description,
-      content,
-    }).then(() => {
+    try{
+      await api.post('/bubbles', {
+        title,
+        description,
+        content,
+      });
       alert('Bubble cadastrado com sucesso!')
-
       Router.push('/');
       setIsNewBubbleModalVisible(false);
-    }).catch(() => {
-      alert('Erro no cadastro! Tente novamente');
 
+    } catch {
+      alert('Erro no cadastro! Tente novamente');
       Router.reload();
-    });
+    };
   };
 
   return (
