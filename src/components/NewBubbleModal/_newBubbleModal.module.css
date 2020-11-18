@@ -80,7 +80,6 @@
 
 .newBubblePage .newBubbleDetails .textContent .typeText p {
   background-color: var(--color-background);
-  border: none;
   margin: 0;
   padding-top: 10px;
   width: 100px;
@@ -136,6 +135,10 @@
   border: none;
   transition: 200ms;
   cursor: pointer;
+}
+
+.newBubblePage .newBubbleDetails .textContent .buttonContent button:focus {
+  outline: none;
 }
 
 .newBubblePage .newBubbleDetails .textContent .buttonContent .anonymous {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { Bubble } from "@prisma/client";
 import DBClient from '../../prisma/client';
+import api from "../services/api";
 
 import Header from '../components/Header/Header';
 import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
@@ -49,8 +50,30 @@ type Props = {
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false)
-  const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false)
+  const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false);
+  const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false);
+
+  const postBubble = async (e) => {
+    e.preventDefault();
+    const title = e.target.title.value;
+    const description = e.target.description.value;
+    const content = e.target.content.value;
+    
+    await api.post('/bubbles', {
+      title,
+      description,
+      content,
+    }).then(() => {
+      alert('Bubble cadastrado com sucesso!')
+
+      Router.push('/');
+      setIsNewBubbleModalVisible(false);
+    }).catch(() => {
+      alert('Erro no cadastro! Tente novamente');
+
+      Router.reload();
+    });
+  };
 
   return (
     <div className={styles.homePage}>
@@ -67,7 +90,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
               {isBubbleDetailsVisible ?
                 <BubbleDetails
-                  onClose={() => {setIsBubbleDetailsVisible(false); Router.back();}}
+                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/');}}
                   bubble={bubble}
                 />
               : null}
@@ -76,13 +99,14 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
         </div>
 
-        <Link href={'/'} as={`/bubbles/new`}>
+        <Link href='/' as='/bubbles/new'>
           <FloatingButton onClick={() => setIsNewBubbleModalVisible(true)} />
         </Link>
 
         {isNewBubbleModalVisible ?
           <NewBubbleModal
-            onClose={() => {setIsNewBubbleModalVisible(false); Router.back();}}
+            onClose={() => {setIsNewBubbleModalVisible(false); Router.push('/');}}
+            onSubmitNewBubble={postBubble}
           />
         : null}
 
