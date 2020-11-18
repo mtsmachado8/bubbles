@@ -2,5 +2,120 @@
   display: flex;
   
   width: 100%;
-  height: 100%;
+  max-height: 100%;
+
+  position: relative;
+}
+
+.detailsPage img {
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--color-object-background);
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+  margin: 0 10px 0 10px;
+}
+
+.detailsPage .square {
+  width: 25px;
+  height: 25px;
+  top: 35px;
+  left: 60px;
+  transform: rotate(45deg);
+  position: absolute;
+  background-color: var(--color-primary);
+}
+
+.detailsPage .bubbleDetails {
+  border: 1px solid #707070;
+  border-radius: 10px;
+  width: 100%;
+  max-height: 100%;
+}
+
+.detailsPage .bubbleDetails .titleContainer {
+  background-color: var(--color-primary);
+  border-radius: 8px 8px 0 0;
+  padding: 15px 15px 5px;
+  max-height: 130px;
+  overflow: hidden;
+}
+
+.detailsPage .bubbleDetails .titleContainer h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.detailsPage .bubbleDetails .titleContainer p {
+  color: var(--color-text-primary-grey);
+}
+
+.detailsPage .bubbleDetails .textContent {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px 20px;
+  background-color: var(--color-object-background);
+  border-radius: 0 0 10px 10px;
+}
+
+.detailsPage .bubbleDetails .textContent .typeText p {
+  background-color: var(--color-background);
+  margin: 0;
+  padding-top: 10px;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.detailsPage .bubbleDetails .textContent .textArea {
+  overflow: auto;
+  background-color: var(--color-background);
+  width: 100%;
+  max-height: 300px;
+  padding: 15px 20px 10px;
+  border-radius: 0 8px 8px 8px;
+}
+
+.detailsPage .bubbleDetails .textContent .textArea p {
+  margin: 0;
+}
+
+.detailsPage .bubbleDetails .textContent .textArea::-webkit-scrollbar-track {
+  background-color: var(--color-text-primary);
+  border-radius: 15px;
+}
+
+.detailsPage .bubbleDetails .textContent .textArea::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 15px;
+  background: #F4F4F4;
+}
+
+.detailsPage .bubbleDetails .textContent .textArea::-webkit-resizer {
+  display: none;
+}
+
+.detailsPage .bubbleDetails .textContent .textArea::-webkit-scrollbar-thumb {
+  background: #dad7d7;
+  border-radius: 15px;
+}
+
+@media (min-width: 900px) {
+  .detailsPage img {
+    height: 80px;
+    margin: 5px 30px 0 20px;
+  }
+
+  .detailsPage .square {
+    width: 25px;
+    height: 25px;
+    top: 33px;
+    left: 120px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .detailsPage .bubbleDetails {
+    width: 80%;
+  }
 }

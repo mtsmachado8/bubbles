@@ -36,11 +36,11 @@
 
 .bubblesContainer::-webkit-scrollbar {
   width: 6px;
-  background: #F4F4F4;
+  background: var(--color-primary-lighter);
 }
 
 .bubblesContainer::-webkit-scrollbar-thumb {
-  background: #dad7d7;
+  background: var(--color-primary-lighter);
   border-radius: 15px;
 }
 
