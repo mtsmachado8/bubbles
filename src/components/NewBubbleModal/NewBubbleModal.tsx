@@ -10,9 +10,10 @@ import styles from './_newBubbleModal.module.css';
 
 type Props = {
   onClose: any;
+  onSubmitNewBubble: any;
 };
 
-const BubbleDetails: React.FC<Props> = ({ onClose }: Props) => {
+const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
   const placeholder = `Tell us:
 
   1 - What is the problem?
@@ -24,16 +25,16 @@ const BubbleDetails: React.FC<Props> = ({ onClose }: Props) => {
       <div className={styles.newBubblePage}>
         <img src={noImage} alt="Avatar"/>
         <div className={styles.square}></div>
-        <form onSubmit={() => console.log('submited')} className={styles.newBubbleDetails}>
+        <form onSubmit={onSubmitNewBubble} className={styles.newBubbleDetails}>
           <div className={styles.titleContainer}>
-            <input placeholder="Title" />
-            <input placeholder="Brief description about the bubble"/>
+            <input name='title' placeholder="Title" />
+            <input name='description' placeholder="Brief description about the bubble"/>
           </div>
           <div className={styles.textContent}>
             <div className={styles.typeText}>
               <p>Write</p>
             </div>
-            <textarea className={styles.textArea} placeholder={placeholder} />
+            <textarea name='content' className={styles.textArea} placeholder={placeholder} />
             <div className={styles.buttonContent}>
               <button type="submit" className={styles.anonymous}>Submit Anonymously</button>
               <button type="submit">Login with google</button>
