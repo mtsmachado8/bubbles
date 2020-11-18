@@ -13,6 +13,7 @@ import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 
 import styles from './_home.module.css';
+import api from "../services/api";
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -52,6 +53,20 @@ const HomePage: React.FC<Props> = (props: Props) => {
   const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false)
   const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false)
 
+  const postBubble = async (e) => {
+    e.preventDefault();
+    const title = e.target.title.value
+    const description = e.target.description.value
+    const content = e.target.content.value
+    
+    const createdBubble = await api.post('/bubbles', {
+      title,
+      description,
+      content
+    })
+    console.log(createdBubble)
+  }
+
   return (
     <div className={styles.homePage}>
       <main className={styles.container}>
@@ -83,6 +98,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
         {isNewBubbleModalVisible ?
           <NewBubbleModal
             onClose={() => {setIsNewBubbleModalVisible(false); Router.back();}}
+            onSubmitNewBubble={postBubble}
           />
         : null}
 
