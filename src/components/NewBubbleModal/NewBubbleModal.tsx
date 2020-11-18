@@ -1,4 +1,5 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
+import Router from 'next/router';
 
 import { PrismaClient } from '@prisma/client';
 
@@ -13,32 +14,63 @@ type Props = {
 };
 
 const BubbleDetails: React.FC<Props> = ({ onClose }: Props) => {
-  const placeholder = `Tell us:
+  const [ title, setTitle ] = useState('');
+  const [ description, setDescription ] = useState('');
+  const [ content, setContent ] = useState('');
+  
+  const prisma = new PrismaClient();
+  
+  const handleNewBubble = (e: FormEvent) => {
+    e.preventDefault();
 
-  1 - What is the problem?
-  2 - How to fix?
-  3 - What are the possible problems after fix it?`
+    prisma.bubble.create({
+      data: {
+        title: title,
+        description: description,
+        content: content,
+      },
+    });
 
+    Router.push('/');
+  };
+  
+  const placeholder = 'Tell us:\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?'
+  
   return(
     <Modal onClose={onClose}>
       <div className={styles.newBubblePage}>
         <img src={noImage} alt="Avatar"/>
         <div className={styles.square}></div>
-        <form onSubmit={() => console.log('submited')} className={styles.newBubbleDetails}>
+        <form onSubmit={handleNewBubble} className={styles.newBubbleDetails}>
+
           <div className={styles.titleContainer}>
-            <input placeholder="Title" />
-            <input placeholder="Brief description about the bubble"/>
+            <input 
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              placeholder="Title"
+            />
+            <input
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              placeholder="Brief description about the bubble"
+            />
           </div>
           <div className={styles.textContent}>
             <div className={styles.typeText}>
               <p>Write</p>
             </div>
-            <textarea className={styles.textArea} placeholder={placeholder} />
+            <textarea 
+              className={styles.textArea} 
+              placeholder={placeholder}
+              value={content}
+              onChange={e => setContent(e.target.value)}
+            />
             <div className={styles.buttonContent}>
               <button type="submit" className={styles.anonymous}>Submit Anonymously</button>
               <button type="submit">Login with google</button>
             </div>
           </div>
+
         </form>
       </div>
     </Modal>
