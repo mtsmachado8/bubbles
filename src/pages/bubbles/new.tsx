@@ -13,20 +13,19 @@ const NewBubble: React.FC = () => {
     const title = e.target.title.value;
     const description = e.target.description.value;
     const content = e.target.content.value;
-    
-    await api.post('/bubbles', {
-      title,
-      description,
-      content,
-    }).then(() => {
-      alert('Bubble cadastrado com sucesso!');
-
+    try {
+      await api.post('/bubbles', {
+        title,
+        description,
+        content,
+      });
+      alert('Bubble cadastrado com sucesso!')
       Router.push('/');
-    }).catch(() => {
-      alert('Erro no cadastro! Tente novamente.');
 
+    } catch {
+      alert('Erro no cadastro! Tente novamente');
       Router.reload();
-    });
+    };
   };
 
   return (
