@@ -34,6 +34,7 @@
 .textContent .title {
   display: flex;
   justify-content: space-between;
+  margin-left: 10px;
 }
 
 .textContent .title h2 {
@@ -93,7 +94,7 @@
   }
   
   .textContent .title h2 {
-    font-size: 28px;
+    font-size: 30px;
   }
   
   .textContent .title p {

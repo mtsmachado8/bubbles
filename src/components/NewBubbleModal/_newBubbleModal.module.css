@@ -35,8 +35,8 @@
 .newBubblePage .newBubbleDetails .titleContainer {
   background-color: var(--color-primary);
   border-radius: 8px 8px 0 0;
-  padding: 10px 20px 5px;
-  height: 100px;
+  padding: 15px 20px 5px;
+  height: 90px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -44,11 +44,11 @@
 
 .newBubblePage .newBubbleDetails .titleContainer input {
   width: 100%;
-  height: 40px;
+  height: 30px;
   border: none;
   background-color: var(--color-primary);
   color: var(--color-text-primary);
-  font-size: 30px;
+  font-size: 26px;
 }
 
 .newBubblePage .newBubbleDetails .titleContainer input:focus {
@@ -57,23 +57,23 @@
 
 .newBubblePage .newBubbleDetails .titleContainer input::-webkit-input-placeholder {
   color: var(--color-text-primary);
-  font-size: 30px;
+  font-size: 26px;
 }
 
 .newBubblePage .newBubbleDetails .titleContainer input + input {
-  font-size: 20px;
+  font-size: 18px;
   color: var(--color-text-primary-grey);
 }
 
 .newBubblePage .newBubbleDetails .titleContainer input + input::-webkit-input-placeholder {
-  font-size: 20px;
+  font-size: 18px;
   color: var(--color-text-primary-grey);
 }
 
 .newBubblePage .newBubbleDetails .textContent {
   display: flex;
   flex-direction: column;
-  padding: 10px 20px 10px;
+  padding: 20px 20px 15px;
   background-color: var(--color-object-background);
   border-radius: 0 0 10px 10px;
 }
@@ -96,7 +96,7 @@
   padding: 20px 30px;
   border-radius: 0 8px 8px 8px;
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 18px;
   border: none;
   resize: none;
   font-family: Roboto;
@@ -128,9 +128,9 @@
 }
 
 .newBubblePage .newBubbleDetails .textContent .buttonContent button {
-  width: 200px;
-  height: 40px;
-  font-size: 16px;
+  width: 150px;
+  height: 35px;
+  font-size: 14px;
   border-radius: 8px;
   border: none;
   transition: 200ms;
@@ -150,16 +150,17 @@
 .newBubblePage .newBubbleDetails .textContent .buttonContent .anonymous::after {
   content: "";
   width: 0;
-  height: 1.5px;
+  height: 2px;
   background-color: var(--color-primary);
   position: absolute;
   bottom: 6px;
-  left: 24px;
+  left: 8px;
+  transition: 300ms ease;
 }
 
 .newBubblePage .newBubbleDetails .textContent .buttonContent .anonymous:hover::after {
-  width: 152px;
-  transition: 200ms ease-in-out;
+  width: 134px;
+  transition: 300ms ease;
 }
 
 .newBubblePage .newBubbleDetails .textContent .buttonContent button + button {
@@ -175,6 +176,22 @@
   border: none;
 }
 
+@media (min-width: 600px) {
+  .newBubblePage .newBubbleDetails .textContent .buttonContent button {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .newBubblePage .newBubbleDetails .textContent .buttonContent .anonymous::after {
+    left: 24px;
+  }
+
+  .newBubblePage .newBubbleDetails .textContent .buttonContent .anonymous:hover::after {
+    width: 152px;
+  }
+}
+
 @media (min-width: 900px) {
   .newBubblePage img {
     height: 80px;
@@ -186,6 +203,36 @@
     height: 25px;
     top: 33px;
     left: 120px;
+  }
+
+  .newBubblePage .newBubbleDetails .titleContainer {
+    height: 100px;
+    padding: 10px 20px 5px;
+  }
+
+  .newBubblePage .newBubbleDetails .titleContainer input {
+    height: 40px;
+    font-size: 30px;
+  }
+
+  .newBubblePage .newBubbleDetails .titleContainer input::-webkit-input-placeholder {
+    font-size: 30px;
+  }
+
+  .newBubblePage .newBubbleDetails .titleContainer input + input {
+    font-size: 20px;
+  }
+
+  .newBubblePage .newBubbleDetails .titleContainer input + input::-webkit-input-placeholder {
+    font-size: 20px;
+  }
+
+  .newBubblePage .newBubbleDetails .textContent {
+    padding: 10px 20px 10px;
+  }
+
+  .newBubblePage .newBubbleDetails .textContent .textArea {
+    font-size: 20px;
   }
 }
 

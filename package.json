@@ -11,13 +11,14 @@
     "migration:up": "prisma migrate up --experimental"
   },
   "dependencies": {
-    "@prisma/client": "^2.10.2",
+    "@prisma/client": "^2.11.0",
     "axios": "^0.21.0",
     "next": "10.0.0",
     "next-images": "^1.6.2",
     "react": "17.0.1",
     "react-dom": "^17.0.1",
     "react-google-login": "^5.1.23",
+    "react-google-one-tap-login": "^0.0.8",
     "react-markdown": "^5.0.2"
   },
   "devDependencies": {

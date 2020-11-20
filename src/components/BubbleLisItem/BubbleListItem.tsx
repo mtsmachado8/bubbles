@@ -16,12 +16,12 @@ type Props = {
 };
 
 const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) => {
-  const authorAvatar = bubble?.author?.avatarUrl 
+  const authorAvatar = bubble.author?.avatarUrl
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
 
   const label = bubble?.labels
-    ? bubble.labels[0]
+    ? bubble.labels[0].name
     : 'Sem categoria';
 
   return (

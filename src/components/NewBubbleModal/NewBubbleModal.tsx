@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
+// import {} from 'react-google-one-tap-login'; // https://github.com/MSalmanTariq/react-google-one-tap-login
+
 import Modal from "../Modal/Modal";
 
 import styles from './_newBubbleModal.module.css';
@@ -16,10 +18,6 @@ type Props = {
 const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
   const [ isLogedIn, setIsLogedIn ] = useState(false);
 
-  const [ description, setDescription ] = useState('');
-  const [ content, setContent ] = useState('');
-  const [ title, setTitle ] = useState('');
-
   const [ avatarUrl, setAvatarUrl ] = useState('');
   const [ firstName, setFirstName ] = useState('');
   const [ email, setEmail ] = useState('');
@@ -31,6 +29,12 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     ? avatarUrl
     : '/anonymous-image.png';
 
+  const user = {
+    avatarUrl,
+    email,
+    name,
+  }
+
   const onSuccessGoogle = response => {
     setAvatarUrl(response.profileObj.imageUrl);
     setEmail(response.profileObj.email);
@@ -40,8 +44,8 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   };
 
   const onFailureGoogle = response => {
+    alert('Ops... There was a connection error.');
     console.log(response);
-    alert('Ops... Houve um erro na conexão.');
   };
 
   const onLogoutGoogle = () => {
@@ -50,6 +54,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     setName('');
     setFirstName('');
     setIsLogedIn(false);
+    alert('Logout done');
   };
 
   return(
@@ -57,21 +62,21 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
       <div className={styles.newBubblePage}>
         <img src={image} alt="Avatar"/>
         <div className={styles.square}></div>
-        <form onSubmit={onSubmitNewBubble} className={styles.newBubbleDetails}>
+        <form onSubmit={e => onSubmitNewBubble(e, user)} className={styles.newBubbleDetails}>
           <div className={styles.titleContainer}>
-            <input name='title' onChange={e => setTitle(e.target.value)} placeholder="Title" />
-            <input name='description' onChange={e => setDescription(e.target.value)} placeholder="Brief description about the bubble"/>
+            <input name='title' required placeholder="Title" />
+            <input name='description' required placeholder="Brief description about the bubble"/>
           </div>
           <div className={styles.textContent}>
             <div className={styles.typeText}>
               <p>Write</p>
             </div>
-            <textarea name='content' onChange={e => setContent(e.target.value)} className={styles.textArea} placeholder={placeholder} />
+            <textarea name='content' required className={styles.textArea} placeholder={placeholder} />
             <div className={styles.buttonContent}>
               <button type="submit" className={styles.anonymous}>{submitButton}</button>
 
-              {isLogedIn ? 
-                <GoogleLogout
+              {isLogedIn 
+              ? <GoogleLogout
                   clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
                   onLogoutSuccess={onLogoutGoogle}
                   render={renderProps => (
@@ -79,22 +84,23 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                       onClick={renderProps.onClick} 
                       disabled={renderProps.disabled}
                       type='button'
-                      >Logout</button>
+                    >Logout</button>
                   )}
                 /> 
               : <GoogleLogin
-                clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                isSignedIn={true}
-                onSuccess={onSuccessGoogle}
-                onFailure={onFailureGoogle}
-                cookiePolicy={'single_host_origin'}
-                render={renderProps => (
-                  <button 
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                    type='button'
+                  clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
+                  isSignedIn={true}
+                  onSuccess={onSuccessGoogle}
+                  onFailure={onFailureGoogle}
+                  cookiePolicy={'single_host_origin'}
+                  render={renderProps => (
+                    <button 
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                      type='button'
                     >Login with Google</button>
-                )}/>
+                  )}
+                />
               }
             </div>
           </div>

@@ -6,39 +6,24 @@ const prisma = DBClient.getInstance().prisma;
 export default async (req, res) => {
   if (req.method === 'POST') {
     
-    const { title, description, content, name, email, avatarUrl } = req.body;
+    const { title, description, content, author } = req.body;
 
-    if(!(name || email || avatarUrl) === null || undefined) {
-      const createdBubble = await prisma.bubble.create({
-        data: {
-          title,
-          description,
-          content,
+    const createdBubble = await prisma.bubble.create({
+      data: {
+        title,
+        description,
+        content,
+        author: {
+          connectOrCreate: {
+            where: { email: author.email },
+            create: author,
+          },
         },
-      });
-      res.statusCode = 200;
-      res.json(createdBubble);
-      
-    } else {
-      const createdBubble = await prisma.bubble.create({
-        data: {
-          title,
-          description,
-          content,
-        },
-      });
+      },
+    });
 
-      const createdUser = await prisma.user.create({
-        data: {
-          name,
-          email,
-          avatarUrl,
-          bubbles: createdBubble[createdBubble.id],
-        },
-      });
-      res.statusCode = 200;
-      res.json(createdBubble, createdUser);
-    };
+    res.statusCode = 200;
+    res.json(createdBubble);
 
   } else {
     res.statusCode = 200;
