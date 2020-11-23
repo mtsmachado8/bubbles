@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
-// import {} from 'react-google-one-tap-login'; // https://github.com/MSalmanTariq/react-google-one-tap-login
 
 import Modal from "../Modal/Modal";
 
