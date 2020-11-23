@@ -53,23 +53,27 @@ const HomePage: React.FC<Props> = (props: Props) => {
   const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false);
   const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false);
 
-  const postBubble = async (e) => {
+  const postBubble = async (e, userInfo) => {
     e.preventDefault();
+
     const title = e.target.title.value;
     const description = e.target.description.value;
     const content = e.target.content.value;
-    try{
+    const author = userInfo
+  
+    try {
       await api.post('/bubbles', {
         title,
         description,
         content,
+        author,
       });
-      alert('Bubble cadastrado com sucesso!')
+      alert('Bubble successfully registered!')
       Router.push('/');
       setIsNewBubbleModalVisible(false);
 
     } catch {
-      alert('Erro no cadastro! Tente novamente');
+      alert('Registration error! Try again');
       Router.reload();
     };
   };
