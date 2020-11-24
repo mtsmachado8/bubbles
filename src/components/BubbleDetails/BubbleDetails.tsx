@@ -1,46 +1,55 @@
-import React from "react";
-import { Bubble } from "@prisma/client";
+import React, { useState } from "react";
 
 import Modal from "../Modal/Modal";
+import Comments from '../Comments/Comments';
+import NewComment from '../NewComment/NewComment';
 
 import styles from './_bubbleDetails.module.css';
 
-type BubbleProps = Bubble & {
-  author: {
-      avatarUrl: string;
-  };
-};
-
 type Props = {
-  bubble: BubbleProps,
+  bubble: any,
   onClose: any,
   props?: any
 };
 
-const BubbleDetails: React.FC<Props> = ({ bubble, onClose, ...props }: Props) => {
+const BubbleDetails: React.FC<Props> = ({ bubble, onClose }: Props) => {
+  const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
+
   const authorAvatar = bubble?.author?.avatarUrl 
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
 
   return(
     <Modal onClose={onClose}>
-      <div className={styles.detailsPage} {...props}>
-        <img src={authorAvatar} alt="Avatar"/>
-        <div className={styles.square}></div>
-        <div className={styles.bubbleDetails}>
-          <div className={styles.titleContainer}>
-            <h2>{bubble.title}</h2>
-            <p>{bubble.description}</p>
-          </div>
-          <div className={styles.textContent}>
-            <div className={styles.typeText}>
-              <p>Write</p>
+      <div className={styles.content}>
+        <section className={styles.detailsContent}>
+          <div className={styles.detailsPage}>
+            <img src={authorAvatar} alt="Avatar"/>
+            <div className={styles.square}></div>
+            <div className={styles.bubbleDetails}>
+              <div className={styles.titleContainer}>
+                <h2>{bubble.title}</h2>
+                <p>{bubble.description}</p>
+              </div>
+              <div className={styles.textArea}>
+                <p>{bubble.content}</p>
+              </div>
             </div>
-            <div className={styles.textArea}>
-              <p>{bubble.content}</p>
-            </div>
           </div>
-        </div>
+          <Comments />
+
+          {isNewCommentVisible
+          ? <NewComment onClose={() => setIsNewCommentVisible(false)} />
+
+          : <div className={styles.buttonBox}>
+              <button type='button' onClick={() => setIsNewCommentVisible(true)}>Comment here</button>
+            </div>
+          }
+        </section>
+
+        <aside className={styles.labelsContent}>
+
+        </aside>
       </div>
     </Modal>
   );

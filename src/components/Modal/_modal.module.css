@@ -19,9 +19,10 @@
 
 .modalContainer {
   position: absolute;
-  height: 80%;
-  width: 95%;
-  top: 50px;
+  height: 95%;
+  width: 100%;
+  padding: 0 10px 0 0;
+  top: 20px;
 }
 
 @media (min-width: 600px) {
@@ -33,9 +34,5 @@
 @media (min-width: 900px) {
   .modal {
     border-radius: 50px;
-  }
-
-  .modalContainer {
-    width: 88%;
   }
 }

@@ -21,10 +21,9 @@
 .image {
   height: 50px;
   border-radius: 50%;
-  border: 2px solid var(--color-object-background);
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
   margin-right: 40px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .textContent {
@@ -34,7 +33,6 @@
 .textContent .title {
   display: flex;
   justify-content: space-between;
-  margin-left: 10px;
 }
 
 .textContent .title h2 {

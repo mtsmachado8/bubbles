@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
-
-import Modal from "../Modal/Modal";
-
-import styles from './_newBubbleModal.module.css';
+import styles from './_newComment.module.css';
 
 type Props = {
-  onClose: any;
-  onSubmitNewBubble: any;
-};
+  id?: string
+  onClose: any
+}
 
-const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
+const NewComment: React.FC<Props> = ({ onClose }: Props) => {
   const [ isLogedIn, setIsLogedIn ] = useState(false);
 
   const [ avatarUrl, setAvatarUrl ] = useState('');
@@ -19,8 +16,8 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   const [ email, setEmail ] = useState('');
   const [ name, setName ] = useState('');
 
-  const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
-  const submitButton = isLogedIn ? `Submit with ${firstName}` : 'Submit Anonymously';
+  const submitButton = isLogedIn ? `Comment with ${firstName}` : 'Comment Anonymously';
+  const commentName = isLogedIn ? `${name}` : 'Anonymous'
   const image = avatarUrl
     ? avatarUrl
     : '/anonymous-image.png';
@@ -54,24 +51,19 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   };
 
   return(
-    <Modal onClose={onClose}>
-      <div className={styles.newBubblePage}>
-        <img src={image} alt="Avatar"/>
-        <div className={styles.square}></div>
-        <form onSubmit={e => onSubmitNewBubble(e, user)} className={styles.newBubbleDetails}>
-          <div className={styles.titleContainer}>
-            <input name='title' autoFocus required placeholder="Title" />
-            <input name='description' required placeholder="Brief description about the bubble"/>
-          </div>
-          <div className={styles.textContent}>
-            <div className={styles.typeText}>
-              <p>Write</p>
-            </div>
-            <textarea name='content' required className={styles.textArea} placeholder={placeholder} />
-            <div className={styles.buttonContent}>
-              <button type="submit" className={styles.submit}>{submitButton}</button>
-
-              {isLogedIn 
+    <div className={styles.newCommentBox}>
+      <img src={image} alt="Avatar Image"/>
+      <div className={styles.square}></div>
+      <div className={styles.commentDetails}>
+        <div className={styles.nameBox}>
+          <h4>{commentName}</h4>
+        </div>
+        <div className={styles.commentArea}>
+          <textarea name='comment' autoFocus required className={styles.textArea} placeholder='Text your comment here' />
+          <div className={styles.buttonContent}>
+            <button type='button' className={styles.cancelButton} onClick={onClose}>Cancel</button>
+            <button type='button' className={styles.submitButton}>{submitButton}</button>
+            {isLogedIn 
               ? <GoogleLogout
                   clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
                   onLogoutSuccess={onLogoutGoogle}
@@ -79,6 +71,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                     <button 
                       onClick={renderProps.onClick} 
                       disabled={renderProps.disabled}
+                      className={styles.loginButton}
                       type='button'
                     >Logout</button>
                   )}
@@ -93,18 +86,17 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                     <button 
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
+                      className={styles.loginButton}
                       type='button'
                     >Login with Google</button>
                   )}
                 />
               }
-            </div>
           </div>
-
-        </form>
+        </div>
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default BubbleDetails
+export default NewComment;

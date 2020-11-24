@@ -1,8 +1,39 @@
+.content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.detailsContent {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding-right: 5px;
+}
+
+.detailsContent::-webkit-scrollbar-track {
+  background-color: var(--color-background);
+  border-radius: 15px;
+}
+
+.detailsContent::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 25px;
+  background: #F4F4F4;
+}
+
+.detailsContent::-webkit-scrollbar-thumb {
+  background: #dad7d7;
+  border-radius: 15px;
+}
+
 .detailsPage {
   display: flex;
   
   width: 100%;
-  max-height: 100%;
+  max-height: 40%;
 
   position: relative;
 }
@@ -10,16 +41,15 @@
 .detailsPage img {
   height: 50px;
   border-radius: 50%;
-  border: 2px solid var(--color-object-background);
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-  margin: 0 10px 0 10px;
+  margin: 0 20px 0 10px;
 }
 
 .detailsPage .square {
-  width: 25px;
-  height: 25px;
-  top: 35px;
-  left: 60px;
+  width: 18px;
+  height: 18px;
+  top: 18px;
+  left: 75px;
   transform: rotate(45deg);
   position: absolute;
   background-color: var(--color-primary);
@@ -29,75 +59,100 @@
   border: 1px solid #707070;
   border-radius: 10px;
   width: 100%;
-  height: 500px;
 }
 
 .detailsPage .bubbleDetails .titleContainer {
   background-color: var(--color-primary);
   border-radius: 8px 8px 0 0;
-  padding: 15px 20px 5px;
-  height: 90px;
+  padding: 10px 5px 5px 15px;
+  height: 64px;
   overflow: hidden;
 }
 
 .detailsPage .bubbleDetails .titleContainer h2 {
   margin: 0;
   color: var(--color-text-primary);
-  font-size: 26px;
+  font-size: 24px;
 }
 
 .detailsPage .bubbleDetails .titleContainer p {
-  margin-top: 8px;
-  font-size: 16px;
-  color: var(--color-text-primary-grey);
+  display: none;
 }
 
-.detailsPage .bubbleDetails .textContent {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 20px 20px;
+.detailsPage .bubbleDetails .textArea {
   background-color: var(--color-object-background);
-  border-radius: 0 0 10px 10px;
-}
-
-.detailsPage .bubbleDetails .textContent .typeText p {
-  background-color: var(--color-background);
-  margin: 0;
-  padding-top: 10px;
-  width: 100px;
-  height: 40px;
-  text-align: center;
-  border-radius: 8px 8px 0 0;
-}
-
-.detailsPage .bubbleDetails .textContent .textArea {
-  background-color: var(--color-background);
   overflow: auto;
   width: 100%;
-  height: 328px;
-  padding: 15px 25px 10px;
-  border-radius: 0 8px 8px 8px;
-  font-size: 16px;
+  height: 165px;
+  padding: 10px 10px 10px 15px;
+  border-radius: 0 0 10px 10px;
+  overflow: auto;
 }
 
-.detailsPage .bubbleDetails .textContent .textArea p {
+.detailsPage .bubbleDetails .textArea p {
   margin: 0;
+  font-size: 16px;
+  line-height: 22px;
 }
 
-.detailsPage .bubbleDetails .textContent .textArea::-webkit-scrollbar-track {
+.detailsPage .bubbleDetails .textArea::-webkit-scrollbar-track {
   background-color: var(--color-text-primary);
   border-radius: 15px;
 }
 
-.detailsPage .bubbleDetails .textContent .textArea::-webkit-scrollbar {
+.detailsPage .bubbleDetails .textArea::-webkit-scrollbar {
   width: 6px;
-  border-radius: 15px;
+  border-radius: 25px;
   background: #F4F4F4;
 }
 
-.detailsPage .bubbleDetails .textContent .textArea::-webkit-scrollbar-thumb {
+.detailsPage .bubbleDetails .textArea::-webkit-scrollbar-thumb {
   background: #dad7d7;
   border-radius: 15px;
+}
+
+
+.buttonBox {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttonBox button {
+  width: 150px;
+  height: 35px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  transition: 200ms;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 6px;
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.buttonBox button:focus {
+  outline: none;
+}
+
+.buttonBox button:hover {
+  background-color: var(--color-primary-light);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  border: none;
+}
+
+.labelsContent {
+  opacity: 0;
+  padding: 0 5px;
+}
+
+@media (min-width: 600px) {
+  .buttonBox button {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+  }
 }
 
 @media (min-width: 900px) {
@@ -115,6 +170,7 @@
 
   .detailsPage .bubbleDetails .titleContainer {
     height: 100px;
+    padding: 15px 20px 5px;
   }
 
   .detailsPage .bubbleDetails .titleContainer h2 {
@@ -122,24 +178,29 @@
   }
 
   .detailsPage .bubbleDetails .titleContainer p {
+    color: var(--color-text-primary-grey);
+    margin-top: 8px;
     font-size: 20px;
+    display: inline-block;
   }
 
-  .detailsPage .bubbleDetails .textContent {
-    padding: 10px 20px 20px;
+  .detailsPage .bubbleDetails .textArea {
+    height: 135px;
   }
 
-  .detailsPage .bubbleDetails .textContent .typeText p {
-    font-size: 20px;
+  .detailsPage .bubbleDetails .textArea p {
+    font-size: 18px;
+    line-height: 25px;
   }
 
-  .detailsPage .bubbleDetails .textContent .textArea {
-    font-size: 20px;
+  .labelsContent {
+    width: 30%;
+    opacity: 1;
   }
 }
 
 @media (min-width: 1100px) {
-  .detailsPage .bubbleDetails {
-    width: 80%;
+  .labelsContent {
+    width: 25%;
   }
 }
