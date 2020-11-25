@@ -31,6 +31,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   // params contains the post `id`.
   // If the route is like /bubbles/1, then params.id is 1
   const bubble = await prisma.bubble.findOne({
+    include: {
+      author: {
+        select: {
+          avatarUrl: true
+        }
+      }
+    },
     where: {
       id: parseInt(params.id as string)
     },
@@ -55,6 +62,8 @@ type Props = {
 };
 
 const BubblePage: React.FC<Props> = ({ bubble }: Props) => {
+  console.log(JSON.stringify(bubble, null, 2));
+
   return(
     <BubbleDetails onClose={() => Router.push('/')} bubble={bubble} />
   );

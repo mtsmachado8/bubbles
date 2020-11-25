@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
@@ -50,9 +50,18 @@ type Props = {
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
+  const [bubbles, setBubbles] = useState([])
   const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false);
+  const [oppenedBubbleId, setOppenedBubbleId] = useState(null);
   const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false);
 
+  useEffect(() => {
+    setBubbles(props.bubbles.map(bubble => ({
+      ...bubble,
+      createdAt: new Date(bubble.createdAt)
+    })))
+  }, [])
+  
   const postBubble = async (e, userInfo) => {
     e.preventDefault();
 
@@ -85,13 +94,19 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
         <div className={styles.bubblesContainer}>
 
-          {props.bubbles.map((bubble) => (
+          {bubbles.map((bubble) => (
             <div key={bubble.id}>
               <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`}>
-                <BubbleListItem onClick={() => setIsBubbleDetailsVisible(true)} bubble={bubble} />
+                <BubbleListItem
+                  onClick={() => {
+                    setIsBubbleDetailsVisible(true);
+                    setOppenedBubbleId(bubble.id)}
+                  }
+                  bubble={bubble}
+                />
               </Link>
 
-              {isBubbleDetailsVisible ?
+              {isBubbleDetailsVisible && bubble.id === oppenedBubbleId ?
                 <BubbleDetails
                   onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/');}}
                   bubble={bubble}
@@ -103,7 +118,10 @@ const HomePage: React.FC<Props> = (props: Props) => {
         </div>
 
         <Link href='/' as='/bubbles/new'>
-          <FloatingButton onClick={() => setIsNewBubbleModalVisible(true)} />
+          <FloatingButton 
+            onClick={() => setIsNewBubbleModalVisible(true)} 
+            isVisible={!isNewBubbleModalVisible && !isBubbleDetailsVisible}
+          />
         </Link>
 
         {isNewBubbleModalVisible ?

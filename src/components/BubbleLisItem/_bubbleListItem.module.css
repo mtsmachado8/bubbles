@@ -1,7 +1,5 @@
 .bubbleContainer {
   width: 98%;
-  min-width: 300px;
-  height: 190px;
   background-color: var(--color-object-background);
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -9,8 +7,6 @@
   display: flex;
   transition: 200ms;
   margin: 5px 0 20px 8px;
-  margin-bottom: 20px;
-  margin-top: 5px;
 }
 
 .bubbleContainer:hover {

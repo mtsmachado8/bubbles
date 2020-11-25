@@ -35,7 +35,7 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) =
         <div className={styles.description}>
           <p>{bubble.description}</p>
         </div>
-        <p className={styles.date}>{bubble.createdAt}</p>
+        <p className={styles.date}>{bubble.createdAt.toLocaleDateString('pt-br')}</p>
       </div>
     </div>
   );

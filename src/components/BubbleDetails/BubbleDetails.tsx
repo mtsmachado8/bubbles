@@ -13,6 +13,8 @@ type Props = {
 };
 
 const BubbleDetails: React.FC<Props> = ({ bubble, onClose }: Props) => {
+  console.log(JSON.stringify(bubble, null, 2));
+
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
   const authorAvatar = bubble?.author?.avatarUrl 

@@ -1,8 +1,11 @@
 .plusContainer {
-  display: grid;
-  justify-content: right;
-  margin-top: 20px;
-  margin-right: 10px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.plusContainerHidden {
+  display: none;
 }
 
 .plusContainer button {
