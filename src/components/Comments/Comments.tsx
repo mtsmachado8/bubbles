@@ -1,85 +1,45 @@
-import React, { useState } from 'react';
-
-import NewComment from '../NewComment/NewComment';
+import React from 'react';
 
 import styles from './_comments.module.css';
 
 type Props = {
-  comments: any;
+  bubble: any;
 }
 
-const Comments: React.FC = () => {
+const Comments: React.FC<Props> = ({ bubble }: Props) => {
   return(
     <div className={styles.commentSpace}>
 
       <div className={styles.alreadyCommented}>
-        {/* {comments.map(comment => ( */}
+        {bubble.comments?.map(comment => (
           <div className={styles.cardBox}>
-            <img src='/anonymous-image.png' alt='Avatar Image'/>
-            <div className={styles.square}></div>
-            <div className={styles.commentDetail}>
-              <div className={styles.nameBox}>
-                <h4>Narcisio Cardoso</h4>
-                <p>commented 22 hours ago</p>
-              </div>
-              <div className={styles.commentText}>
-                <p>Acho válido Marcelo, 
-                  gostei muito da sua primeira sugetão, 
-                  o que acham de implementarem isso na 
-                  empresa e seguir conforme a demanda</p>
-              </div>
-            </div>
-          </div>
 
-          <div className={styles.cardBox}>
-            <img src='/anonymous-image.png' alt='Avatar Image'/>
+            <img 
+              src={comment.author?.avatarUrl
+              ? comment.author.avatarUrl 
+              : '/anonymous-image.png'} 
+              alt='Avatar Image'
+            />
+
             <div className={styles.square}></div>
             <div className={styles.commentDetail}>
               <div className={styles.nameBox}>
-                <h4>Narcisio Cardoso</h4>
-                <p>commented 22 hours ago</p>
+
+                <h4>
+                  {comment.author?.name 
+                    ? comment.author.name
+                    : 'Anonymous'
+                  }
+                </h4>
+
+                <p>{comment.createdAt}</p>
               </div>
               <div className={styles.commentText}>
-                <p>Acho válido Marcelo, 
-                  gostei muito da sua primeira sugetão, 
-                  o que acham de implementarem isso na 
-                  empresa e seguir conforme a demanda</p>
+                <p>{comment.content}</p>
               </div>
             </div>
           </div>
-          <div className={styles.cardBox}>
-            <img src='/anonymous-image.png' alt='Avatar Image'/>
-            <div className={styles.square}></div>
-            <div className={styles.commentDetail}>
-              <div className={styles.nameBox}>
-                <h4>Narcisio Cardoso</h4>
-                <p>commented 22 hours ago</p>
-              </div>
-              <div className={styles.commentText}>
-                <p>Acho válido Marcelo, 
-                  gostei muito da sua primeira sugetão, 
-                  o que acham de implementarem isso na 
-                  empresa e seguir conforme a demanda</p>
-              </div>
-            </div>
-          </div>
-          <div className={styles.cardBox}>
-            <img src='/anonymous-image.png' alt='Avatar Image'/>
-            <div className={styles.square}></div>
-            <div className={styles.commentDetail}>
-              <div className={styles.nameBox}>
-                <h4>Narcisio Cardoso</h4>
-                <p>commented 22 hours ago</p>
-              </div>
-              <div className={styles.commentText}>
-                <p>Acho válido Marcelo, 
-                  gostei muito da sua primeira sugetão, 
-                  o que acham de implementarem isso na 
-                  empresa e seguir conforme a demanda</p>
-              </div>
-            </div>
-          </div>
-        {/* ))} */}
+        ))}
       </div>
     </div>
   );

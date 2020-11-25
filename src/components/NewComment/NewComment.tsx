@@ -6,9 +6,10 @@ import styles from './_newComment.module.css';
 type Props = {
   id?: string
   onClose: any
+  onSubmitNewComment: any
 }
 
-const NewComment: React.FC<Props> = ({ onClose }: Props) => {
+const NewComment: React.FC<Props> = ({ onClose, onSubmitNewComment }: Props) => {
   const [ isLogedIn, setIsLogedIn ] = useState(false);
 
   const [ avatarUrl, setAvatarUrl ] = useState('');
@@ -16,8 +17,10 @@ const NewComment: React.FC<Props> = ({ onClose }: Props) => {
   const [ email, setEmail ] = useState('');
   const [ name, setName ] = useState('');
 
+  const [ comment, setComment ] = useState('');
+
   const submitButton = isLogedIn ? `Comment with ${firstName}` : 'Comment Anonymously';
-  const commentName = isLogedIn ? `${name}` : 'Anonymous'
+  const userName = isLogedIn ? `${name}` : 'Anonymous'
   const image = avatarUrl
     ? avatarUrl
     : '/anonymous-image.png';
@@ -54,15 +57,15 @@ const NewComment: React.FC<Props> = ({ onClose }: Props) => {
     <div className={styles.newCommentBox}>
       <img src={image} alt="Avatar Image"/>
       <div className={styles.square}></div>
-      <div className={styles.commentDetails}>
+      <form onSubmit={e => onSubmitNewComment(e, comment, user)} className={styles.commentDetails}>
         <div className={styles.nameBox}>
-          <h4>{commentName}</h4>
+          <h4>{userName}</h4>
         </div>
         <div className={styles.commentArea}>
-          <textarea name='comment' autoFocus required className={styles.textArea} placeholder='Text your comment here' />
+          <textarea onChange={e => setComment(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
           <div className={styles.buttonContent}>
             <button type='button' className={styles.cancelButton} onClick={onClose}>Cancel</button>
-            <button type='button' className={styles.submitButton}>{submitButton}</button>
+            <button type='submit' className={styles.submitButton}>{submitButton}</button>
             {isLogedIn 
               ? <GoogleLogout
                   clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
@@ -94,7 +97,7 @@ const NewComment: React.FC<Props> = ({ onClose }: Props) => {
               }
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

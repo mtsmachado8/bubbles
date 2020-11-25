@@ -20,9 +20,7 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) =
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
 
-  const label = bubble?.labels
-    ? bubble.labels[0].name
-    : 'Sem categoria';
+  const newLabelsArray = bubble.labels?.slice(0, 3);
 
   return (
     <div onClick={onClick} {...props} className={styles.bubbleContainer}>
@@ -30,7 +28,11 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) =
       <div className={styles.textContent}>
         <div className={styles.title}>
           <h2>{bubble.title}</h2>
-          <p>{label}</p>
+          <div className={styles.labels}>
+          {newLabelsArray.map(label => (
+              <p>{label.name}</p>
+          ))}
+          </div>
         </div>
         <div className={styles.description}>
           <p>{bubble.description}</p>

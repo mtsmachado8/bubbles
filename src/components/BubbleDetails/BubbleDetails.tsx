@@ -9,15 +9,13 @@ import styles from './_bubbleDetails.module.css';
 type Props = {
   bubble: any,
   onClose: any,
-  props?: any
+  onSubmitNewComment: any,
 };
 
-const BubbleDetails: React.FC<Props> = ({ bubble, onClose }: Props) => {
-  console.log(JSON.stringify(bubble, null, 2));
-
+const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment }: Props) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
-  const authorAvatar = bubble?.author?.avatarUrl 
+  const authorAvatar = bubble.author?.avatarUrl 
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
 
@@ -38,10 +36,14 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose }: Props) => {
               </div>
             </div>
           </div>
-          <Comments />
+
+          <Comments bubble={bubble} />
 
           {isNewCommentVisible
-          ? <NewComment onClose={() => setIsNewCommentVisible(false)} />
+          ? <NewComment 
+              onClose={() => setIsNewCommentVisible(false)}
+              onSubmitNewComment={onSubmitNewComment}
+            />
 
           : <div className={styles.buttonBox}>
               <button type='button' onClick={() => setIsNewCommentVisible(true)}>Comment here</button>

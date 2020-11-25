@@ -4,39 +4,31 @@ import { GetStaticPaths, GetStaticProps } from "next";
 
 import { Bubble } from "@prisma/client";
 import DBClient from '../../../prisma/client';
+import api from '../../services/api';
 
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
 const prisma = DBClient.getInstance().prisma;
 
-// This function gets called at build time
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Call an external API endpoint to get bubbles
   const bubbles = await prisma.bubble.findMany({
     select: {
       id: true
     },
   });
-
-  // Get the paths we want to pre-render based on bubbles
   const paths = bubbles.map((bubble) => ({ params: { id: `${bubble.id}` }}))
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
   return { paths: paths, fallback: false }
 }
 
-// This also gets called at build time
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // params contains the post `id`.
-  // If the route is like /bubbles/1, then params.id is 1
   const bubble = await prisma.bubble.findOne({
     include: {
       author: {
         select: {
-          avatarUrl: true
-        }
-      }
+          avatarUrl: true,
+        },
+      },
     },
     where: {
       id: parseInt(params.id as string)
@@ -45,13 +37,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const serializableBubble = {
     ...bubble,
-    createdAt: bubble.createdAt.toDateString()
+    createdAt: bubble.createdAt.toDateString(),
   }
-  // Pass post data to the page via props
   return { props: { bubble: serializableBubble } }
 }
 
 type BubbleProps = Bubble & {
+  comments: [],
   author: {
       avatarUrl: string;
   };
@@ -62,10 +54,33 @@ type Props = {
 };
 
 const BubblePage: React.FC<Props> = ({ bubble }: Props) => {
-  console.log(JSON.stringify(bubble, null, 2));
+  const postComment = async (e, userComment, userInfo) => {
+    e.preventDefault();
+
+    const comment = userComment;
+    const author = userInfo;
+    const bubbleId = bubble.id;
+  
+    try {
+      await api.post('/bubbles', {
+        comment,
+        author,
+        bubbleId,
+      });
+      alert('Comment registered!')
+      Router.reload();
+
+    } catch {
+      alert('Registration error! Try again');
+      Router.reload();
+    };
+  };
 
   return(
-    <BubbleDetails onClose={() => Router.push('/')} bubble={bubble} />
+    <BubbleDetails 
+      onClose={() => Router.push('/')} bubble={bubble}
+      onSubmitNewComment={postComment}
+    />
   );
 };
 

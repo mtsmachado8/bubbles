@@ -20,6 +20,7 @@ const prisma = DBClient.getInstance().prisma;
 export const getStaticProps: GetStaticProps = async () => {
   const bubblesResponse = await prisma.bubble.findMany({
     include: {
+      labels: true,
       author: {
         select: {
           avatarUrl: true,
@@ -43,6 +44,7 @@ export const getStaticProps: GetStaticProps = async () => {
 type Props = {
   bubbles: (Bubble & {
     labels: [];
+    comments:[];
     author: {
         avatarUrl: string;
     };
@@ -87,6 +89,28 @@ const HomePage: React.FC<Props> = (props: Props) => {
     };
   };
 
+  const postComment = async (e, userComment, userInfo) => {
+    e.preventDefault();
+
+    const comment = userComment;
+    const author = userInfo;
+    const bubbleId = oppenedBubbleId;
+  
+    try {
+      await api.post('/bubbles', {
+        comment,
+        author,
+        bubbleId,
+      });
+      alert('Comment registered!')
+      Router.reload();
+
+    } catch {
+      alert('Registration error! Try again');
+      Router.reload();
+    };
+  };
+
   return (
     <div className={styles.homePage}>
       <main className={styles.container}>
@@ -108,7 +132,8 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
               {isBubbleDetailsVisible && bubble.id === oppenedBubbleId ?
                 <BubbleDetails
-                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/');}}
+                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/')}}
+                  onSubmitNewComment={postComment}
                   bubble={bubble}
                 />
               : null}
@@ -126,7 +151,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
         {isNewBubbleModalVisible ?
           <NewBubbleModal
-            onClose={() => {setIsNewBubbleModalVisible(false); Router.push('/');}}
+            onClose={() => {setIsNewBubbleModalVisible(false); Router.push('/')}}
             onSubmitNewBubble={postBubble}
           />
         : null}
