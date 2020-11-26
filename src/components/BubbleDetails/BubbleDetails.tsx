@@ -8,8 +8,8 @@ import styles from './_bubbleDetails.module.css';
 
 type Props = {
   bubble: any,
-  onClose: any,
-  onSubmitNewComment: any,
+  onClose: Function,
+  onSubmitNewComment: Function,
 };
 
 const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment }: Props) => {
@@ -41,7 +41,7 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment }:
 
           {isNewCommentVisible
           ? <NewComment 
-              onClose={() => setIsNewCommentVisible(false)}
+              onClick={() => setIsNewCommentVisible(false)}
               onSubmitNewComment={onSubmitNewComment}
             />
 

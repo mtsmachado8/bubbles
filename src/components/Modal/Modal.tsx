@@ -4,7 +4,7 @@ import styles from './_modal.module.css';
 
 type Props = {
   id?: string,
-  onClose: any,
+  onClose: Function,
   children,
 }
 

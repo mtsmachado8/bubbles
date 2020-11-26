@@ -92,13 +92,13 @@ const HomePage: React.FC<Props> = (props: Props) => {
   const postComment = async (e, userComment, userInfo) => {
     e.preventDefault();
 
-    const comment = userComment;
+    const content = userComment;
     const author = userInfo;
     const bubbleId = oppenedBubbleId;
   
     try {
-      await api.post('/bubbles', {
-        comment,
+      await api.post('/comments', {
+        content,
         author,
         bubbleId,
       });

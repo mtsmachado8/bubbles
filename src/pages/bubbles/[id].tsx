@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 }
 
 type BubbleProps = Bubble & {
-  comments: [],
+  comments: {},
   author: {
       avatarUrl: string;
   };
@@ -57,13 +57,13 @@ const BubblePage: React.FC<Props> = ({ bubble }: Props) => {
   const postComment = async (e, userComment, userInfo) => {
     e.preventDefault();
 
-    const comment = userComment;
+    const content = userComment;
     const author = userInfo;
     const bubbleId = bubble.id;
   
     try {
-      await api.post('/bubbles', {
-        comment,
+      await api.post('/comments', {
+        content,
         author,
         bubbleId,
       });

@@ -12,7 +12,6 @@ type BubbleProps = Bubble & {
 type Props = {
   bubble: BubbleProps,
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
-  props?: any
 };
 
 const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) => {
@@ -23,7 +22,7 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) =
   const newLabelsArray = bubble.labels?.slice(0, 3);
 
   return (
-    <div onClick={onClick} {...props} className={styles.bubbleContainer}>
+    <div onClick={onClick} className={styles.bubbleContainer}>
       <img src={authorAvatar} className={styles.image} />
       <div className={styles.textContent}>
         <div className={styles.title}>

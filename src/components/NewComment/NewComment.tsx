@@ -4,12 +4,12 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import styles from './_newComment.module.css';
 
 type Props = {
-  id?: string
-  onClose: any
-  onSubmitNewComment: any
+  id?: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onSubmitNewComment: Function;
 }
 
-const NewComment: React.FC<Props> = ({ onClose, onSubmitNewComment }: Props) => {
+const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => {
   const [ isLogedIn, setIsLogedIn ] = useState(false);
 
   const [ avatarUrl, setAvatarUrl ] = useState('');
@@ -64,7 +64,7 @@ const NewComment: React.FC<Props> = ({ onClose, onSubmitNewComment }: Props) => 
         <div className={styles.commentArea}>
           <textarea onChange={e => setComment(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
           <div className={styles.buttonContent}>
-            <button type='button' className={styles.cancelButton} onClick={onClose}>Cancel</button>
+            <button type='button' className={styles.cancelButton} onClick={onClick}>Cancel</button>
             <button type='submit' className={styles.submitButton}>{submitButton}</button>
             {isLogedIn 
               ? <GoogleLogout

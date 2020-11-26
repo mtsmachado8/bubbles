@@ -5,23 +5,24 @@ const prisma = DBClient.getInstance().prisma;
 export default async (req, res) => {
   if (req.method === 'POST') {
     
-    const { title, description, content, author } = req.body;
+    const { content, bubbleId, author } = req.body;
 
-    const createdBubble = await prisma.bubble.create({
+    const createdComment = await prisma.comment.create({
       data: {
-        title,
-        description,
-        content,
+        bubble: {
+          connect: { id: bubbleId }
+        },
         author: {
           connectOrCreate: {
             where: { email: author.email },
             create: author,
           },
         },
+        content,
       },
     });
     res.statusCode = 200;
-    res.json(createdBubble);
+    res.json(createdComment);
 
   } else {
     res.statusCode = 200;

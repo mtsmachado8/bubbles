@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
-
 import Modal from "../Modal/Modal";
 
 import styles from './_newBubbleModal.module.css';
 
 type Props = {
-  onClose: any;
-  onSubmitNewBubble: any;
+  onClose: Function;
+  onSubmitNewBubble: Function;
 };
 
 const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
