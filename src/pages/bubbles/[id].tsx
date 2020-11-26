@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 
@@ -29,6 +29,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
           avatarUrl: true,
         },
       },
+      comments: true,
     },
     where: {
       id: parseInt(params.id as string)
@@ -38,22 +39,42 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const serializableBubble = {
     ...bubble,
     createdAt: bubble.createdAt.toDateString(),
-  }
-  return { props: { bubble: serializableBubble } }
-}
+    comments: bubble.comments.map(comment => ({
+      ...comment,
+      createdAt: comment.createdAt.toDateString(),
+    })),
+  };
+  return { props: { bubble: serializableBubble } };
+};
 
-type BubbleProps = Bubble & {
-  comments: {},
+type FilledBubble = Bubble & {
+  comments: any[],
   author: {
       avatarUrl: string;
   };
 };
 
 type Props = {
-  bubble: BubbleProps,
+  bubble: FilledBubble,
 };
 
-const BubblePage: React.FC<Props> = ({ bubble }: Props) => {
+const BubblePage: React.FC<Props> = (props: Props) => {
+  const [ bubble, setBubble ] = useState<FilledBubble>(props.bubble)
+
+  useEffect(() => {
+    const newBubble = {
+      ...props.bubble,
+      createdAt: new Date(props.bubble.createdAt),
+
+      comments: props.bubble.comments.map(comment => ({
+        ...comment,
+        createdAt: new Date(comment.createdAt),
+      })),
+    };
+
+    setBubble(newBubble)
+  }, []);
+
   const postComment = async (e, userComment, userInfo) => {
     e.preventDefault();
 

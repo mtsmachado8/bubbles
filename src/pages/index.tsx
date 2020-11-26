@@ -26,14 +26,19 @@ export const getStaticProps: GetStaticProps = async () => {
           avatarUrl: true,
         },
       },
+      comments: true,
     },
   });
 
   // Date is not serializable on next yet
   const serializableBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
-    createdAt: bubble.createdAt.toDateString()
-  }))
+    createdAt: bubble.createdAt.toDateString(),
+    comments: bubble.comments.map(comment => ({
+      ...comment,
+      createdAt: comment.createdAt.toDateString(),
+    })),
+  }));
   
   return {
     props: { bubbles: serializableBubbles },
@@ -44,7 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
 type Props = {
   bubbles: (Bubble & {
     labels: [];
-    comments:[];
+    comments: any[];
     author: {
         avatarUrl: string;
     };
@@ -60,9 +65,13 @@ const HomePage: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     setBubbles(props.bubbles.map(bubble => ({
       ...bubble,
-      createdAt: new Date(bubble.createdAt)
+      createdAt: new Date(bubble.createdAt),
+      comments: bubble.comments.map(comment => ({
+        ...comment,
+        createdAt: new Date(comment.createdAt),
+      }))
     })))
-  }, [])
+  }, []);
   
   const postBubble = async (e, userInfo) => {
     e.preventDefault();
