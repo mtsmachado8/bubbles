@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
 
-import { Bubble } from "@prisma/client";
+import { Bubble, Label, Comment } from "@prisma/client";
 import DBClient from '../../prisma/client';
 import api from "../services/api";
 
@@ -25,6 +25,7 @@ export const getStaticProps: GetStaticProps = async () => {
           avatarUrl: true,
         },
       },
+      comments: true,
     },
   });
 
@@ -41,15 +42,19 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 type Props = {
-  bubbles: (Bubble & {
-    labels: [];
-    author: {
-        avatarUrl: string;
-    };
-  })[]
+  bubbles: FilledBubble[]
 };
 
+type FilledBubble = Bubble & {
+  labels: Label[];
+  comments: Comment[];
+  author: {
+      avatarUrl: string;
+  };
+}
+
 const HomePage: React.FC<Props> = (props: Props) => {
+  const [bubbles, setBubbles] = useState<FilledBubble[]>([])
   const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false);
   const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false);
 

@@ -1,20 +1,22 @@
 import React from "react";
-import { Bubble } from "@prisma/client";
+import { Bubble, Label, Comment } from "@prisma/client";
 
 import Modal from "../Modal/Modal";
 
 import styles from './_bubbleDetails.module.css';
 
-type BubbleProps = Bubble & {
+type FilledBubble = Bubble & {
+  labels: Label[];
+  comments: Comment[];
   author: {
       avatarUrl: string;
   };
-};
+}
 
 type Props = {
-  bubble: BubbleProps,
-  onClose: any,
-  props?: any
+  bubble: FilledBubble,
+  onClose: Function,
+  props?: Function
 };
 
 const BubbleDetails: React.FC<Props> = ({ bubble, onClose, ...props }: Props) => {
