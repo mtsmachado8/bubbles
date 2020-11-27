@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
 
-import { Bubble } from "@prisma/client";
+import { Bubble, Label, Comment } from "@prisma/client";
 import DBClient from '../../prisma/client';
 import api from "../services/api";
 
@@ -30,10 +30,10 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  // Date is not serializable on next yet
   const serializableBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
     createdAt: bubble.createdAt.toDateString(),
+
     comments: bubble.comments.map(comment => ({
       ...comment,
       createdAt: comment.createdAt.toDateString(),
@@ -42,22 +42,25 @@ export const getStaticProps: GetStaticProps = async () => {
   
   return {
     props: { bubbles: serializableBubbles },
-    revalidate: 1
+    revalidate: 1,
   };
 };
 
 type Props = {
-  bubbles: (Bubble & {
-    labels: [];
-    comments: any[];
-    author: {
-        avatarUrl: string;
-    };
-  })[]
+  bubbles: FilledBubble[];
+};
+
+type FilledBubble = Bubble & {
+  labels: Label[];
+  comments: Comment[];
+  author: {
+      avatarUrl: string;
+      name: string;
+  };
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [bubbles, setBubbles] = useState([])
+  const [bubbles, setBubbles] = useState<FilledBubble[]>([])
   const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false);
   const [oppenedBubbleId, setOppenedBubbleId] = useState(null);
   const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false);
@@ -66,6 +69,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
     setBubbles(props.bubbles.map(bubble => ({
       ...bubble,
       createdAt: new Date(bubble.createdAt),
+
       comments: bubble.comments.map(comment => ({
         ...comment,
         createdAt: new Date(comment.createdAt),

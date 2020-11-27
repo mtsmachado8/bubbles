@@ -1,13 +1,24 @@
 import React, { useState } from "react";
 
+import { Bubble, Label, Comment } from "@prisma/client";
+
 import Modal from "../Modal/Modal";
 import Comments from '../Comments/Comments';
 import NewComment from '../NewComment/NewComment';
 
 import styles from './_bubbleDetails.module.css';
 
+type FilledBubble = Bubble & {
+  labels: Label[];
+  comments: Comment[];
+  author: {
+      avatarUrl: string;
+      name: string;
+  };
+}
+
 type Props = {
-  bubble: any,
+  bubble: FilledBubble,
   onClose: Function,
   onSubmitNewComment: Function,
 };

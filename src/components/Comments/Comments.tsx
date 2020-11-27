@@ -32,7 +32,7 @@ const Comments: React.FC<Props> = ({ bubble }: Props) => {
                   }
                 </h4>
 
-                <p>{comment.createdAt}</p>
+                <p>{comment.createdAt.toLocaleDateString('pt-br')}</p>
               </div>
               <div className={styles.commentText}>
                 <p>{comment.content}</p>

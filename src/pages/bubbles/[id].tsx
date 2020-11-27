@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 
-import { Bubble } from "@prisma/client";
+import { Bubble, Label, Comment } from "@prisma/client";
 import DBClient from '../../../prisma/client';
 import api from '../../services/api';
 
@@ -48,9 +48,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 type FilledBubble = Bubble & {
-  comments: any[],
+  labels: Label[],
+  comments: Comment[],
   author: {
       avatarUrl: string;
+      name: string;
   };
 };
 
@@ -69,6 +71,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
       comments: props.bubble.comments.map(comment => ({
         ...comment,
         createdAt: new Date(comment.createdAt),
+        
       })),
     };
 
