@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { toast } from 'react-toastify';
 
 import styles from './_newComment.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 type Props = {
   id?: string;
@@ -37,11 +40,20 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
     setName(response.profileObj.name);
     setFirstName(response.profileObj.givenName);
     setIsLogedIn(true);
+    toast.dark(`Welcome Mr(s) ${response.profileObj.familyName}`, {
+      autoClose: 2500,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+    });
   };
 
   const onFailureGoogle = response => {
-    alert('Ops... There was a connection error.');
     console.log(response);
+    toast.error('Ops... There was a connection error.', {
+      autoClose: 2500,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+    });
   };
 
   const onLogoutGoogle = () => {
@@ -50,7 +62,11 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
     setName('');
     setFirstName('');
     setIsLogedIn(false);
-    alert('Logout done');
+    toast.dark('Bye! See you later.', {
+      autoClose: 2500,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+    });
   };
 
   return(

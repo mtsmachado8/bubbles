@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { toast } from 'react-toastify';
 
 import Modal from "../Modal/Modal";
 
 import styles from './_newBubbleModal.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 type Props = {
   onClose: Function;
@@ -36,11 +39,20 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     setName(response.profileObj.name);
     setFirstName(response.profileObj.givenName);
     setIsLogedIn(true);
+    toast.dark(`Welcome Mr(s) ${response.profileObj.familyName}`, {
+      autoClose: 2500,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+    });
   };
 
   const onFailureGoogle = response => {
-    alert('Ops... There was a connection error.');
     console.log(response);
+    toast.error('Ops... There was a connection error.', {
+      autoClose: 2500,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+    });
   };
 
   const onLogoutGoogle = () => {
@@ -49,7 +61,11 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     setName('');
     setFirstName('');
     setIsLogedIn(false);
-    alert('Logout done');
+    toast.dark('See you later.', {
+      autoClose: 2500,
+      pauseOnHover: false,
+      pauseOnFocusLoss: false,
+    });
   };
 
   return(

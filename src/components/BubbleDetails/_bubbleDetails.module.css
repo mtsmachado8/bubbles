@@ -125,7 +125,6 @@
   border: none;
   transition: 200ms;
   cursor: pointer;
-  margin-top: 20px;
   margin-right: 6px;
   background-color: var(--color-primary);
   color: var(--color-text-primary);

@@ -1,22 +1,39 @@
 import React from 'react';
 
+import { Bubble, Comment, Label } from '@prisma/client';
+
 import styles from './_comments.module.css';
 
+type FilledComment = Comment & {
+  author: {
+    avatarUrl: string;
+    name: string;
+  };
+};
+
+type FilledBubble = Bubble & {
+  labels: Label[],
+  comments: FilledComment[],
+  author: {
+      avatarUrl: string;
+  };
+};
+
 type Props = {
-  bubble: any;
-}
+  bubble: FilledBubble,
+};
 
 const Comments: React.FC<Props> = ({ bubble }: Props) => {
   return(
     <div className={styles.commentSpace}>
 
       <div className={styles.alreadyCommented}>
-        {bubble.comments?.map(comment => (
-          <div className={styles.cardBox}>
+        {bubble.comments.map(comment => (
+          <div className={styles.cardBox} key={comment.id} >
 
             <img 
               src={comment.author?.avatarUrl
-              ? comment.author.avatarUrl 
+              ? comment.author.avatarUrl
               : '/anonymous-image.png'} 
               alt='Avatar Image'
             />
@@ -32,7 +49,7 @@ const Comments: React.FC<Props> = ({ bubble }: Props) => {
                   }
                 </h4>
 
-                <p>{comment.createdAt.toLocaleDateString('pt-br')}</p>
+                <p>{comment.createdAt.toLocaleString('pt-br', {})}</p>
               </div>
               <div className={styles.commentText}>
                 <p>{comment.content}</p>

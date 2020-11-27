@@ -8,19 +8,25 @@ import NewComment from '../NewComment/NewComment';
 
 import styles from './_bubbleDetails.module.css';
 
+type FilledComment = Comment & {
+  author: {
+    avatarUrl: string;
+    name: string;
+  };
+};
+
 type FilledBubble = Bubble & {
   labels: Label[];
-  comments: Comment[];
+  comments: FilledComment[];
   author: {
       avatarUrl: string;
-      name: string;
   };
-}
+};
 
 type Props = {
-  bubble: FilledBubble,
-  onClose: Function,
-  onSubmitNewComment: Function,
+  bubble: any;
+  onClose: Function;
+  onSubmitNewComment: Function;
 };
 
 const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment }: Props) => {

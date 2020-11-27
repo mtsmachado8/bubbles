@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Router from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { toast } from 'react-toastify';
+import Router from "next/router";
 
 import { Bubble, Label, Comment } from "@prisma/client";
 import DBClient from '../../../prisma/client';
 import api from '../../services/api';
 
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
+
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -24,12 +28,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const bubble = await prisma.bubble.findOne({
     include: {
+      comments: {
+        include: {
+          author: {
+            select: {
+              avatarUrl: true,
+              name: true,
+            },
+          },
+        },
+      },
       author: {
         select: {
           avatarUrl: true,
         },
       },
-      comments: true,
     },
     where: {
       id: parseInt(params.id as string)
@@ -38,21 +51,28 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const serializableBubble = {
     ...bubble,
-    createdAt: bubble.createdAt.toDateString(),
+    createdAt: bubble.createdAt.toString(),
+
     comments: bubble.comments.map(comment => ({
       ...comment,
-      createdAt: comment.createdAt.toDateString(),
+      createdAt: comment.createdAt.toString(),
     })),
   };
   return { props: { bubble: serializableBubble } };
 };
 
+type FilledComment = Comment & {
+  author: {
+    avatarUrl: string;
+    name: string;
+  }
+}
+
 type FilledBubble = Bubble & {
   labels: Label[],
-  comments: Comment[],
+  comments: FilledComment[],
   author: {
       avatarUrl: string;
-      name: string;
   };
 };
 
@@ -64,18 +84,15 @@ const BubblePage: React.FC<Props> = (props: Props) => {
   const [ bubble, setBubble ] = useState<FilledBubble>(props.bubble)
 
   useEffect(() => {
-    const newBubble = {
+    setBubble({
       ...props.bubble,
       createdAt: new Date(props.bubble.createdAt),
 
       comments: props.bubble.comments.map(comment => ({
         ...comment,
         createdAt: new Date(comment.createdAt),
-        
       })),
-    };
-
-    setBubble(newBubble)
+    });
   }, []);
 
   const postComment = async (e, userComment, userInfo) => {
@@ -91,11 +108,19 @@ const BubblePage: React.FC<Props> = (props: Props) => {
         author,
         bubbleId,
       });
-      alert('Comment registered!')
+      toast.success('Comment registered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      })
       Router.reload();
 
     } catch {
-      alert('Registration error! Try again');
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+      })
       Router.reload();
     };
   };

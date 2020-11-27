@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
@@ -14,6 +15,8 @@ import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 
 import styles from './_home.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -21,22 +24,31 @@ export const getStaticProps: GetStaticProps = async () => {
   const bubblesResponse = await prisma.bubble.findMany({
     include: {
       labels: true,
+      comments: {
+        include: {
+          author: {
+            select: {
+              avatarUrl: true,
+              name: true,
+            },
+          },
+        },
+      },
       author: {
         select: {
           avatarUrl: true,
         },
       },
-      comments: true,
     },
   });
 
   const serializableBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
-    createdAt: bubble.createdAt.toDateString(),
+    createdAt: bubble.createdAt.toString(),
 
     comments: bubble.comments.map(comment => ({
       ...comment,
-      createdAt: comment.createdAt.toDateString(),
+      createdAt: comment.createdAt.toString(),
     })),
   }));
   
@@ -46,24 +58,30 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-type Props = {
-  bubbles: FilledBubble[];
-};
+type FilledComment = Comment & {
+  author: {
+    avatarUrl: string;
+    name: string;
+  }
+}
 
 type FilledBubble = Bubble & {
-  labels: Label[];
-  comments: Comment[];
+  labels: Label[],
+  comments: FilledComment[],
   author: {
       avatarUrl: string;
-      name: string;
   };
 };
 
+type Props = {
+  bubbles: FilledBubble[],
+};
+
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [bubbles, setBubbles] = useState<FilledBubble[]>([])
-  const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false);
-  const [oppenedBubbleId, setOppenedBubbleId] = useState(null);
-  const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false);
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>([])
+  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
+  const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
+  const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
 
   useEffect(() => {
     setBubbles(props.bubbles.map(bubble => ({
@@ -92,12 +110,20 @@ const HomePage: React.FC<Props> = (props: Props) => {
         content,
         author,
       });
-      alert('Bubble successfully registered!')
+      toast.success('Bubble successfully registered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.push('/');
       setIsNewBubbleModalVisible(false);
 
     } catch {
-      alert('Registration error! Try again');
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.reload();
     };
   };
@@ -115,11 +141,19 @@ const HomePage: React.FC<Props> = (props: Props) => {
         author,
         bubbleId,
       });
-      alert('Comment registered!')
+      toast.success('Comment registrated!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.reload();
-
+    
     } catch {
-      alert('Registration error! Try again');
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.reload();
     };
   };

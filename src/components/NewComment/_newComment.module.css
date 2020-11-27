@@ -148,9 +148,33 @@
   border: none;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
+  .newCommentBox img {
+    height: 50px;
+    margin: 2px 45px 0 35px;
+  }
+
+  .newCommentBox .square {
+    top: 18px;
+    left: 122px;
+  }
+
+  .newCommentBox .commentDetails .nameBox {
+    padding-left: 20px;
+    justify-content: left;
+  }
+
+  .newCommentBox .commentDetails .nameBox h4 {
+    font-size: 24px;
+    margin-right: 30px;
+  }
+
   .newCommentBox .commentDetails .commentArea .buttonContent button {
     font-size: 16px;
+  }
+
+  .newCommentBox .commentDetails .commentArea .buttonContent .loginButton {
+    margin-left: 15px;
   }
 
   .newCommentBox .commentDetails .commentArea .buttonContent .submitButton, 
@@ -175,31 +199,5 @@
 
   .newCommentBox .commentDetails .commentArea .buttonContent .submitButton:hover::after {
     width: 170px;
-  }
-}
-
-@media (min-width: 900px) {
-  .newCommentBox img {
-    height: 50px;
-    margin: 2px 45px 0 35px;
-  }
-
-  .newCommentBox .square {
-    top: 18px;
-    left: 122px;
-  }
-
-  .newCommentBox .commentDetails .nameBox {
-    padding-left: 20px;
-    justify-content: left;
-  }
-
-  .newCommentBox .commentDetails .nameBox h4 {
-    font-size: 24px;
-    margin-right: 30px;
-  }
-
-  .newCommentBox .commentDetails .commentArea .buttonContent .loginButton {
-    margin-left: 15px;
   }
 }
