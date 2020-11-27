@@ -5,7 +5,7 @@ import Router from "next/router";
 import Link from 'next/link';
 
 import { Bubble, Label, Comment } from "@prisma/client";
-import DBClient from '../../prisma/client';
+import prisma from '../../prisma/client';
 import api from "../services/api";
 
 import Header from '../components/Header/Header';
@@ -17,8 +17,6 @@ import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 import styles from './_home.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure();
-
-const prisma = DBClient.getInstance().prisma;
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubblesResponse = await prisma.bubble.findMany({

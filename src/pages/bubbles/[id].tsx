@@ -4,15 +4,13 @@ import { toast } from 'react-toastify';
 import Router from "next/router";
 
 import { Bubble, Label, Comment } from "@prisma/client";
-import DBClient from '../../../prisma/client';
+import prisma from '../../../prisma/client';
 import api from '../../services/api';
 
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
-
-const prisma = DBClient.getInstance().prisma;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const bubbles = await prisma.bubble.findMany({

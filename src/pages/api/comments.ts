@@ -1,6 +1,4 @@
-import DBClient from "../../../prisma/client";
-
-const prisma = DBClient.getInstance().prisma;
+import prisma from "../../../prisma/client";
 
 export default async (req, res) => {
   if (req.method === 'POST') {
