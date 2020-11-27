@@ -1,36 +1,47 @@
-import React from "react";
-import Router from "next/router";
+import React, { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { toast } from 'react-toastify';
+import Router from "next/router";
 
-import { Bubble } from "@prisma/client";
-import DBClient from '../../../prisma/client';
+import { Bubble, Label, Comment } from "@prisma/client";
+import prisma from '../../../prisma/client';
+import api from '../../services/api';
 
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
-const prisma = DBClient.getInstance().prisma;
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
-// This function gets called at build time
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Call an external API endpoint to get bubbles
   const bubbles = await prisma.bubble.findMany({
     select: {
       id: true
     },
   });
-
-  // Get the paths we want to pre-render based on bubbles
   const paths = bubbles.map((bubble) => ({ params: { id: `${bubble.id}` }}))
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
   return { paths: paths, fallback: false }
 }
 
-// This also gets called at build time
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // params contains the post `id`.
-  // If the route is like /bubbles/1, then params.id is 1
   const bubble = await prisma.bubble.findOne({
+    include: {
+      comments: {
+        include: {
+          author: {
+            select: {
+              avatarUrl: true,
+              name: true,
+            },
+          },
+        },
+      },
+      author: {
+        select: {
+          avatarUrl: true,
+        },
+      },
+    },
     where: {
       id: parseInt(params.id as string)
     },
@@ -38,25 +49,85 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const serializableBubble = {
     ...bubble,
-    createdAt: bubble.createdAt.toDateString()
+    createdAt: bubble.createdAt.toString(),
+
+    comments: bubble.comments.map(comment => ({
+      ...comment,
+      createdAt: comment.createdAt.toString(),
+    })),
+  };
+  return { props: { bubble: serializableBubble } };
+};
+
+type FilledComment = Comment & {
+  author: {
+    avatarUrl: string;
+    name: string;
   }
-  // Pass post data to the page via props
-  return { props: { bubble: serializableBubble } }
 }
 
-type BubbleProps = Bubble & {
+type FilledBubble = Bubble & {
+  labels: Label[],
+  comments: FilledComment[],
   author: {
       avatarUrl: string;
   };
 };
 
 type Props = {
-  bubble: BubbleProps,
+  bubble: FilledBubble,
 };
 
-const BubblePage: React.FC<Props> = ({ bubble }: Props) => {
+const BubblePage: React.FC<Props> = (props: Props) => {
+  const [ bubble, setBubble ] = useState<FilledBubble>(props.bubble)
+
+  useEffect(() => {
+    setBubble({
+      ...props.bubble,
+      createdAt: new Date(props.bubble.createdAt),
+
+      comments: props.bubble.comments.map(comment => ({
+        ...comment,
+        createdAt: new Date(comment.createdAt),
+      })),
+    });
+  }, []);
+
+  const postComment = async (e, userComment, userInfo) => {
+    e.preventDefault();
+
+    const content = userComment;
+    const author = userInfo;
+    const bubbleId = bubble.id;
+  
+    try {
+      await api.post('/comments', {
+        content,
+        author,
+        bubbleId,
+      });
+      toast.success('Comment registered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      })
+      Router.reload();
+
+    } catch {
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+      })
+      Router.reload();
+    };
+  };
+
   return(
-    <BubbleDetails onClose={() => Router.push('/')} bubble={bubble} />
+    <BubbleDetails 
+      onClose={() => Router.push('/')} bubble={bubble}
+      onSubmitNewComment={postComment}
+    />
   );
 };
 

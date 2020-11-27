@@ -1,9 +1,13 @@
 import React from 'react';
 import Router from 'next/router';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 
 import NewBubbleModal from '../../components/NewBubbleModal/NewBubbleModal';
+
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 const NewBubble: React.FC = () => {
 
@@ -22,11 +26,19 @@ const NewBubble: React.FC = () => {
         content,
         author,
       });
-      alert('Bubble successfully registered!')
+      toast.success('Bubble successfully registered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.push('/');
 
     } catch {
-      alert('Registration error! Try again');
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.reload();
     };
   };

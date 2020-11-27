@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
 
 import { Bubble, Label, Comment } from "@prisma/client";
-import DBClient from '../../prisma/client';
+import prisma from '../../prisma/client';
 import api from "../services/api";
 
 import Header from '../components/Header/Header';
@@ -14,50 +15,84 @@ import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 
 import styles from './_home.module.css';
-
-const prisma = DBClient.getInstance().prisma;
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubblesResponse = await prisma.bubble.findMany({
     include: {
+      labels: true,
+      comments: {
+        include: {
+          author: {
+            select: {
+              avatarUrl: true,
+              name: true,
+            },
+          },
+        },
+      },
       author: {
         select: {
           avatarUrl: true,
         },
       },
-      comments: true,
     },
   });
 
-  // Date is not serializable on next yet
   const serializableBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
-    createdAt: bubble.createdAt.toDateString()
-  }))
+    createdAt: bubble.createdAt.toString(),
+
+    comments: bubble.comments.map(comment => ({
+      ...comment,
+      createdAt: comment.createdAt.toString(),
+    })),
+  }));
   
   return {
     props: { bubbles: serializableBubbles },
-    revalidate: 1
+    revalidate: 1,
+  };
+};
+
+type FilledComment = Comment & {
+  author: {
+    avatarUrl: string;
+    name: string;
+  }
+}
+
+type FilledBubble = Bubble & {
+  labels: Label[],
+  comments: FilledComment[],
+  author: {
+      avatarUrl: string;
   };
 };
 
 type Props = {
-  bubbles: FilledBubble[]
+  bubbles: FilledBubble[],
 };
 
-type FilledBubble = Bubble & {
-  labels: Label[];
-  comments: Comment[];
-  author: {
-      avatarUrl: string;
-  };
-}
-
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [bubbles, setBubbles] = useState<FilledBubble[]>([])
-  const [isBubbleDetailsVisible, setIsBubbleDetailsVisible] = useState(false);
-  const [isNewBubbleModalVisible, setIsNewBubbleModalVisible] = useState(false);
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>([])
+  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
+  const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
+  const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
 
+  useEffect(() => {
+    setBubbles(props.bubbles.map(bubble => ({
+      ...bubble,
+      createdAt: new Date(bubble.createdAt),
+
+      comments: bubble.comments.map(comment => ({
+        ...comment,
+        createdAt: new Date(comment.createdAt),
+      }))
+    })))
+  }, []);
+  
   const postBubble = async (e, userInfo) => {
     e.preventDefault();
 
@@ -73,12 +108,50 @@ const HomePage: React.FC<Props> = (props: Props) => {
         content,
         author,
       });
-      alert('Bubble successfully registered!')
+      toast.success('Bubble successfully registered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.push('/');
       setIsNewBubbleModalVisible(false);
 
     } catch {
-      alert('Registration error! Try again');
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
+      Router.reload();
+    };
+  };
+
+  const postComment = async (e, userComment, userInfo) => {
+    e.preventDefault();
+
+    const content = userComment;
+    const author = userInfo;
+    const bubbleId = oppenedBubbleId;
+  
+    try {
+      await api.post('/comments', {
+        content,
+        author,
+        bubbleId,
+      });
+      toast.success('Comment registrated!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
+      Router.reload();
+    
+    } catch {
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      });
       Router.reload();
     };
   };
@@ -90,15 +163,22 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
         <div className={styles.bubblesContainer}>
 
-          {props.bubbles.map((bubble) => (
+          {bubbles.map((bubble) => (
             <div key={bubble.id}>
               <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`}>
-                <BubbleListItem onClick={() => setIsBubbleDetailsVisible(true)} bubble={bubble} />
+                <BubbleListItem
+                  onClick={() => {
+                    setIsBubbleDetailsVisible(true);
+                    setOppenedBubbleId(bubble.id)}
+                  }
+                  bubble={bubble}
+                />
               </Link>
 
-              {isBubbleDetailsVisible ?
+              {isBubbleDetailsVisible && bubble.id === oppenedBubbleId ?
                 <BubbleDetails
-                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/');}}
+                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/')}}
+                  onSubmitNewComment={postComment}
                   bubble={bubble}
                 />
               : null}
@@ -108,12 +188,15 @@ const HomePage: React.FC<Props> = (props: Props) => {
         </div>
 
         <Link href='/' as='/bubbles/new'>
-          <FloatingButton onClick={() => setIsNewBubbleModalVisible(true)} />
+          <FloatingButton 
+            onClick={() => setIsNewBubbleModalVisible(true)} 
+            isVisible={!isNewBubbleModalVisible && !isBubbleDetailsVisible}
+          />
         </Link>
 
         {isNewBubbleModalVisible ?
           <NewBubbleModal
-            onClose={() => {setIsNewBubbleModalVisible(false); Router.push('/');}}
+            onClose={() => {setIsNewBubbleModalVisible(false); Router.push('/')}}
             onSubmitNewBubble={postBubble}
           />
         : null}

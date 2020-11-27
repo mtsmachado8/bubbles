@@ -1,7 +1,4 @@
-import DBClient from "../../../prisma/client";
-
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-const prisma = DBClient.getInstance().prisma;
+import prisma from "../../../prisma/client";
 
 export default async (req, res) => {
   if (req.method === 'POST') {
@@ -21,7 +18,6 @@ export default async (req, res) => {
         },
       },
     });
-
     res.statusCode = 200;
     res.json(createdBubble);
 

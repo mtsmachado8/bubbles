@@ -5,11 +5,12 @@ import styles from './_floatingButton.module.css';
 
 type Props = {
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+  isVisible: boolean
 };
 
-const FloatingButton: React.FC<Props> = ({onClick}: Props) => {
+const FloatingButton: React.FC<Props> = ({ onClick, isVisible }: Props) => {
   return (
-    <div className={styles.plusContainer} onClick={onClick}>
+    <div className={isVisible ? styles.plusContainer : styles.plusContainerHidden} onClick={onClick}>
       <button type="button">+</button>
     </div>
   );

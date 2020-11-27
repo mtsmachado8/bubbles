@@ -45,7 +45,7 @@ docker-compose down --volumes
 To map your data model to the database schema, you need to use the prisma migrate
 ```bash
 npx prisma migrate save --name "name-of-the-migration" --experimental
-yarn migrate:up
+yarn migration:up
 ```
 
 ## Learn More

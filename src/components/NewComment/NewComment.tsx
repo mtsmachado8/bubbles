@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { toast } from 'react-toastify';
 
-import Modal from "../Modal/Modal";
-
-import styles from './_newBubbleModal.module.css';
+import styles from './_newComment.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 type Props = {
-  onClose: Function;
-  onSubmitNewBubble: Function;
-};
+  id?: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onSubmitNewComment: Function;
+}
 
-const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
+const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => {
   const [ isLogedIn, setIsLogedIn ] = useState(false);
 
   const [ avatarUrl, setAvatarUrl ] = useState('');
@@ -21,8 +20,10 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   const [ email, setEmail ] = useState('');
   const [ name, setName ] = useState('');
 
-  const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
-  const submitButton = isLogedIn ? `Submit with ${firstName}` : 'Submit Anonymously';
+  const [ comment, setComment ] = useState('');
+
+  const submitButton = isLogedIn ? `Comment with ${firstName}` : 'Comment Anonymously';
+  const userName = isLogedIn ? `${name}` : 'Anonymous'
   const image = avatarUrl
     ? avatarUrl
     : '/anonymous-image.png';
@@ -61,7 +62,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     setName('');
     setFirstName('');
     setIsLogedIn(false);
-    toast.dark('See you later.', {
+    toast.dark('Bye! See you later.', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
@@ -69,24 +70,19 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   };
 
   return(
-    <Modal onClose={onClose}>
-      <div className={styles.newBubblePage}>
-        <img src={image} alt="Avatar"/>
-        <div className={styles.square}></div>
-        <form onSubmit={e => onSubmitNewBubble(e, user)} className={styles.newBubbleDetails}>
-          <div className={styles.titleContainer}>
-            <input name='title' autoFocus required placeholder="Title" />
-            <input name='description' required placeholder="Brief description about the bubble"/>
-          </div>
-          <div className={styles.textContent}>
-            <div className={styles.typeText}>
-              <p>Write</p>
-            </div>
-            <textarea name='content' required className={styles.textArea} placeholder={placeholder} />
-            <div className={styles.buttonContent}>
-              <button type="submit" className={styles.submit}>{submitButton}</button>
-
-              {isLogedIn 
+    <div className={styles.newCommentBox}>
+      <img src={image} alt="Avatar Image"/>
+      <div className={styles.square}></div>
+      <form onSubmit={e => onSubmitNewComment(e, comment, user)} className={styles.commentDetails}>
+        <div className={styles.nameBox}>
+          <h4>{userName}</h4>
+        </div>
+        <div className={styles.commentArea}>
+          <textarea onChange={e => setComment(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
+          <div className={styles.buttonContent}>
+            <button type='button' className={styles.cancelButton} onClick={onClick}>Cancel</button>
+            <button type='submit' className={styles.submitButton}>{submitButton}</button>
+            {isLogedIn 
               ? <GoogleLogout
                   clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
                   onLogoutSuccess={onLogoutGoogle}
@@ -94,6 +90,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                     <button 
                       onClick={renderProps.onClick} 
                       disabled={renderProps.disabled}
+                      className={styles.loginButton}
                       type='button'
                     >Logout</button>
                   )}
@@ -108,18 +105,17 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                     <button 
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
+                      className={styles.loginButton}
                       type='button'
                     >Login with Google</button>
                   )}
                 />
               }
-            </div>
           </div>
-
-        </form>
-      </div>
-    </Modal>
+        </div>
+      </form>
+    </div>
   );
 };
 
-export default BubbleDetails
+export default NewComment;
