@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { toast } from 'react-toastify';
 
-import Modal from "../Modal/Modal";
+import Modal from '../Modal/Modal';
 
 import styles from './_newBubbleModal.module.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -48,7 +48,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
 
   const onFailureGoogle = response => {
     console.log(response);
-    toast.error('Ops... There was a connection error.', {
+    toast.error('Ops... There was a connection error', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
@@ -61,7 +61,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     setName('');
     setFirstName('');
     setIsLogedIn(false);
-    toast.dark('See you later.', {
+    toast.dark('Bye! See you later', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 import { Bubble, Comment, Label } from '@prisma/client';
 
@@ -49,7 +50,16 @@ const Comments: React.FC<Props> = ({ bubble }: Props) => {
                   }
                 </h4>
 
-                <p>{comment.createdAt.toLocaleString('pt-br', {})}</p>
+                <p>
+                  Commented {
+                    formatDistanceToNow(
+                      parseISO(
+                        new Date(comment.createdAt)
+                        .toISOString()
+                      )
+                    )
+                  } ago
+                </p>
               </div>
               <div className={styles.commentText}>
                 <p>{comment.content}</p>

@@ -10,6 +10,7 @@ import api from '../../services/api';
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
 import 'react-toastify/dist/ReactToastify.css';
+import { parseISO } from "date-fns/esm";
 toast.configure()
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -85,11 +86,6 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     setBubble({
       ...props.bubble,
       createdAt: new Date(props.bubble.createdAt),
-
-      comments: props.bubble.comments.map(comment => ({
-        ...comment,
-        createdAt: new Date(comment.createdAt),
-      })),
     });
   }, []);
 

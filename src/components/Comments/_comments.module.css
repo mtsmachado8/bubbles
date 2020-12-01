@@ -27,7 +27,7 @@
 .cardBox .square {
   width: 18px;
   height: 18px;
-  top: 18px;
+  top: 12px;
   left: 75px;
   transform: rotate(45deg);
   position: absolute;
