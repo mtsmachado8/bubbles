@@ -17,6 +17,21 @@
   border-radius: 10px;
 }
 
+.modal .closeModal {
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  position: fixed;
+  right: 13px;
+  top: -10px;
+  transition: 300ms;
+}
+
+.modal .closeModal:hover {
+  color: var(--color-text-secondary);
+}
+
 .modalContainer {
   position: absolute;
   height: 95%;
@@ -25,14 +40,13 @@
   top: 20px;
 }
 
-@media (min-width: 600px) {
-  .modal {
-    width: 80%;
-  }
-}
-
 @media (min-width: 900px) {
   .modal {
     border-radius: 50px;
+  }
+
+  .modal .closeModal {
+    top: 0;
+    right: 30px;
   }
 }

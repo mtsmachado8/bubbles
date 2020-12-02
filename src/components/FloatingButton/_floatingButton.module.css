@@ -1,5 +1,5 @@
 .plusContainer {
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
 }
@@ -27,4 +27,16 @@
 
 .plusContainer button:focus {
   outline: none;
+}
+
+@media (min-width: 900px) {
+  .plusContainer {
+    right: 27%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .plusContainer {
+    right: 22%;
+  }
 }

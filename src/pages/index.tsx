@@ -84,12 +84,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     setBubbles(props.bubbles.map(bubble => ({
       ...bubble,
-      createdAt: new Date(bubble.createdAt),
-
-      comments: bubble.comments.map(comment => ({
-        ...comment,
-        createdAt: new Date(comment.createdAt),
-      }))
+      createdAt: new Date(bubble.createdAt)
     })))
   }, []);
   
