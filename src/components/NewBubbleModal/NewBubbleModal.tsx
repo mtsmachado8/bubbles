@@ -3,6 +3,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { toast } from 'react-toastify';
 
 import Modal from '../Modal/Modal';
+import Labels from '../Labels/Labels';
 
 import styles from './_newBubbleModal.module.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -70,53 +71,59 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
 
   return(
     <Modal onClose={onClose}>
-      <div className={styles.newBubblePage}>
-        <img src={image} alt="Avatar"/>
-        <div className={styles.square}></div>
-        <form onSubmit={e => onSubmitNewBubble(e, user)} className={styles.newBubbleDetails}>
-          <div className={styles.titleContainer}>
-            <input name='title' autoFocus required placeholder="Title" />
-            <input name='description' required placeholder="Brief description about the bubble"/>
-          </div>
-          <div className={styles.textContent}>
-            <div className={styles.typeText}>
-              <p>Write</p>
+      <div className={styles.content}>
+        <section className={styles.newBubblePage}>
+          <img src={image} alt="Avatar"/>
+          <div className={styles.square}></div>
+          <form onSubmit={e => onSubmitNewBubble(e, user)} className={styles.newBubbleDetails}>
+            <div className={styles.titleContainer}>
+              <input name='title' autoFocus required autoComplete='off' placeholder="Title" />
+              <input name='description' required autoComplete='off' placeholder="Brief description about the bubble"/>
             </div>
-            <textarea name='content' required className={styles.textArea} placeholder={placeholder} />
-            <div className={styles.buttonContent}>
-              <button type="submit" className={styles.submit}>{submitButton}</button>
+            <div className={styles.textContent}>
+              <div className={styles.typeText}>
+                <p>Write</p>
+              </div>
+              <textarea name='content' required className={styles.textArea} placeholder={placeholder} />
+              <div className={styles.buttonContent}>
+                <button type="submit" className={styles.submit}>{submitButton}</button>
 
-              {isLogedIn 
-              ? <GoogleLogout
-                  clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                  onLogoutSuccess={onLogoutGoogle}
-                  render={renderProps => (
-                    <button 
-                      onClick={renderProps.onClick} 
-                      disabled={renderProps.disabled}
-                      type='button'
-                    >Logout</button>
-                  )}
-                /> 
-              : <GoogleLogin
-                  clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                  isSignedIn={true}
-                  onSuccess={onSuccessGoogle}
-                  onFailure={onFailureGoogle}
-                  cookiePolicy={'single_host_origin'}
-                  render={renderProps => (
-                    <button 
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                      type='button'
-                    >Login with Google</button>
-                  )}
-                />
-              }
+                {isLogedIn 
+                ? <GoogleLogout
+                    clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
+                    onLogoutSuccess={onLogoutGoogle}
+                    render={renderProps => (
+                      <button 
+                        onClick={renderProps.onClick} 
+                        disabled={renderProps.disabled}
+                        type='button'
+                      >Logout</button>
+                    )}
+                  /> 
+                : <GoogleLogin
+                    clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
+                    isSignedIn={true}
+                    onSuccess={onSuccessGoogle}
+                    onFailure={onFailureGoogle}
+                    cookiePolicy={'single_host_origin'}
+                    render={renderProps => (
+                      <button 
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                        type='button'
+                      >Login with Google</button>
+                    )}
+                  />
+                }
+              </div>
             </div>
-          </div>
 
-        </form>
+          </form>
+        </section>
+
+        <aside className={styles.labelsContent}>
+          <Labels />
+        </aside>
       </div>
     </Modal>
   );

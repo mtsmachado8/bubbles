@@ -1,17 +1,20 @@
+.content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
 .newBubblePage {
   display: flex;
   
-  width: 95%;
-  margin-left: 4%;
+  width: 100%;
+  margin-left: 2%;
 
   position: relative;
 }
 
 .newBubblePage img {
   display: none;
-  border-radius: 50%;
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-  margin: 0 10px 0 10px;
 }
 
 .newBubblePage .square {
@@ -29,13 +32,13 @@
   border: 1px solid #707070;
   border-radius: 10px;
   width: 100%;
+  height: 462px;
 }
 
 .newBubblePage .newBubbleDetails .titleContainer {
   background-color: var(--color-primary);
   border-radius: 8px 8px 0 0;
-  padding: 15px 25px 5px;
-  height: 90px;
+  padding: 15px 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -175,7 +178,15 @@
   border: none;
 }
 
+.content .labelsContent {
+  display: none;
+}
+
 @media (min-width: 600px) {
+  .newBubblePage .newBubbleDetails {
+    height: 83%;
+  }
+
   .newBubblePage .newBubbleDetails .textContent .buttonContent button {
     width: 200px;
     height: 40px;
@@ -197,38 +208,35 @@
     
     width: 85%;
     height: 100%;
-    padding-top: 20px;
   
     position: relative;
   }
-
 
   .newBubblePage img {
     display: inline-block;
     height: 80px;
     border-radius: 50%;
     box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-    margin: 5px 30px 0 20px;
+    margin: 5px 30px 0 5px;
   }
 
   .newBubblePage .square {
     display: inline-block;
     width: 25px;
     height: 25px;
-    top: 53px;
-    left: 120px;
+    top: 32px;
+    left: 105px;
     transform: rotate(45deg);
     position: absolute;
     background-color: var(--color-primary);
   }
 
   .newBubblePage .newBubbleDetails {
-    height: 500px;
+    height: 495px;
   }
 
   .newBubblePage .newBubbleDetails .titleContainer {
-    height: 100px;
-    padding: 10px 20px 5px;
+    padding: 10px 5px 5px 20px;
   }
 
   .newBubblePage .newBubbleDetails .titleContainer input {
@@ -255,5 +263,16 @@
   .newBubblePage .newBubbleDetails .textContent .textArea {
     height: 288px;
     font-size: 20px;
+  }
+
+  .content .labelsContent {
+    width: 30%;
+    display: flex;
+  }
+}
+
+@media (min-width: 1100px) {
+  .content .labelsContent {
+    width: 25%;
   }
 }
