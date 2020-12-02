@@ -122,7 +122,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
         </section>
 
         <aside className={styles.labelsContent}>
-          <Labels />
+          
         </aside>
       </div>
     </Modal>
