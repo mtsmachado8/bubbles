@@ -27,6 +27,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const bubble = await prisma.bubble.findOne({
     include: {
+      labels: true,
       comments: {
         include: {
           author: {
@@ -57,7 +58,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       createdAt: comment.createdAt.toString(),
     })),
   };
-  return { props: { bubble: serializableBubble } };
+  
+  const labels = await prisma.label.findMany()
+
+  return { props: { bubble: serializableBubble, labels } };
 };
 
 type FilledComment = Comment & {
@@ -77,6 +81,7 @@ type FilledBubble = Bubble & {
 
 type Props = {
   bubble: FilledBubble,
+  labels: Label[];
 };
 
 const BubblePage: React.FC<Props> = (props: Props) => {
@@ -119,10 +124,45 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     };
   };
 
+  const postLabel = async (e, newLabel) => {
+    e.preventDefault();
+
+    const name = newLabel.name;
+    const description = newLabel.description;
+    const color = newLabel.color;
+    const bubbleId = bubble.id;
+  
+    try {
+      await api.post('/labels', {
+        name,
+        description,
+        color,
+        bubbleId,
+      });
+      toast.success('Label registered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      })
+      Router.reload();
+
+    } catch {
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+      })
+      Router.reload();
+    };
+  };
+
   return(
     <BubbleDetails 
-      onClose={() => Router.push('/')} bubble={bubble}
+      onClose={() => Router.push('/')}
       onSubmitNewComment={postComment}
+      onSubmitNewLabel={postLabel}
+      bubble={bubble}
+      allLabels={props.labels}
     />
   );
 };

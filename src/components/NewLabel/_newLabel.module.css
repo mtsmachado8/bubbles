@@ -1,0 +1,213 @@
+.newLabelContent {
+  display: flex;
+  flex-direction: column;
+
+  width: 300px;
+  height: 250px;
+
+  position: fixed;
+  background-color: var(--color-object-background);
+  border-radius: 5px;
+  padding: 20px 20px 10px;
+
+  right: 20px;
+  top: 100px;
+
+  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.7);
+}
+
+.newLabelContent .square {
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  bottom: 243px;
+  right: 15%;
+  position: absolute;
+  background-color: var(--color-object-background);
+}
+
+.newLabelContent label {
+  color: var(--color-text-contrast);
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.newLabelContent input {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background-color: var(--color-background);
+  font-family: Roboto;
+}
+
+.newLabelContent input:focus {
+  outline: none;
+  box-shadow: 0 0 4px 1px var(--color-primary);
+}
+
+.newLabelContent .inputContent {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.newLabelContent .inputContent .description {
+  margin-bottom: 10px;
+}
+
+.newLabelContent .colorContent {
+  display: flex;
+  text-align: left;
+  align-items: center;
+}
+
+.newLabelContent .colorContent .colorInput {
+  width: 47%;
+}
+
+.newLabelContent .colorContent .colorInput .inputs {
+  display: flex;
+  align-items: center;
+}
+
+.newLabelContent .colorContent .colorInput .inputs .colorRGB {
+  width: 38px;
+  height: 38px;
+  border: none;
+  padding: 0;
+  margin: 10px 5px 10px 0;
+  border-radius: 4px;
+  background-color: none;
+  transition: 200ms;
+}
+
+.newLabelContent .colorContent .colorInput .inputs .colorRGB::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.newLabelContent .colorContent .colorInput .inputs .colorRGB::-webkit-color-swatch {
+  border-radius: 6px;
+  border: none;
+  box-shadow: 0 0 8px 2px var(--color-primary);
+}
+
+.newLabelContent .colorContent .colorInput .inputs .colorText {
+  width: 66px;
+  margin: 0;
+}
+
+.newLabelContent .colorContent .preview p {
+  width: 140px;
+  height: 25px;
+  border-radius: 20px;
+  text-align: center;
+  padding-top: 5px;
+  font-size: 14px;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.newLabelContent .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.newLabelContent .buttons button {
+  width: 48%;
+  height: 35px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  transition: 200ms;
+  cursor: pointer;
+}
+
+.newLabelContent .buttons button:focus {
+  outline: none;
+}
+
+.newLabelContent .buttons .cancel {
+  background-color: var(--color-object-background);
+  color: var(--color-primary);
+  position: relative;
+}
+
+.newLabelContent .buttons .cancel::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  position: absolute;
+  bottom: 2px;
+  left: 25px;
+  transition: 300ms ease;
+}
+
+.newLabelContent .buttons .cancel:hover::after {
+  width: 80px;
+  transition: 300ms ease;
+}
+
+.newLabelContent .buttons .submit {
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.newLabelContent .buttons .submit:hover {
+  background-color: var(--color-primary-light);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  border: none;
+}
+
+@media (min-width: 1000px) {
+  .newLabelContent .square {
+    right: 20%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .newLabelContent .square {
+    right: 26%;
+  }
+}
+
+@media (min-width: 1300px) {
+  .newLabelContent .square {
+    right: 32%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .newLabelContent {
+    top: 105px;
+  }
+
+  .newLabelContent .square {
+    right: 38%;
+  }
+}
+
+@media (min-width: 1600px) {
+  .newLabelContent {
+    top: 108px;
+  }
+
+  .newLabelContent .square {
+    right: 47%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .newLabelContent {
+    top: 110px;
+  }
+
+  .newLabelContent .square {
+    right: 52%;
+  }
+}

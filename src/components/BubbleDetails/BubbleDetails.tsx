@@ -26,11 +26,13 @@ type FilledBubble = Bubble & {
 
 type Props = {
   bubble: FilledBubble;
+  allLabels: Label[];
   onClose: Function;
   onSubmitNewComment: Function;
+  onSubmitNewLabel: Function;
 };
 
-const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment }: Props) => {
+const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, allLabels }: Props) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
   const authorAvatar = bubble.author?.avatarUrl 
@@ -70,7 +72,11 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment }:
         </section>
 
         <aside className={styles.labelsContent}>
-          <Labels />
+          <Labels 
+            onSubmitNewLabel={onSubmitNewLabel}
+            labels={bubble.labels}
+            allLabels={allLabels}
+          />
         </aside>
       </div>
     </Modal>

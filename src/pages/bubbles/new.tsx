@@ -1,15 +1,28 @@
 import React from 'react';
 import Router from 'next/router';
 import { toast } from 'react-toastify';
+import { GetStaticProps } from 'next';
 
 import api from '../../services/api';
+import prisma from '../../../prisma/client';
+import { Label } from '@prisma/client';
 
 import NewBubbleModal from '../../components/NewBubbleModal/NewBubbleModal';
 
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
-const NewBubble: React.FC = () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const labels = prisma.label.findMany();
+
+  return { props: { labels } };
+};
+
+type Props = {
+  labels: Label[];
+}
+
+const NewBubble: React.FC<Props> = (props: Props) => {
 
   const postBubble = async (e, userInfo) => {
     e.preventDefault();
