@@ -27,7 +27,7 @@ type FilledBubble = Bubble & {
 type Props = {
   bubble: FilledBubble;
   allLabels: Label[];
-  onClose: Function;
+  onClose: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
   onSubmitNewComment: Function;
   onSubmitNewLabel: Function;
 };

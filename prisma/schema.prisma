@@ -34,6 +34,7 @@ model Label {
   id          Int      @default(autoincrement()) @id
   name        String   @unique
   description String?
+  color       String
   Bubbles     Bubble[]
 }
 
