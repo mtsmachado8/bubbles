@@ -10,7 +10,6 @@ import api from '../../services/api';
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
 import 'react-toastify/dist/ReactToastify.css';
-import { parseISO } from "date-fns/esm";
 toast.configure()
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -49,6 +48,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   });
 
+  const labels = await prisma.label.findMany()
+
   const serializableBubble = {
     ...bubble,
     createdAt: bubble.createdAt.toString(),
@@ -59,8 +60,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     })),
   };
   
-  const labels = await prisma.label.findMany()
-
   return { props: { bubble: serializableBubble, labels } };
 };
 

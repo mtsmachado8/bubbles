@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 export const getStaticProps: GetStaticProps = async () => {
-  const labels = prisma.label.findMany();
+  const labels = await prisma.label.findMany();
 
   return { props: { labels } };
 };

@@ -40,6 +40,8 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
+  const labels = await prisma.label.findMany()
+
   const serializableBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
     createdAt: bubble.createdAt.toString(),
@@ -49,8 +51,6 @@ export const getStaticProps: GetStaticProps = async () => {
       createdAt: comment.createdAt.toString(),
     })),
   }));
-
-  const labels = await prisma.label.findMany()
   
   return {
     props: { bubbles: serializableBubbles, labels },
