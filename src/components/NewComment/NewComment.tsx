@@ -49,7 +49,7 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
 
   const onFailureGoogle = response => {
     console.log(response);
-    toast.error('Ops... There was a connection error.', {
+    toast.error('Ops... There was a connection error', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
@@ -62,7 +62,7 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
     setName('');
     setFirstName('');
     setIsLogedIn(false);
-    toast.dark('Bye! See you later.', {
+    toast.dark('Bye! See you later', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,

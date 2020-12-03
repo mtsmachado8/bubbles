@@ -16,6 +16,7 @@
   "dependencies": {
     "@prisma/client": "^2.11.0",
     "axios": "^0.21.0",
+    "date-fns": "^2.16.1",
     "next": "10.0.0",
     "next-images": "^1.6.2",
     "react": "17.0.1",
@@ -23,6 +24,7 @@
     "react-google-login": "^5.1.23",
     "react-google-one-tap-login": "^0.0.8",
     "react-markdown": "^5.0.2",
+    "react-tapable-editor": "^0.3.0",
     "react-toastify": "^6.1.0",
     "swr": "^0.3.9",
     "use-mutation": "^2.0.1"

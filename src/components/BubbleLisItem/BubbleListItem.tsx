@@ -14,7 +14,7 @@ type Props = {
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 };
 
-const BubbleListItem: React.FC<Props> = ({ bubble, onClick, ...props }: Props) => {
+const BubbleListItem: React.FC<Props> = ({ bubble, onClick }: Props) => {
   const authorAvatar = bubble.author?.avatarUrl
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';

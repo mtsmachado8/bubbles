@@ -49,9 +49,11 @@ export const getStaticProps: GetStaticProps = async () => {
       createdAt: comment.createdAt.toString(),
     })),
   }));
+
+  const labels = await prisma.label.findMany()
   
   return {
-    props: { bubbles: serializableBubbles },
+    props: { bubbles: serializableBubbles, labels },
     revalidate: 1,
   };
 };
@@ -73,6 +75,7 @@ type FilledBubble = Bubble & {
 
 type Props = {
   bubbles: FilledBubble[],
+  labels: Label[];
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
@@ -84,12 +87,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     setBubbles(props.bubbles.map(bubble => ({
       ...bubble,
-      createdAt: new Date(bubble.createdAt),
-
-      comments: bubble.comments.map(comment => ({
-        ...comment,
-        createdAt: new Date(comment.createdAt),
-      }))
+      createdAt: new Date(bubble.createdAt)
     })))
   }, []);
   
@@ -156,6 +154,38 @@ const HomePage: React.FC<Props> = (props: Props) => {
     };
   };
 
+  const postLabel = async (e, newLabel) => {
+    e.preventDefault();
+
+    const name = newLabel.name;
+    const description = newLabel.description;
+    const color = newLabel.color;
+    const bubbleId = oppenedBubbleId;
+  
+    try {
+      await api.post('/labels', {
+        name,
+        description,
+        color,
+        bubbleId,
+      });
+      toast.success('Label registered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      })
+      Router.reload();
+
+    } catch {
+      toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+      })
+      Router.reload();
+    };
+  };
+
   return (
     <div className={styles.homePage}>
       <main className={styles.container}>
@@ -179,7 +209,9 @@ const HomePage: React.FC<Props> = (props: Props) => {
                 <BubbleDetails
                   onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/')}}
                   onSubmitNewComment={postComment}
+                  onSubmitNewLabel={postLabel}
                   bubble={bubble}
+                  allLabels={props.labels}
                 />
               : null}
             </div>
