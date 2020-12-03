@@ -163,7 +163,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
     const bubbleId = oppenedBubbleId;
   
     try {
-      await api.post('/labels', {
+      await api.post('/labels/create', {
         name,
         description,
         color,
@@ -178,6 +178,32 @@ const HomePage: React.FC<Props> = (props: Props) => {
 
     } catch {
       toast.error('Registration error! Try again', {
+        autoClose: 2500,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+      })
+      Router.reload();
+    };
+  };
+
+  const alterateLabel = async (e, id) => {
+    e.preventDefault();
+
+    const bubbleId = oppenedBubbleId;
+  
+    try {
+      await api.put(`/labels/${id}`, {
+        bubbleId,
+      });
+      toast.success('Label altered!', {
+        autoClose: 2500,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+      })
+      Router.reload();
+
+    } catch {
+      toast.error('Alteration error! Try again', {
         autoClose: 2500,
         pauseOnFocusLoss: false,
         pauseOnHover: false,
@@ -212,6 +238,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
                   onSubmitNewLabel={postLabel}
                   bubble={bubble}
                   allLabels={props.labels}
+                  onConfigChange={alterateLabel}
                 />
               : null}
             </div>

@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 type Props = {
   labels: Label[];
-}
+};
 
 const NewBubble: React.FC<Props> = (props: Props) => {
 

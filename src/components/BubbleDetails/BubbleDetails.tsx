@@ -30,17 +30,18 @@ type Props = {
   onClose: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
   onSubmitNewComment: Function;
   onSubmitNewLabel: Function;
+  onConfigChange: Function;
 };
 
-const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, allLabels }: Props) => {
+const BubbleDetails: React.FC<Props> = ( props: Props ) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
-  const authorAvatar = bubble.author?.avatarUrl 
-    ? bubble.author.avatarUrl
+  const authorAvatar = props.bubble.author?.avatarUrl 
+    ? props.bubble.author.avatarUrl
     : '/anonymous-image.png';
 
   return(
-    <Modal onClose={onClose}>
+    <Modal onClose={props.onClose}>
       <div className={styles.content}>
         <section className={styles.detailsContent}>
           <div className={styles.detailsPage}>
@@ -48,21 +49,21 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, o
             <div className={styles.square}></div>
             <div className={styles.bubbleDetails}>
               <div className={styles.titleContainer}>
-                <h2>{bubble.title}</h2>
-                <p>{bubble.description}</p>
+                <h2>{props.bubble.title}</h2>
+                <p>{props.bubble.description}</p>
               </div>
               <div className={styles.textArea}>
-                <p>{bubble.content}</p>
+                <p>{props.bubble.content}</p>
               </div>
             </div>
           </div>
 
-          <Comments bubble={bubble} />
+          <Comments bubble={props.bubble} />
 
           {isNewCommentVisible
           ? <NewComment 
               onClick={() => setIsNewCommentVisible(false)}
-              onSubmitNewComment={onSubmitNewComment}
+              onSubmitNewComment={props.onSubmitNewComment}
             />
 
           : <div className={styles.buttonBox}>
@@ -73,9 +74,10 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, o
 
         <aside className={styles.labelsContent}>
           <Labels 
-            onSubmitNewLabel={onSubmitNewLabel}
-            labels={bubble.labels}
-            allLabels={allLabels}
+            onSubmitNewLabel={props.onSubmitNewLabel}
+            labels={props.bubble.labels}
+            allLabels={props.allLabels}
+            onConfigChange={props.onConfigChange}
           />
         </aside>
       </div>

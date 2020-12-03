@@ -18,9 +18,17 @@ const post = async (url: string, data: any) => {
   return response.data;
 };
 
+const put = async (url: string, data: any) => {
+  const response = await createdApi.put(url, data, {
+    headers: {},
+  });
+  return response.data;
+};
+
 const api = {
   get,
-  post
+  post,
+  put,
 };
 
 export { api };

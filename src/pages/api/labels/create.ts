@@ -1,4 +1,4 @@
-import prisma from "../../../prisma/client";
+import prisma from "../../../../prisma/client";
 
 export default async (req, res) => {
   if (req.method === 'POST') {
@@ -11,12 +11,13 @@ export default async (req, res) => {
           name,
           description,
           Bubbles: {
-            connect: { id: bubbleId },
+            connect: { id: bubbleId }
           },
         },
       });
       res.statusCode = 200;
       res.json(createdLabel);
+
     } else {
       const createdLabel = await prisma.label.create({
         data: {
@@ -27,10 +28,9 @@ export default async (req, res) => {
       res.statusCode = 200;
       res.json(createdLabel);
     }
-
-
   } else {
     res.statusCode = 200;
     res.json({ name: 'John Doe' });
   };
 };
+

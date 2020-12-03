@@ -10,9 +10,10 @@ type Props = {
   labels?: Label[];
   allLabels: Label[];
   onSubmitNewLabel: Function;
+  onConfigChange: Function;
 }
 
-const Labels: React.FC<Props> = (props: Props) => {
+const Labels: React.FC<Props> = ( props: Props ) => {
   const [ isNewLabelVisible, setIsNewLabelVisible ] = useState(false);
   const [ isConfigLabelVisible, setIsConfigLabelVisible ] = useState(false);
 
@@ -20,7 +21,7 @@ const Labels: React.FC<Props> = (props: Props) => {
     <div className={styles.labelsPage}>
       <div className={styles.button}>
         <h5>Labels</h5>
-        <p onClick={() => setIsNewLabelVisible(!isNewLabelVisible)}>+</p>
+        <p onClick={() => (setIsNewLabelVisible(!isNewLabelVisible), setIsConfigLabelVisible(false))}>+</p>
       </div>
       <div className={styles.labelsContent}>
         {props.labels?.map(label => (
@@ -28,13 +29,14 @@ const Labels: React.FC<Props> = (props: Props) => {
             <p>{label.name}</p>
           </div>
         ))}
-        <div className={styles.labelConfig} onClick={() => setIsConfigLabelVisible(!isConfigLabelVisible)}>
+        <div className={styles.labelConfig} onClick={() => (setIsConfigLabelVisible(!isConfigLabelVisible), setIsNewLabelVisible(false))}>
           <p className={styles.labelConfigParagraph}>Config Labels</p>
           {isConfigLabelVisible
           ? <ConfigLabel 
-              labels={props.allLabels}
+              labels={props.labels}
+              onConfigChange={props.onConfigChange}
+              allLabels={props.allLabels}
             />
-
           : null
           }
         </div>
