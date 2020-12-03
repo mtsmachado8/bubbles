@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 type Props = {
-  onClose: Function;
+  onClose: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
   onSubmitNewBubble: Function;
 };
 
