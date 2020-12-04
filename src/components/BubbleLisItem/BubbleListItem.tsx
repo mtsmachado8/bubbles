@@ -29,7 +29,7 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick }: Props) => {
           <h2>{bubble.title}</h2>
           <div className={styles.labels}>
           {newLabelsArray.map(label => (
-              <p>{label.name}</p>
+              <p style={{backgroundColor: label.color}}>{label.name}</p>
           ))}
           </div>
         </div>

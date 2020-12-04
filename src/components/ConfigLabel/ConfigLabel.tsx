@@ -22,18 +22,17 @@ const ConfigLabel: React.FC<Props> = ( props: Props ) => {
       ...label,
       selected: false,
     }));
-
     const labels = props.labels.map(label => ({
       ...label,
       selected: true,
     }));
-
     const selectedLabels = labels.concat(
       allLabels.filter( ({id}) => !labels.find(label => label.id == id))
     );
+    
     setFilledLabels(selectedLabels);
   }, [props.labels]);
-
+  
   return(
     <div className={styles.configLabelContent}>
       <div className={styles.square}></div>
@@ -42,7 +41,7 @@ const ConfigLabel: React.FC<Props> = ( props: Props ) => {
       </div>
       <div className={styles.labelsContent}>
         {filledLabels.map(label => (
-          <div onClick={(e) => props.onConfigChange(e, label.id)} className={styles.label} key={label.id}>
+          <div onClick={(e) => props.onConfigChange(e, label.id, label.selected)} className={styles.label} key={label.id}>
             <div className={label.selected ? styles.addOrRemove : styles.addOrRemoveNull}>
               <p>&#x02518;</p>
             </div>

@@ -10,6 +10,7 @@ export default async (req, res) => {
         data: {
           name,
           description,
+          color,
           Bubbles: {
             connect: { id: bubbleId }
           },
@@ -23,6 +24,7 @@ export default async (req, res) => {
         data: {
           name,
           description,
+          color,
         },
       });
       res.statusCode = 200;

@@ -4,18 +4,32 @@ export default async (req, res) => {
   if (req.method === 'PUT') {
     const { query: { id } } = req;
     
-    const { bubbleId } = req.body;
-  
-    const alteredLabel = await prisma.label.update({
-      where: { id },
-      data: {
-        Bubbles: {
-          disconnect: { id: bubbleId },
+    const { isSelectedLabel, bubbleId, labelId } = req.body;
+    
+    if(isSelectedLabel) {
+      const alteredLabel = await prisma.label.update({
+        where: { id: labelId },
+        data: {
+          Bubbles: {
+            disconnect: { id: bubbleId },
+          },
         },
-      },
-    });
-    res.statusCode = 200;
-    res.json(alteredLabel);
+      });
+      res.statusCode = 200;
+      res.json(alteredLabel);
+
+    } else {
+      const alteredLabel = await prisma.label.update({
+        where: { id: labelId },
+        data: {
+          Bubbles: {
+            connect: { id: bubbleId },
+          },
+        },
+      });
+      res.statusCode = 200;
+      res.json(alteredLabel);
+    };
 
   } else {
     res.statusCode = 200;

@@ -163,7 +163,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
     const bubbleId = oppenedBubbleId;
   
     try {
-      await api.post('/labels/create', {
+      await api.post('/labels', {
         name,
         description,
         color,
@@ -186,20 +186,24 @@ const HomePage: React.FC<Props> = (props: Props) => {
     };
   };
 
-  const alterateLabel = async (e, id) => {
+  const alterateLabel = async (e, id, selectedLabel) => {
     e.preventDefault();
 
     const bubbleId = oppenedBubbleId;
+    const labelId = id;
+    const isSelectedLabel = selectedLabel;
   
     try {
-      await api.put(`/labels/${id}`, {
+      await api.put(`/labels/${labelId}`, {
         bubbleId,
+        labelId,
+        isSelectedLabel,
       });
       toast.success('Label altered!', {
         autoClose: 2500,
         pauseOnHover: false,
         pauseOnFocusLoss: false,
-      })
+      });
       Router.reload();
 
     } catch {
@@ -207,7 +211,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
         autoClose: 2500,
         pauseOnFocusLoss: false,
         pauseOnHover: false,
-      })
+      });
       Router.reload();
     };
   };

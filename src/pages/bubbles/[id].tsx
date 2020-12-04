@@ -24,7 +24,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const bubble = await prisma.bubble.findOne({
+  const bubble = await prisma.bubble.findUnique({
     include: {
       labels: true,
       comments: {
@@ -132,7 +132,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     const bubbleId = bubble.id;
   
     try {
-      await api.post('/labels/create', {
+      await api.post('/labels', {
         name,
         description,
         color,
@@ -155,20 +155,24 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     };
   };
 
-  const alterateLabel = async (e, id, res) => {
+  const alterateLabel = async (e, id, selectedLabel) => {
     e.preventDefault();
 
     const bubbleId = bubble.id;
+    const labelId = id;
+    const isSelectedLabel = selectedLabel;
   
     try {
-      await api.put(`/labels/${id}`, {
+      await api.put(`/labels/${labelId}`, {
         bubbleId,
+        labelId,
+        isSelectedLabel,
       });
       toast.success('Label altered!', {
         autoClose: 2500,
         pauseOnHover: false,
         pauseOnFocusLoss: false,
-      })
+      });
       Router.reload();
 
     } catch {
@@ -176,7 +180,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
         autoClose: 2500,
         pauseOnFocusLoss: false,
         pauseOnHover: false,
-      })
+      });
       Router.reload();
     };
   };
@@ -184,10 +188,10 @@ const BubblePage: React.FC<Props> = (props: Props) => {
   return(
     <BubbleDetails 
       onClose={() => Router.push('/')}
-      onSubmitNewComment={postComment}
-      onSubmitNewLabel={postLabel}
       bubble={bubble}
       allLabels={props.labels}
+      onSubmitNewComment={postComment}
+      onSubmitNewLabel={postLabel}
       onConfigChange={alterateLabel}
     />
   );

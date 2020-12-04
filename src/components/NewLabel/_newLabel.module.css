@@ -107,6 +107,8 @@
   padding-top: 5px;
   font-size: 14px;
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+  color: var(--color-text-primary);
+  font-weight: bold;
 }
 
 .newLabelContent .buttons {

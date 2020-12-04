@@ -26,7 +26,7 @@ const Labels: React.FC<Props> = ( props: Props ) => {
       <div className={styles.labelsContent}>
         {props.labels?.map(label => (
           <div className={styles.labelName} key={label.id}>
-            <p>{label.name}</p>
+            <p style={{backgroundColor: label.color}}>{label.name}</p>
           </div>
         ))}
         <div className={styles.labelConfig} onClick={() => (setIsConfigLabelVisible(!isConfigLabelVisible), setIsNewLabelVisible(false))}>
