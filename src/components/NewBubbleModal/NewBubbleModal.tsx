@@ -3,7 +3,6 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { toast } from 'react-toastify';
 
 import Modal from '../Modal/Modal';
-import Labels from '../Labels/Labels';
 
 import styles from './_newBubbleModal.module.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +15,10 @@ type Props = {
 
 const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
   const [ isLogedIn, setIsLogedIn ] = useState(false);
+
+  const [ description, setDescription ] = useState('');
+  const [ content, setContent ] = useState('');
+  const [ title, setTitle ] = useState('');
 
   const [ avatarUrl, setAvatarUrl ] = useState('');
   const [ firstName, setFirstName ] = useState('');
@@ -32,7 +35,13 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     avatarUrl,
     email,
     name,
-  }
+  };
+
+  const bubble = {
+    description,
+    content,
+    title,
+  };
 
   const onSuccessGoogle = response => {
     setAvatarUrl(response.profileObj.imageUrl);
@@ -75,16 +84,35 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
         <section className={styles.newBubblePage}>
           <img src={image} alt="Avatar"/>
           <div className={styles.square}></div>
-          <form onSubmit={e => onSubmitNewBubble(e, user)} className={styles.newBubbleDetails}>
+          <form onSubmit={e => onSubmitNewBubble(e, bubble, user)} className={styles.newBubbleDetails}>
             <div className={styles.titleContainer}>
-              <input name='title' autoFocus required autoComplete='off' placeholder="Title" />
-              <input name='description' required autoComplete='off' placeholder="Brief description about the bubble"/>
+              <input
+                name='title'
+                autoFocus
+                required
+                autoComplete='off'
+                placeholder="Title"
+                onChange={e => setTitle(e.target.value)}  
+              />
+              <input
+                name='description'
+                required
+                autoComplete='off'
+                placeholder="Brief description about the bubble"
+                onChange={e => setDescription(e.target.value)}
+              />
             </div>
             <div className={styles.textContent}>
               <div className={styles.typeText}>
                 <p>Write</p>
               </div>
-              <textarea name='content' required className={styles.textArea} placeholder={placeholder} />
+              <textarea
+                name='content'
+                required 
+                className={styles.textArea}
+                placeholder={placeholder} 
+                onChange={e => setContent(e.target.value)}
+              />
               <div className={styles.buttonContent}>
                 <button type="submit" className={styles.submit}>{submitButton}</button>
 

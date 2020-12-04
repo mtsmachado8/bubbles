@@ -9,6 +9,10 @@ import api from '../../services/api';
 
 import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
 
+import postComments from '../../services/postComments';
+import postLabels from '../../services/postLabels';
+import alteredLabels from '../../services/alteredLabels';
+
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
@@ -93,96 +97,16 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     });
   }, []);
 
-  const postComment = async (e, userComment, userInfo) => {
-    e.preventDefault();
-
-    const content = userComment;
-    const author = userInfo;
-    const bubbleId = bubble.id;
-  
-    try {
-      await api.post('/comments', {
-        content,
-        author,
-        bubbleId,
-      });
-      toast.success('Comment registered!', {
-        autoClose: 2500,
-        pauseOnHover: false,
-        pauseOnFocusLoss: false,
-      })
-      Router.reload();
-
-    } catch {
-      toast.error('Registration error! Try again', {
-        autoClose: 2500,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-      })
-      Router.reload();
-    };
+  const postComment = (e, newComment, userInfo) => {
+    postComments(e, newComment, userInfo, bubble.id);
   };
 
-  const postLabel = async (e, newLabel) => {
-    e.preventDefault();
-
-    const name = newLabel.name;
-    const description = newLabel.description;
-    const color = newLabel.color;
-    const bubbleId = bubble.id;
-  
-    try {
-      await api.post('/labels', {
-        name,
-        description,
-        color,
-        bubbleId,
-      });
-      toast.success('Label registered!', {
-        autoClose: 2500,
-        pauseOnHover: false,
-        pauseOnFocusLoss: false,
-      })
-      Router.reload();
-
-    } catch {
-      toast.error('Registration error! Try again', {
-        autoClose: 2500,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-      })
-      Router.reload();
-    };
+  const postLabel = (e, newLabel) => {
+    postLabels(e, newLabel, bubble.id);
   };
 
-  const alterateLabel = async (e, id, selectedLabel) => {
-    e.preventDefault();
-
-    const bubbleId = bubble.id;
-    const labelId = id;
-    const isSelectedLabel = selectedLabel;
-  
-    try {
-      await api.put(`/labels/${labelId}`, {
-        bubbleId,
-        labelId,
-        isSelectedLabel,
-      });
-      toast.success('Label altered!', {
-        autoClose: 2500,
-        pauseOnHover: false,
-        pauseOnFocusLoss: false,
-      });
-      Router.reload();
-
-    } catch {
-      toast.error('Alteration error! Try again', {
-        autoClose: 2500,
-        pauseOnFocusLoss: false,
-        pauseOnHover: false,
-      });
-      Router.reload();
-    };
+  const alteredLabel = (e, id, selectedLabel) => {
+    alteredLabels(e, id , selectedLabel, bubble.id);
   };
 
   return(
@@ -192,7 +116,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
       allLabels={props.labels}
       onSubmitNewComment={postComment}
       onSubmitNewLabel={postLabel}
-      onConfigChange={alterateLabel}
+      onConfigChange={alteredLabel}
     />
   );
 };
