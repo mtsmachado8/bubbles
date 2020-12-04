@@ -16,7 +16,6 @@ jobs:
         uses: amondnet/vercel-action@v19.0.1
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          github-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-deployment: true
           vercel-project-name: bubbles
