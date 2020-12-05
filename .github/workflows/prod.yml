@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Demo 
+      - name: Deploy Demo 
         uses: amondnet/vercel-action@v20.0.0
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Proposals
+    - name: Deploy Proposals
       uses: amondnet/vercel-action@v20.0.0
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
