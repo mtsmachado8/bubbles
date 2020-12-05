@@ -73,22 +73,22 @@
   cursor: pointer;
 }
 
-.configLabelContent .labelsContent .label .addOrRemove {
+.configLabelContent .labelsContent .label .selectedLabel {
   width: 15%;
 }
 
-.configLabelContent .labelsContent .label .addOrRemove p {
+.configLabelContent .labelsContent .label .selectedLabel p {
   margin: 8px 0 0 8px;
   transform: rotate(40deg);
   font-size: 28px;
   color: var(--color-primary);
 }
 
-.configLabelContent .labelsContent .label .addOrRemoveNull {
+.configLabelContent .labelsContent .label .unselectedLabel {
   width: 15%;
 }
 
-.configLabelContent .labelsContent .label .addOrRemoveNull p {
+.configLabelContent .labelsContent .label .unselectedLabel p {
   display: none;
 }
 

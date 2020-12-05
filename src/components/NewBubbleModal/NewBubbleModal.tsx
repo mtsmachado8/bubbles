@@ -5,8 +5,6 @@ import { toast } from 'react-toastify';
 import Modal from '../Modal/Modal';
 
 import styles from './_newBubbleModal.module.css';
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
 
 type Props = {
   onClose: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
@@ -84,7 +82,13 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
         <section className={styles.newBubblePage}>
           <img src={image} alt="Avatar"/>
           <div className={styles.square}></div>
-          <form onSubmit={e => onSubmitNewBubble(e, bubble, user)} className={styles.newBubbleDetails}>
+          <form
+            className={styles.newBubbleDetails}
+            onSubmit={e => {
+              e.preventDefault();
+              onSubmitNewBubble(e, bubble, user);
+            }}
+          >
             <div className={styles.titleContainer}>
               <input
                 name='title'

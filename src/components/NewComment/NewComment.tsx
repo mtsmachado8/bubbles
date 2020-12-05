@@ -3,8 +3,6 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { toast } from 'react-toastify';
 
 import styles from './_newComment.module.css';
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
 
 type Props = {
   id?: string;
@@ -73,7 +71,13 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
     <div className={styles.newCommentBox}>
       <img src={image} alt="Avatar Image"/>
       <div className={styles.square}></div>
-      <form onSubmit={e => onSubmitNewComment(e, comment, user)} className={styles.commentDetails}>
+      <form
+        className={styles.commentDetails}
+        onSubmit={e => {
+          e.preventDefault();
+          onSubmitNewComment(e, comment, user);
+        }}
+      >
         <div className={styles.nameBox}>
           <h4>{userName}</h4>
         </div>

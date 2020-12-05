@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  const labels = await prisma.label.findMany()
+  const labels = await prisma.label.findMany();
 
   const serializableBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
@@ -63,24 +63,24 @@ type FilledComment = Comment & {
   author: {
     avatarUrl: string;
     name: string;
-  }
-}
+  };
+};
 
 type FilledBubble = Bubble & {
-  labels: Label[],
-  comments: FilledComment[],
+  labels: Label[];
+  comments: FilledComment[];
   author: {
       avatarUrl: string;
   };
 };
 
 type Props = {
-  bubbles: FilledBubble[],
+  bubbles: FilledBubble[];
   labels: Label[];
 };
 
 const HomePage: React.FC<Props> = (props: Props) => {
-  const [ bubbles, setBubbles ] = useState<FilledBubble[]>([])
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>([]);
   const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
   const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
@@ -88,25 +88,25 @@ const HomePage: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     setBubbles(props.bubbles.map(bubble => ({
       ...bubble,
-      createdAt: new Date(bubble.createdAt)
-    })))
+      createdAt: new Date(bubble.createdAt),
+    })));
   }, []);
 
-  const postBubble = (e, bubblInfo, userInfo) => {
-    postBubbles(e, bubblInfo, userInfo);
+  const postBubble = (bubblInfo, userInfo) => {
+    postBubbles(bubblInfo, userInfo);
     setIsNewBubbleModalVisible(false);
   };
 
-  const postComment = (e, newComment, userInfo) => {
-    postComments(e, newComment, userInfo, oppenedBubbleId);
+  const postComment = (newComment, userInfo) => {
+    postComments(newComment, userInfo, oppenedBubbleId);
   };
 
-  const postLabel = (e, newLabel) => {
-    postLabels(e, newLabel, oppenedBubbleId);
+  const postLabel = (newLabel) => {
+    postLabels(newLabel, oppenedBubbleId);
   };
 
-  const alteredLabel = (e, id, selectedLabel) => {
-    alteredLabels(e, id , selectedLabel, oppenedBubbleId);
+  const alteredLabel = (id, selectedLabel) => {
+    alteredLabels(id , selectedLabel, oppenedBubbleId);
   };
 
   return (

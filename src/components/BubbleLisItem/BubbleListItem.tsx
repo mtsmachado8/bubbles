@@ -1,5 +1,6 @@
 import React from "react";
 import { Bubble, Label } from "@prisma/client";
+
 import styles from './_bubbleListItem.module.css';
 
 type BubbleProps = Bubble & {

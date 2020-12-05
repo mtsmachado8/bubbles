@@ -2,12 +2,7 @@ import api from './api';
 import Router from 'next/router';
 import { toast } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
-
-const postLabels = async (e, newLabel, oppenedBubbleId) => {
-  e.preventDefault();
-
+const postLabels = async (newLabel, oppenedBubbleId) => {
   const name = newLabel.name;
   const description = newLabel.description;
   const color = newLabel.color;

@@ -17,11 +17,21 @@ const Labels: React.FC<Props> = ( props: Props ) => {
   const [ isNewLabelVisible, setIsNewLabelVisible ] = useState(false);
   const [ isConfigLabelVisible, setIsConfigLabelVisible ] = useState(false);
 
+  const onConfigLabelClick = () => {
+    setIsConfigLabelVisible(!isConfigLabelVisible);
+    setIsNewLabelVisible(false)
+  };
+
+  const onNewLabelClick = () => {
+    setIsNewLabelVisible(!isNewLabelVisible);
+    setIsConfigLabelVisible(false)
+  };
+
   return(
     <div className={styles.labelsPage}>
       <div className={styles.button}>
         <h5>Labels</h5>
-        <p onClick={() => (setIsNewLabelVisible(!isNewLabelVisible), setIsConfigLabelVisible(false))}>+</p>
+        <p onClick={onNewLabelClick}>+</p>
       </div>
       <div className={styles.labelsContent}>
         {props.labels?.map(label => (
@@ -29,7 +39,9 @@ const Labels: React.FC<Props> = ( props: Props ) => {
             <p style={{backgroundColor: label.color}}>{label.name}</p>
           </div>
         ))}
-        <div className={styles.labelConfig} onClick={() => (setIsConfigLabelVisible(!isConfigLabelVisible), setIsNewLabelVisible(false))}>
+        <div 
+          className={styles.labelConfig}
+          onClick={onConfigLabelClick}>
           <p className={styles.labelConfigParagraph}>Config Labels</p>
           {isConfigLabelVisible
           ? <ConfigLabel 

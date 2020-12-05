@@ -2,12 +2,7 @@ import api from './api';
 import Router from 'next/router';
 import { toast } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
-
-const alteredLabels = async (e, id, selectedLabel, oppenedBubbleId) => {
-  e.preventDefault();
-
+const alteredLabels = async (id, selectedLabel, oppenedBubbleId) => {
   const labelId = id;
   const bubbleId = oppenedBubbleId;
   const isSelectedLabel = selectedLabel;
