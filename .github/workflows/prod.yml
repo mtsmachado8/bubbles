@@ -12,13 +12,14 @@ jobs:
       - name: Deploy Demo 
         uses: amondnet/vercel-action@v20.0.0
         with:
+          vercel-project-name: bubbles
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_DEMO_PROJECT_ID }} 
+          vercel-project-id: ${{ secrets.VERCEL_DEMO_PROJECT_ID }}
+          vercel-args: '--prod'
           github-deployment: true
-          vercel-project-name: bubbles
-  
+
   deploy-proposals:    
     runs-on: ubuntu-latest
     steps:
@@ -26,10 +27,9 @@ jobs:
     - name: Deploy Proposals
       uses: amondnet/vercel-action@v20.0.0
       with:
+        vercel-project-name: bubble-proposals
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-        vercel-project-id: ${{ secrets.VERCEL_PROPOSALS_PROJECT_ID }} 
-        github-deployment: true
-        vercel-project-name: bubble-proposals
-
+        vercel-project-id: ${{ secrets.VERCEL_PROPOSALS_PROJECT_ID }}
+        vercel-args: '--prod'
