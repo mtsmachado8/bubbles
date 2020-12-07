@@ -10,7 +10,7 @@ Please leave your comments, feedback and feature ideas on the document (soon we 
 
 ## Demo
 A demo is worth a thousand words, so take a look:  
-[Bubbles Demo](https://bubbles-pied.vercel.app/)
+[Bubbles Demo](https://bubbles-demo.vercel.app/)
 
 ## Up and running
 
