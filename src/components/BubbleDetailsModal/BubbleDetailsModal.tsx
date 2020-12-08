@@ -32,14 +32,11 @@ type Props = {
   onClose: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
   onSubmitNewComment: Function;
   onSubmitNewLabel: Function;
+  onConfigChange: Function;
 };
 
-const BubbleDetailsModal: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, allLabels }: Props) => {
+const BubbleDetailsModal: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, onConfigChange, allLabels }: Props) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
-
-  const authorAvatar = bubble.author?.avatarUrl 
-    ? bubble.author.avatarUrl
-    : '/anonymous-image.png';
 
   return(
     <Modal onClose={onClose}>
@@ -66,6 +63,7 @@ const BubbleDetailsModal: React.FC<Props> = ({ bubble, onClose, onSubmitNewComme
             onSubmitNewLabel={onSubmitNewLabel}
             labels={bubble.labels}
             allLabels={allLabels}
+            onConfigChange={onConfigChange}
           />
         </aside>
       </div>

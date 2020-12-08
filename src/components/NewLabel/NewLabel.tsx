@@ -8,7 +8,7 @@ type Props = {
 }
 
 const NewLabel: React.FC<Props> = ({ onClick, onSubmitNewLabel }: Props) => {
-  const [ color, setColor ] = useState('#b36fd8')
+  const [ color, setColor ] = useState('#8d47b2')
   const [ name, setName ] = useState('Content');
   const [ description, setDescription ] = useState('');
 
@@ -19,7 +19,13 @@ const NewLabel: React.FC<Props> = ({ onClick, onSubmitNewLabel }: Props) => {
   };
 
   return(
-    <form className={styles.newLabelContent} onSubmit={e => onSubmitNewLabel(e, label)}>
+    <form
+      className={styles.newLabelContent}
+      onSubmit={e => {
+        e.preventDefault();
+        onSubmitNewLabel(e, label);
+      }}
+    >
       <div className={styles.square}></div>
       <div className={styles.inputContent}>
         <label htmlFor='name'>Label Name</label>
