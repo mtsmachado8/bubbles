@@ -29,7 +29,7 @@
 .newCommentBox .commentDetails {
   display: flex;
   flex-direction: column;
-  border: 1px solid #707070;
+  box-shadow: 1px 1px 5px -3px var(--color-text-contrast);
   border-radius: 10px;
   width: 100%;
 }

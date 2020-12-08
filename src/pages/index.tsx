@@ -9,14 +9,12 @@ import prisma from '../../prisma/client';
 import api from "../services/api";
 
 import Header from '../components/Header/Header';
-import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
+import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
-import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
+import BubbleDetails from "../components/BubbleDetailsModal/BubbleDetailsModal";
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 
 import styles from './_home.module.css';
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure();
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubblesResponse = await prisma.bubble.findMany({

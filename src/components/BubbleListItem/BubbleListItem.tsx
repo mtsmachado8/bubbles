@@ -1,6 +1,7 @@
 import React from "react";
 import { Bubble, Label } from "@prisma/client";
 import styles from './_bubbleListItem.module.css';
+import Avatar from '../Avatar/Avatar'
 
 type BubbleProps = Bubble & {
   labels: Array<Label>;
@@ -23,7 +24,11 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick }: Props) => {
 
   return (
     <div onClick={onClick} className={styles.bubbleContainer}>
-      <img src={authorAvatar} className={styles.image} />
+      <Avatar
+        src={authorAvatar}
+        alt='User Avatar'
+        size={50}
+      />
       <div className={styles.textContent}>
         <div className={styles.title}>
           <h2>{bubble.title}</h2>

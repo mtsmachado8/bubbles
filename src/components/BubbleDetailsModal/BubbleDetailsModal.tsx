@@ -6,8 +6,10 @@ import Modal from "../Modal/Modal";
 import Comments from '../Comments/Comments';
 import NewComment from '../NewComment/NewComment';
 import Labels from "../Labels/Labels";
-
-import styles from './_bubbleDetails.module.css';
+import Image from 'next/image';
+import styles from './_bubbleDetailsModal.module.css';
+import Avatar from "../Avatar/Avatar";
+import BubbleDetails from "./BubbleDetails/BubbleDetails";
 
 type FilledComment = Comment & {
   author: {
@@ -32,7 +34,7 @@ type Props = {
   onSubmitNewLabel: Function;
 };
 
-const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, allLabels }: Props) => {
+const BubbleDetailsModal: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, allLabels }: Props) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
   const authorAvatar = bubble.author?.avatarUrl 
@@ -43,19 +45,7 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, o
     <Modal onClose={onClose}>
       <div className={styles.content}>
         <section className={styles.detailsContent}>
-          <div className={styles.detailsPage}>
-            <img src={authorAvatar} alt="Avatar"/>
-            <div className={styles.square}></div>
-            <div className={styles.bubbleDetails}>
-              <div className={styles.titleContainer}>
-                <h2>{bubble.title}</h2>
-                <p>{bubble.description}</p>
-              </div>
-              <div className={styles.textArea}>
-                <p>{bubble.content}</p>
-              </div>
-            </div>
-          </div>
+          <BubbleDetails bubble={bubble}/>
 
           <Comments bubble={bubble} />
 
@@ -83,4 +73,4 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, o
   );
 };
 
-export default BubbleDetails
+export default BubbleDetailsModal

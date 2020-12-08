@@ -3,8 +3,6 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { toast } from 'react-toastify';
 
 import styles from './_newComment.module.css';
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
 
 type Props = {
   id?: string;

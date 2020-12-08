@@ -6,8 +6,6 @@ import Modal from '../Modal/Modal';
 import Labels from '../Labels/Labels';
 
 import styles from './_newBubbleModal.module.css';
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
 
 type Props = {
   onClose: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;

@@ -7,10 +7,7 @@ import { Bubble, Label, Comment } from "@prisma/client";
 import prisma from '../../../prisma/client';
 import api from '../../services/api';
 
-import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
-
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
+import BubbleDetails from "../../components/BubbleDetailsModal/BubbleDetailsModal";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const bubbles = await prisma.bubble.findMany({

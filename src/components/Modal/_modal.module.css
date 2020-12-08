@@ -1,4 +1,5 @@
 .modalOverlay {
+  z-index: 999;
   background-color: rgba(0,0,0,0.8);
   width: 100%;
   height: 100%;
@@ -8,6 +9,7 @@
 }
 
 .modal {
+  z-index: 1000;
   background-color: var(--color-background);
   width: 90%;
   height: 90%;

@@ -29,69 +29,6 @@
   border-radius: 15px;
 }
 
-.detailsPage {
-  display: flex;
-  
-  width: 100%;
-
-  position: relative;
-}
-
-.detailsPage img {
-  height: 50px;
-  border-radius: 50%;
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-  margin: 0 20px 0 10px;
-}
-
-.detailsPage .square {
-  width: 18px;
-  height: 18px;
-  top: 18px;
-  left: 75px;
-  transform: rotate(45deg);
-  position: absolute;
-  background-color: var(--color-primary);
-}
-
-.detailsPage .bubbleDetails {
-  border: 1px solid #707070;
-  border-radius: 10px;
-  width: 100%;
-}
-
-.detailsPage .bubbleDetails .titleContainer {
-  background-color: var(--color-primary);
-  border-radius: 8px 8px 0 0;
-  padding: 15px 5px 15px 20px;
-  overflow: hidden;
-}
-
-.detailsPage .bubbleDetails .titleContainer h2 {
-  margin: 0;
-  color: var(--color-text-primary);
-  font-size: 24px;
-}
-
-.detailsPage .bubbleDetails .titleContainer p {
-  display: none;
-}
-
-.detailsPage .bubbleDetails .textArea {
-  background-color: var(--color-object-background);
-  overflow: auto;
-  width: 100%;
-  padding: 10px 10px 10px 15px;
-  border-radius: 0 0 10px 10px;
-  overflow: auto;
-}
-
-.detailsPage .bubbleDetails .textArea p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 22px;
-}
-
 .detailsPage .bubbleDetails .textArea::-webkit-scrollbar-track {
   background-color: var(--color-text-primary);
   border-radius: 15px;

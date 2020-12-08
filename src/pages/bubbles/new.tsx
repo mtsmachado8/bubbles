@@ -9,9 +9,6 @@ import { Label } from '@prisma/client';
 
 import NewBubbleModal from '../../components/NewBubbleModal/NewBubbleModal';
 
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
-
 export const getStaticProps: GetStaticProps = async () => {
   const labels = await prisma.label.findMany();
 
