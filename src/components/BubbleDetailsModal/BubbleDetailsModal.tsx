@@ -6,9 +6,7 @@ import Modal from "../Modal/Modal";
 import Comments from '../Comments/Comments';
 import NewComment from '../NewComment/NewComment';
 import Labels from "../Labels/Labels";
-import Image from 'next/image';
 import styles from './_bubbleDetailsModal.module.css';
-import Avatar from "../Avatar/Avatar";
 import BubbleDetails from "./BubbleDetails/BubbleDetails";
 
 type FilledComment = Comment & {

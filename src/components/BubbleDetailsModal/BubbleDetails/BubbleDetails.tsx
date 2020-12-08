@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Bubble, Label, Comment } from "@prisma/client";
 
-import Modal from "../Modal/Modal";
-import Comments from '../Comments/Comments';
-import NewComment from '../NewComment/NewComment';
-import Labels from "../Labels/Labels";
-import Image from 'next/image';
 import styles from './_bubbleDetails.module.css';
 import Avatar from "../../Avatar/Avatar";
 

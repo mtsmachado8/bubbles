@@ -1,10 +1,6 @@
 import '../assets/styles/globals.css';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import { toast } from 'react-toastify';
-
-import 'react-toastify/dist/ReactToastify.css';
-toast.configure()
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
