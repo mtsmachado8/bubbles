@@ -5,7 +5,7 @@ import Router from "next/router";
 import { Bubble, Label, Comment } from "@prisma/client";
 import prisma from '../../../prisma/client';
 
-import BubbleDetails from "../../components/BubbleDetails/BubbleDetails";
+import BubbleDetailsModal from "../../components/BubbleDetailsModal/BubbleDetailsModal";
 
 import postComments from '../../services/postComments';
 import postLabels from '../../services/postLabels';
@@ -105,7 +105,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
   };
 
   return(
-    <BubbleDetails 
+    <BubbleDetailsModal
       onClose={() => Router.push('/')}
       bubble={bubble}
       allLabels={props.labels}

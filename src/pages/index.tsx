@@ -7,9 +7,9 @@ import { Bubble, Label, Comment } from "@prisma/client";
 import prisma from '../../prisma/client';
 
 import Header from '../components/Header/Header';
-import BubbleListItem from "../components/BubbleLisItem/BubbleListItem";
+import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
-import BubbleDetails from "../components/BubbleDetails/BubbleDetails";
+import BubbleDetails from "../components/BubbleDetailsModal/BubbleDetailsModal";
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 
 import postBubbles from '../services/postBubbles';

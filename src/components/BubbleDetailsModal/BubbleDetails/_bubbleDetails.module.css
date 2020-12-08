@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.details {
+  box-shadow: 1px 1px 5px -3px var(--color-text-contrast);
+  border-radius: 10px;
+  margin-left: 20px;
+  width: 100%;
+  position: relative;
+}
+
+.details .square {
+  width: 18px;
+  height: 18px;
+  top: 18px;
+  left: -9px;
+  transform: rotate(45deg);
+  position: absolute;
+  background-color: var(--color-primary);
+}
+
+.details .titleContainer {
+  background-color: var(--color-primary);
+  border-radius: 8px 8px 0 0;
+  padding: 15px 5px 15px 20px;
+  overflow: hidden;
+}
+
+.details .titleContainer h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 24px;
+}
+
+.details .titleContainer p {
+  display: none;
+}
+
+.details .textArea {
+  background-color: var(--color-object-background);
+  overflow: auto;
+  width: 100%;
+  padding: 10px 10px 10px 15px;
+  border-radius: 0 0 10px 10px;
+  overflow: auto;
+}
+
+.details .textArea p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+}

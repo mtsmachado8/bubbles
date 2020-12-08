@@ -4,6 +4,7 @@ import { formatDistanceToNow, parseISO } from 'date-fns';
 import { Bubble, Comment, Label } from '@prisma/client';
 
 import styles from './_comments.module.css';
+import Avatar from '../Avatar/Avatar';
 
 type FilledComment = Comment & {
   author: {
@@ -32,15 +33,16 @@ const Comments: React.FC<Props> = ({ bubble }: Props) => {
         {bubble.comments.map(comment => (
           <div className={styles.cardBox} key={comment.id} >
 
-            <img 
+            <Avatar
               src={comment.author?.avatarUrl
-              ? comment.author.avatarUrl
-              : '/anonymous-image.png'} 
-              alt='Avatar Image'
+                ? comment.author.avatarUrl
+                : '/anonymous-image.png'}
+              alt='Author Avatar'
+              size={50}
             />
 
-            <div className={styles.square}></div>
             <div className={styles.commentDetail}>
+              <div className={styles.square}/>
               <div className={styles.nameBox}>
 
                 <h4>

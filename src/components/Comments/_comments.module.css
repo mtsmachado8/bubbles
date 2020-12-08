@@ -1,6 +1,7 @@
 .commentSpace {
   display: flex;
   flex-direction: column;
+  padding-left: 20px;
   width: 100%;
 }
 
@@ -13,35 +14,29 @@
 .cardBox {
   display: flex;
   margin-bottom: 50px;
+}
+
+.commentDetail {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 5px -3px var(--color-text-contrast);
+  border-radius: 10px;
+  width: 100%;
+  margin-left: 20px;
 }
 
-.cardBox img {
-  height: 40px;
-  border-radius: 50%;
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-  margin: 0 25px 0 15px;
-}
-
-.cardBox .square {
+.commentDetail .square {
   width: 18px;
   height: 18px;
   top: 12px;
-  left: 75px;
+  left: -9px;
   transform: rotate(45deg);
   position: absolute;
   background-color: var(--color-comment-background);
 }
 
-.cardBox .commentDetail {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #707070;
-  border-radius: 10px;
-  width: 100%;
-}
-
-.cardBox .commentDetail .nameBox {
+.commentDetail .nameBox {
   background-color: var(--color-comment-background);
   border-radius: 8px 8px 0 0;
   padding: 8px 5px 8px 15px;
@@ -50,13 +45,13 @@
   justify-content: space-between;
 }
 
-.cardBox .commentDetail .nameBox h4 {
+.commentDetail .nameBox h4 {
   margin: 0;
   color: var(--color-text-primary);
   font-size: 20px;
 }
 
-.cardBox .commentDetail .nameBox p {
+.commentDetail .nameBox p {
   margin: 0;
   margin-left: 20px;
   font-size: 12px;
@@ -64,7 +59,7 @@
   color: var(--color-text-primary-grey);
 }
 
-.cardBox .commentDetail .commentText {
+.commentDetail .commentText {
   background-color: var(--color-object-background);
   overflow: auto;
   width: 100%;
@@ -73,37 +68,32 @@
   overflow: auto;
 }
 
-.cardBox .commentDetail .commentText p {
+.commentDetail .commentText p {
   margin: 0;
   font-size: 16px;
   line-height: 22px;
 }
 
-.cardBox .commentDetail .commentText::-webkit-scrollbar-track {
+.commentDetail .commentText::-webkit-scrollbar-track {
   background-color: var(--color-text-primary);
   border-radius: 15px;
 }
 
-.cardBox .commentDetail .commentText::-webkit-scrollbar {
+.commentDetail .commentText::-webkit-scrollbar {
   width: 6px;
   border-radius: 25px;
   background: #F4F4F4;
 }
 
-.cardBox .commentDetail .commentText::-webkit-scrollbar-thumb {
+.commentDetail .commentText::-webkit-scrollbar-thumb {
   background: #dad7d7;
   border-radius: 15px;
 }
 
 @media (min-width: 900px) {
-  .cardBox img {
-    height: 50px;
-    margin: 2px 45px 0 35px;
-  }
-
   .cardBox .square {
     top: 18px;
-    left: 122px;
+    left: -9px;
   }
 
   .cardBox .commentDetail .nameBox {

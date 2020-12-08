@@ -6,8 +6,10 @@ import Modal from "../Modal/Modal";
 import Comments from '../Comments/Comments';
 import NewComment from '../NewComment/NewComment';
 import Labels from "../Labels/Labels";
-
-import styles from './_bubbleDetails.module.css';
+import Image from 'next/image';
+import styles from './_bubbleDetailsModal.module.css';
+import Avatar from "../Avatar/Avatar";
+import BubbleDetails from "./BubbleDetails/BubbleDetails";
 
 type FilledComment = Comment & {
   author: {
@@ -33,37 +35,21 @@ type Props = {
   onConfigChange: Function;
 };
 
-const BubbleDetails: React.FC<Props> = ( props: Props ) => {
+const BubbleDetailsModal: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, onConfigChange, allLabels }: Props) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
-  const authorAvatar = props.bubble.author?.avatarUrl 
-    ? props.bubble.author.avatarUrl
-    : '/anonymous-image.png';
-
   return(
-    <Modal onClose={props.onClose}>
+    <Modal onClose={onClose}>
       <div className={styles.content}>
         <section className={styles.detailsContent}>
-          <div className={styles.detailsPage}>
-            <img src={authorAvatar} alt="Avatar"/>
-            <div className={styles.square}></div>
-            <div className={styles.bubbleDetails}>
-              <div className={styles.titleContainer}>
-                <h2>{props.bubble.title}</h2>
-                <p>{props.bubble.description}</p>
-              </div>
-              <div className={styles.textArea}>
-                <p>{props.bubble.content}</p>
-              </div>
-            </div>
-          </div>
+          <BubbleDetails bubble={bubble}/>
 
-          <Comments bubble={props.bubble} />
+          <Comments bubble={bubble} />
 
           {isNewCommentVisible
           ? <NewComment 
               onClick={() => setIsNewCommentVisible(false)}
-              onSubmitNewComment={props.onSubmitNewComment}
+              onSubmitNewComment={onSubmitNewComment}
             />
 
           : <div className={styles.buttonBox}>
@@ -74,10 +60,10 @@ const BubbleDetails: React.FC<Props> = ( props: Props ) => {
 
         <aside className={styles.labelsContent}>
           <Labels 
-            onSubmitNewLabel={props.onSubmitNewLabel}
-            labels={props.bubble.labels}
-            allLabels={props.allLabels}
-            onConfigChange={props.onConfigChange}
+            onSubmitNewLabel={onSubmitNewLabel}
+            labels={bubble.labels}
+            allLabels={allLabels}
+            onConfigChange={onConfigChange}
           />
         </aside>
       </div>
@@ -85,4 +71,4 @@ const BubbleDetails: React.FC<Props> = ( props: Props ) => {
   );
 };
 
-export default BubbleDetails
+export default BubbleDetailsModal

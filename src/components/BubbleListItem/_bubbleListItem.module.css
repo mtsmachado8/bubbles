@@ -1,7 +1,7 @@
 .bubbleContainer {
   width: 96%;
   background-color: var(--color-object-background);
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 5px -3px var(--color-text-contrast);
   border-radius: 10px;
   padding: 5px 15px;
   display: flex;
@@ -10,20 +10,20 @@
 }
 
 .bubbleContainer:hover {
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 6px -2px var(--color-text-contrast);
   cursor: pointer;
 }
 
 .image {
-  height: 50px;
   border-radius: 50%;
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-  margin-right: 40px;
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .textContent {
   width: 100%;
+  margin-left: 10px;
 }
 
 .textContent .title {
@@ -73,7 +73,7 @@
 .textContent .date {
   text-align: right;
   font-size: 10px;
-  color: var(--color-text-secondary);
+  color: var(--color-text-contrast-secondary);
   margin: 0;
 }
 
