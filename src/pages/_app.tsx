@@ -13,7 +13,7 @@ const App = ({ Component, pageProps }: AppProps) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <meta name="description" content=" Work together on your company's biggest problems."/>
     </Head>
-    <Component {...pageProps} />;
+    <Component {...pageProps} />
   </>
 );
 
