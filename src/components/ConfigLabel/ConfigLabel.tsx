@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Label } from "@prisma/client";
 
 import styles from './_configLabel.module.css';
 
+type LabelFilled = Label & {
+  selected: boolean;
+};
+
 type Props = {
   labels?: Label[];
-}
+  allLabels: Label[];
+  onConfigChange: Function;
+};
 
-const ConfigLabel: React.FC<Props> = (props: Props) => {
+const ConfigLabel: React.FC<Props> = ( props: Props ) => {
+  const [ filledLabels, setFilledLabels ] = useState<LabelFilled[]>([])
 
+  useEffect(() => {
+    const allLabels = props.allLabels.map(label => ({
+      ...label,
+      selected: false,
+    }));
+    const labels = props.labels.map(label => ({
+      ...label,
+      selected: true,
+    }));
+    const selectedLabels = labels.concat(
+      allLabels.filter( ({id}) => !labels.find(label => label.id == id))
+    );
+    
+    setFilledLabels(selectedLabels);
+  }, [props.labels]);
+  
   return(
     <div className={styles.configLabelContent}>
       <div className={styles.square}></div>
@@ -17,9 +40,15 @@ const ConfigLabel: React.FC<Props> = (props: Props) => {
         <p>Apply and remove labels</p>
       </div>
       <div className={styles.labelsContent}>
-        {props.labels.map(label => (
-          <div className={styles.label} key={label.id}>
-            <div className={styles.addOrRemove}>
+        {filledLabels.map(label => (
+          <div
+            className={styles.label} key={label.id}
+            onClick={(e) => {
+              e.preventDefault();
+              props.onConfigChange(label.id, label.selected);
+            }}
+          >
+            <div className={label.selected ? styles.selectedLabel : styles.unselectedLabel}>
               <p>&#x02518;</p>
             </div>
             <div className={styles.labelDetails}>

@@ -59,8 +59,9 @@
   height: 30px;
   padding-top: 6px;
   border-radius: 20px;
-  background-color: var(--color-primary-lighter);
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+  color: var(--color-text-primary);
+  font-weight: bold;
   cursor: default;
 }
 
