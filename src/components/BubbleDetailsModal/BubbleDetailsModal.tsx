@@ -33,21 +33,21 @@ type Props = {
   onConfigChange: Function;
 };
 
-const BubbleDetailsModal: React.FC<Props> = ({ bubble, onClose, onSubmitNewComment, onSubmitNewLabel, onConfigChange, allLabels }: Props) => {
+const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
   return(
-    <Modal onClose={onClose}>
+    <Modal onClose={props.onClose}>
       <div className={styles.content}>
         <section className={styles.detailsContent}>
-          <BubbleDetails bubble={bubble}/>
+          <BubbleDetails bubble={props.bubble}/>
 
-          <Comments bubble={bubble} />
+          <Comments bubble={props.bubble} />
 
           {isNewCommentVisible
           ? <NewComment 
               onClick={() => setIsNewCommentVisible(false)}
-              onSubmitNewComment={onSubmitNewComment}
+              onSubmitNewComment={props.onSubmitNewComment}
             />
 
           : <div className={styles.buttonBox}>
@@ -58,10 +58,10 @@ const BubbleDetailsModal: React.FC<Props> = ({ bubble, onClose, onSubmitNewComme
 
         <aside className={styles.labelsContent}>
           <Labels 
-            onSubmitNewLabel={onSubmitNewLabel}
-            labels={bubble.labels}
-            allLabels={allLabels}
-            onConfigChange={onConfigChange}
+            onSubmitNewLabel={props.onSubmitNewLabel}
+            labels={props.bubble.labels}
+            allLabels={props.allLabels}
+            onConfigChange={props.onConfigChange}
           />
         </aside>
       </div>

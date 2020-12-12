@@ -1,16 +1,11 @@
 import api from './api';
-import Router from 'next/router';
 import { toast } from 'react-toastify';
 
-const alteredLabels = async (id, selectedLabel, oppenedBubbleId) => {
-  const labelId = id;
-  const bubbleId = oppenedBubbleId;
-  const isSelectedLabel = selectedLabel;
-
+const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId: Number) => {
   try {
     await api.put(`/labels/${labelId}`, {
-      bubbleId,
       labelId,
+      bubbleId,
       isSelectedLabel,
     });
     toast.success('Label altered!', {
@@ -18,15 +13,13 @@ const alteredLabels = async (id, selectedLabel, oppenedBubbleId) => {
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-    Router.reload();
 
   } catch {
-    toast.error('Alteration error! Try again', {
+    toast.error('Alteration error! Please, reload the page and try again', {
       autoClose: 2500,
       pauseOnFocusLoss: false,
       pauseOnHover: false,
     });
-    Router.reload();
   };
 };
 

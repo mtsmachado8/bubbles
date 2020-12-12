@@ -9,8 +9,8 @@ import prisma from '../../prisma/client';
 import Header from '../components/Header/Header';
 import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
-import BubbleDetails from "../components/BubbleDetailsModal/BubbleDetailsModal";
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
+import BubbleDetailsModal from "../components/BubbleDetailsModal/BubbleDetailsModal";
 
 import postBubbles from '../services/postBubbles';
 import postComments from '../services/postComments';
@@ -129,7 +129,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
               </Link>
 
               {isBubbleDetailsVisible && bubble.id === oppenedBubbleId ?
-                <BubbleDetails
+                <BubbleDetailsModal
                   onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/')}}
                   bubble={bubble}
                   allLabels={props.labels}

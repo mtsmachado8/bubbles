@@ -86,7 +86,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
             className={styles.newBubbleDetails}
             onSubmit={e => {
               e.preventDefault();
-              onSubmitNewBubble(e, bubble, user);
+              onSubmitNewBubble(bubble, user);
             }}
           >
             <div className={styles.titleContainer}>

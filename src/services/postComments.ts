@@ -1,11 +1,10 @@
 import api from './api';
-import Router from 'next/router';
 import { toast } from 'react-toastify';
 
-const postComments = async (newComment, userInfo, oppenedBubbleId) => {
-  const content = newComment;
-  const author = userInfo;
-  const bubbleId = oppenedBubbleId;
+import { User } from '@prisma/client';
+
+const postComments = async (content: String, author: User, id: Number) => {
+  const bubbleId = id;
 
   try {
     await api.post('/comments', {
@@ -18,15 +17,14 @@ const postComments = async (newComment, userInfo, oppenedBubbleId) => {
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-    Router.reload();
   
   } catch {
-    toast.error('Registration error! Try again', {
+    toast.error('Registration error! Please, reload the page and try again', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-    Router.reload();
+
   };
 };
 

@@ -10,7 +10,7 @@ type Props = {
   onSubmitNewComment: Function;
 }
 
-const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => {
+const NewComment: React.FC<Props> = (props: Props) => {
   const [ isLogedIn, setIsLogedIn ] = useState(false);
 
   const [ avatarUrl, setAvatarUrl ] = useState('');
@@ -18,7 +18,7 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
   const [ email, setEmail ] = useState('');
   const [ name, setName ] = useState('');
 
-  const [ comment, setComment ] = useState('');
+  const [ content, setContent ] = useState('');
 
   const submitButton = isLogedIn ? `Comment with ${firstName}` : 'Comment Anonymously';
   const userName = isLogedIn ? `${name}` : 'Anonymous'
@@ -30,7 +30,12 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
     avatarUrl,
     email,
     name,
-  }
+  };
+
+  const onSubmitNewComment = (content, user, e) => {
+    props.onClick(e);
+    props.onSubmitNewComment(content, user);
+  };
 
   const onSuccessGoogle = response => {
     setAvatarUrl(response.profileObj.imageUrl);
@@ -75,16 +80,16 @@ const NewComment: React.FC<Props> = ({ onClick, onSubmitNewComment }: Props) => 
         className={styles.commentDetails}
         onSubmit={e => {
           e.preventDefault();
-          onSubmitNewComment(e, comment, user);
+          onSubmitNewComment(content, user, e);
         }}
       >
         <div className={styles.nameBox}>
           <h4>{userName}</h4>
         </div>
         <div className={styles.commentArea}>
-          <textarea onChange={e => setComment(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
+          <textarea onChange={e => setContent(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
           <div className={styles.buttonContent}>
-            <button type='button' className={styles.cancelButton} onClick={onClick}>Cancel</button>
+            <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>
             <button type='submit' className={styles.submitButton}>{submitButton}</button>
             {isLogedIn 
               ? <GoogleLogout

@@ -1,12 +1,10 @@
 import api from './api';
-import Router from 'next/router';
 import { toast } from 'react-toastify';
 
-const postLabels = async (newLabel, oppenedBubbleId) => {
-  const name = newLabel.name;
-  const description = newLabel.description;
-  const color = newLabel.color;
-  const bubbleId = oppenedBubbleId;
+import { Label } from '@prisma/client';
+
+const postLabels = async ({name, description, color}: Label, id: Number) => {
+  const bubbleId = id;
 
   try {
     await api.post('/labels', {
@@ -20,15 +18,13 @@ const postLabels = async (newLabel, oppenedBubbleId) => {
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     })
-    Router.reload();
 
   } catch {
-    toast.error('Registration error! Try again', {
+    toast.error('Registration error! Please, reload the page and try again', {
       autoClose: 2500,
       pauseOnFocusLoss: false,
       pauseOnHover: false,
     })
-    Router.reload();
   };
 };
 
