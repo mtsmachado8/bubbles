@@ -23,7 +23,7 @@ const NewLabel: React.FC<Props> = ({ onClick, onSubmitNewLabel }: Props) => {
       className={styles.newLabelContent}
       onSubmit={e => {
         e.preventDefault();
-        onSubmitNewLabel(e, label);
+        onSubmitNewLabel(label);
       }}
     >
       <div className={styles.square}></div>

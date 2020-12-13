@@ -27,6 +27,11 @@ const Labels: React.FC<Props> = ( props: Props ) => {
     setIsConfigLabelVisible(false)
   };
 
+  const onSubmitNewLabel = (label) => {
+    props.onSubmitNewLabel(label);
+    setIsNewLabelVisible(false);
+  }
+
   return(
     <div className={styles.labelsPage}>
       <div className={styles.button}>
@@ -55,9 +60,9 @@ const Labels: React.FC<Props> = ( props: Props ) => {
       </div>
 
       {isNewLabelVisible
-      ? <NewLabel 
+      ? <NewLabel
           onClick={() => setIsNewLabelVisible(false)}
-          onSubmitNewLabel={props.onSubmitNewLabel}
+          onSubmitNewLabel={onSubmitNewLabel}
         />
 
       : null

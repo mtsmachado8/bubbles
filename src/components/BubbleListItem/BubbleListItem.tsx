@@ -1,5 +1,6 @@
 import React from "react";
 import { Bubble, Label } from "@prisma/client";
+import { format } from 'date-fns';
 
 import styles from './_bubbleListItem.module.css';
 import Avatar from '../Avatar/Avatar'
@@ -35,14 +36,14 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick }: Props) => {
           <h2>{bubble.title}</h2>
           <div className={styles.labels}>
           {newLabelsArray.map(label => (
-              <p style={{backgroundColor: label.color}}>{label.name}</p>
+              <p key={label.id} style={{backgroundColor: label.color}}>{label.name}</p>
           ))}
           </div>
         </div>
         <div className={styles.description}>
           <p>{bubble.description}</p>
         </div>
-        <p className={styles.date}>{bubble.createdAt.toLocaleDateString('pt-br')}</p>
+        <p className={styles.date}>{format(new Date(bubble.createdAt), 'dd/MM/yyyy')}</p>
       </div>
     </div>
   );

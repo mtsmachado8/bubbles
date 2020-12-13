@@ -1,34 +1,35 @@
 import api from './api';
-import Router from 'next/router';
+import { Mutate, Trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
-const postBubble = async (bubbleInfo, userInfo) => {
-  const title = bubbleInfo.title;
-  const description = bubbleInfo.description;
-  const content = bubbleInfo.content
-  const author = userInfo
+import { User, Bubble } from '@prisma/client';
 
+const postBubble = async ({title, description, content}: Bubble, author: User) => {
   try {
+    Mutate('/bubbles');
+    
     await api.post('/bubbles', {
       title,
       description,
       content,
       author,
     });
+
+    Trigger('/bubbles');
+    
     toast.success('Bubble successfully registered!', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-    Router.push('/');
 
   } catch {
-    toast.error('Registration error! Try again', {
+    toast.error('Registration error! Please, reload the page and try again', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-    Router.reload();
+
   };
 };
 

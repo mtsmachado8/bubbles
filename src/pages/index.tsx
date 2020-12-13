@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { GetStaticProps } from "next";
 import Router from "next/router";
+import { GetStaticProps, NextPage } from "next";
 import Link from 'next/link';
 
 import { Bubble, Label, Comment } from "@prisma/client";
-import prisma from '../../prisma/client';
+import useFetch from "../hooks/swr";
+import api from "../services/api";
 
-import Header from '../components/Header/Header';
+import BubbleDetailsModal from "../components/BubbleDetailsModal/BubbleDetailsModal";
 import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
-import BubbleDetails from "../components/BubbleDetailsModal/BubbleDetailsModal";
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
+import Header from '../components/Header/Header';
 
-import postBubbles from '../services/postBubbles';
-import postComments from '../services/postComments';
-import postLabels from '../services/postLabels';
 import alteredLabels from '../services/alteredLabels';
+import postComments from '../services/postComments';
+import postBubbles from '../services/postBubbles';
+import postLabels from '../services/postLabels';
 
 import styles from './_home.module.css';
+import prisma from "../../prisma/client";
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubblesResponse = await prisma.bubble.findMany({
@@ -41,8 +43,6 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  const labels = await prisma.label.findMany();
-
   const serializableBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
     createdAt: bubble.createdAt.toString(),
@@ -52,10 +52,13 @@ export const getStaticProps: GetStaticProps = async () => {
       createdAt: comment.createdAt.toString(),
     })),
   }));
-  
+  const labels = await prisma.label.findMany()
+
   return {
-    props: { bubbles: serializableBubbles, labels },
-    revalidate: 1,
+    props: {
+      initialBubblesData: serializableBubbles,
+      initialLabelsData: labels,
+    },
   };
 };
 
@@ -75,25 +78,39 @@ type FilledBubble = Bubble & {
 };
 
 type Props = {
-  bubbles: FilledBubble[];
-  labels: Label[];
+  initialBubblesData: FilledBubble[];
+  initialLabelsData: Label[];
 };
 
-const HomePage: React.FC<Props> = (props: Props) => {
-  const [ bubbles, setBubbles ] = useState<FilledBubble[]>([]);
-  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
-  const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
+const HomePage: NextPage<Props> = ( props: Props ) => {
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData);
+  const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
+
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
+  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
+  
+  const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
+
+  const { data: bubblesData } = useFetch('/bubbles');
+  const { data: labelsData } = useFetch('/labels');
 
   useEffect(() => {
-    setBubbles(props.bubbles.map(bubble => ({
-      ...bubble,
-      createdAt: new Date(bubble.createdAt),
-    })));
-  }, []);
+    if(bubblesData != undefined) {
+      setBubbles(bubblesData.map(bubble => ({
+        ...bubble,
+        createdAt: new Date(bubble.createdAt),
+      })));
+    };
+
+    if(labelsData != undefined) {
+      setLabels(labelsData);
+    };
+
+  }, [bubblesData, labelsData]);
 
   const postBubble = (bubblInfo, userInfo) => {
     postBubbles(bubblInfo, userInfo);
+    Router.push('/');
     setIsNewBubbleModalVisible(false);
   };
 
@@ -129,10 +146,10 @@ const HomePage: React.FC<Props> = (props: Props) => {
               </Link>
 
               {isBubbleDetailsVisible && bubble.id === oppenedBubbleId ?
-                <BubbleDetails
+                <BubbleDetailsModal
                   onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/')}}
                   bubble={bubble}
-                  allLabels={props.labels}
+                  allLabels={labels}
                   onSubmitNewLabel={postLabel}
                   onConfigChange={alteredLabel}
                   onSubmitNewComment={postComment}

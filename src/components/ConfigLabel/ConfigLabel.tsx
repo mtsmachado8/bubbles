@@ -4,7 +4,7 @@ import { Label } from "@prisma/client";
 
 import styles from './_configLabel.module.css';
 
-type LabelFilled = Label & {
+type FilledLabels = Label & {
   selected: boolean;
 };
 
@@ -15,23 +15,24 @@ type Props = {
 };
 
 const ConfigLabel: React.FC<Props> = ( props: Props ) => {
-  const [ filledLabels, setFilledLabels ] = useState<LabelFilled[]>([])
+  const [ filledLabels, setFilledLabels ] = useState<FilledLabels[]>([])
 
   useEffect(() => {
-    const allLabels = props.allLabels.map(label => ({
-      ...label,
-      selected: false,
-    }));
-    const labels = props.labels.map(label => ({
-      ...label,
-      selected: true,
-    }));
-    const selectedLabels = labels.concat(
-      allLabels.filter( ({id}) => !labels.find(label => label.id == id))
-    );
+      const allLabels = props.allLabels.map(label => ({
+        ...label,
+        selected: false,
+      }));
+      const labels = props.labels.map(label => ({
+        ...label,
+        selected: true,
+      }));
+      const selectedLabels = labels.concat(
+        allLabels.filter( ({id}) => !labels.find(label => label.id == id))
+      );
+      
+      setFilledLabels(selectedLabels);
     
-    setFilledLabels(selectedLabels);
-  }, [props.labels]);
+  }, [props.allLabels, props.labels]);
   
   return(
     <div className={styles.configLabelContent}>

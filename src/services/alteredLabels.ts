@@ -1,32 +1,33 @@
 import api from './api';
-import Router from 'next/router';
+import { Mutate, Trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
-const alteredLabels = async (id, selectedLabel, oppenedBubbleId) => {
-  const labelId = id;
-  const bubbleId = oppenedBubbleId;
-  const isSelectedLabel = selectedLabel;
+const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId: Number) => {
+  try {  
+    Mutate('/bubbles');
+    Mutate(`/bubbles/${bubbleId}`);
 
-  try {
     await api.put(`/labels/${labelId}`, {
-      bubbleId,
       labelId,
+      bubbleId,
       isSelectedLabel,
     });
+
+    Trigger('/bubbles');
+    Trigger(`/bubbles/${bubbleId}`);
+
     toast.success('Label altered!', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-    Router.reload();
 
   } catch {
-    toast.error('Alteration error! Try again', {
+    toast.error('Alteration error! Please, reload the page and try again', {
       autoClose: 2500,
       pauseOnFocusLoss: false,
       pauseOnHover: false,
     });
-    Router.reload();
   };
 };
 

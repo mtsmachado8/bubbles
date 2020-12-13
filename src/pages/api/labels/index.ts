@@ -1,8 +1,17 @@
 import prisma from "../../../../prisma/client";
 
+// 
+
 export default async (req, res) => {
-  if (req.method === 'POST') {
-    
+  if (req.method === 'GET') {
+    const labels = await prisma.label.findMany();
+
+
+    res.statusCode = 200;
+    res.json(labels);
+
+  } if (req.method === 'POST') {
+
     const { name, description, color, bubbleId } = req.body;
 
     if(bubbleId) {
@@ -12,7 +21,7 @@ export default async (req, res) => {
           description,
           color,
           Bubbles: {
-            connect: { id: bubbleId }
+            connect: { id: bubbleId },
           },
         },
       });
@@ -29,7 +38,8 @@ export default async (req, res) => {
       });
       res.statusCode = 200;
       res.json(createdLabel);
-    }
+    };
+
   } else {
     res.statusCode = 200;
     res.json({ name: 'John Doe' });

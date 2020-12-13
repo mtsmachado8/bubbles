@@ -7,9 +7,10 @@ import prisma from '../../../prisma/client';
 
 import BubbleDetailsModal from "../../components/BubbleDetailsModal/BubbleDetailsModal";
 
+import alteredLabels from '../../services/alteredLabels';
 import postComments from '../../services/postComments';
 import postLabels from '../../services/postLabels';
-import alteredLabels from '../../services/alteredLabels';
+import useFetch from "../../hooks/swr";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const bubbles = await prisma.bubble.findMany({
@@ -19,7 +20,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   const paths = bubbles.map((bubble) => ({ params: { id: `${bubble.id}` }}));
 
-  return { paths: paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -59,7 +60,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     })),
   };
   
-  return { props: { bubble: serializableBubble, labels } };
+  return { 
+    props: { 
+      initialBubbleData: serializableBubble,
+      initialLabelsData: labels,
+    }, 
+  };
 };
 
 type FilledComment = Comment & {
@@ -78,19 +84,29 @@ type FilledBubble = Bubble & {
 };
 
 type Props = {
-  bubble: FilledBubble;
-  labels: Label[];
+  initialBubbleData: FilledBubble;
+  initialLabelsData: Label[];
 };
 
 const BubblePage: React.FC<Props> = (props: Props) => {
-  const [ bubble, setBubble ] = useState<FilledBubble>(props.bubble)
+  const [ bubble, setBubble ] = useState<FilledBubble>(props.initialBubbleData)
+  const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData)
+
+  const { data: bubbleData } = useFetch(`/bubbles/${props.initialBubbleData.id}`);
+  const { data: labelsData } = useFetch('/labels');
 
   useEffect(() => {
-    setBubble({
-      ...props.bubble,
-      createdAt: new Date(props.bubble.createdAt),
-    });
-  }, []);
+    if (bubbleData != undefined) {
+      setBubble({
+        ...bubbleData,
+        createdAt: new Date(bubbleData.createdAt),
+      });
+    };
+
+    if(labelsData != undefined) {
+      setLabels(labelsData);
+    };
+  }, [bubbleData, labelsData, labels]);
 
   const postComment = (newComment, userInfo) => {
     postComments(newComment, userInfo, bubble.id);
@@ -108,7 +124,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     <BubbleDetailsModal
       onClose={() => Router.push('/')}
       bubble={bubble}
-      allLabels={props.labels}
+      allLabels={labels}
       onSubmitNewComment={postComment}
       onSubmitNewLabel={postLabel}
       onConfigChange={alteredLabel}
