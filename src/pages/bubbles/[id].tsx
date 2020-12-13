@@ -7,9 +7,9 @@ import prisma from '../../../prisma/client';
 
 import BubbleDetailsModal from "../../components/BubbleDetailsModal/BubbleDetailsModal";
 
+import alteredLabels from '../../services/alteredLabels';
 import postComments from '../../services/postComments';
 import postLabels from '../../services/postLabels';
-import alteredLabels from '../../services/alteredLabels';
 import useFetch from "../../hooks/swr";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -62,8 +62,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   
   return { 
     props: { 
-      bubble: serializableBubble, 
-      labels,
+      initialBubbleData: serializableBubble,
+      initialLabelsData: labels,
     }, 
   };
 };
@@ -84,29 +84,29 @@ type FilledBubble = Bubble & {
 };
 
 type Props = {
-  bubble: FilledBubble;
-  labels: Label[];
+  initialBubbleData: FilledBubble;
+  initialLabelsData: Label[];
 };
 
 const BubblePage: React.FC<Props> = (props: Props) => {
-  const [ bubble, setBubble ] = useState<FilledBubble>(props.bubble)
-  const [ labels, setLabels ] = useState<Label[]>(props.labels)
+  const [ bubble, setBubble ] = useState<FilledBubble>(props.initialBubbleData)
+  const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData)
 
-  const { data: bubbleData } = useFetch(`/bubbles/${props.bubble.id}`);
+  const { data: bubbleData } = useFetch(`/bubbles/${props.initialBubbleData.id}`);
   const { data: labelsData } = useFetch('/labels');
 
   useEffect(() => {
     if (bubbleData != undefined) {
       setBubble({
         ...bubbleData,
-        createdAt: new Date(props.bubble.createdAt),
+        createdAt: new Date(bubbleData.createdAt),
       });
     };
 
     if(labelsData != undefined) {
       setLabels(labelsData);
     };
-  }, [bubbleData, labelsData]);
+  }, [bubbleData, labelsData, labels]);
 
   const postComment = (newComment, userInfo) => {
     postComments(newComment, userInfo, bubble.id);

@@ -9,6 +9,7 @@ const postLabels = async ({name, description, color}: Label, id: Number) => {
 
   try {
     Mutate('/bubbles');
+    Mutate('/labels');
     Mutate(`/bubbles/${bubbleId}`);
 
     await api.post('/labels', {
@@ -19,6 +20,7 @@ const postLabels = async ({name, description, color}: Label, id: Number) => {
     });
 
     Trigger('/bubbles');
+    Trigger('/labels');
     Trigger(`/bubbles/${bubbleId}`);
 
     toast.success('Label registered!', {

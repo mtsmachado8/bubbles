@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps = async () => {
       createdAt: comment.createdAt.toString(),
     })),
   }));
-  const labels =await prisma.label.findMany()
+  const labels = await prisma.label.findMany()
 
   return {
     props: {
@@ -83,11 +83,13 @@ type Props = {
 };
 
 const HomePage: NextPage<Props> = ( props: Props ) => {
-  const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
   const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData);
-  const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
-  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
+  const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
+
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
+  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
+  
+  const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
 
   const { data: bubblesData } = useFetch('/bubbles');
   const { data: labelsData } = useFetch('/labels');
