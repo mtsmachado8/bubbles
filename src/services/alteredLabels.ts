@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId: Number) => {
   try {  
     Mutate('/bubbles');
+    Mutate(`/bubbles/${bubbleId}`);
 
     await api.put(`/labels/${labelId}`, {
       labelId,
@@ -13,6 +14,7 @@ const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId
     });
 
     Trigger('/bubbles');
+    Trigger(`/bubbles/${bubbleId}`);
 
     toast.success('Label altered!', {
       autoClose: 2500,

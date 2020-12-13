@@ -1,32 +1,62 @@
 import React, { useEffect, useState } from "react";
-import { GetStaticProps } from "next";
 import Router from "next/router";
+import { GetStaticProps, NextPage } from "next";
 import Link from 'next/link';
 
 import { Bubble, Label, Comment } from "@prisma/client";
 import useFetch from "../hooks/swr";
 import api from "../services/api";
 
-import Header from '../components/Header/Header';
+import BubbleDetailsModal from "../components/BubbleDetailsModal/BubbleDetailsModal";
 import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
-import BubbleDetailsModal from "../components/BubbleDetailsModal/BubbleDetailsModal";
+import Header from '../components/Header/Header';
 
-import postBubbles from '../services/postBubbles';
-import postComments from '../services/postComments';
-import postLabels from '../services/postLabels';
 import alteredLabels from '../services/alteredLabels';
+import postComments from '../services/postComments';
+import postBubbles from '../services/postBubbles';
+import postLabels from '../services/postLabels';
 
 import styles from './_home.module.css';
+import prisma from "../../prisma/client";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const bubbles = await api.get('/bubbles');
-  const labels = await api.get('/labels');
+  const bubblesResponse = await prisma.bubble.findMany({
+    include: {
+      labels: true,
+      comments: {
+        include: {
+          author: {
+            select: {
+              avatarUrl: true,
+              name: true,
+            },
+          },
+        },
+      },
+      author: {
+        select: {
+          avatarUrl: true,
+        },
+      },
+    },
+  });
+
+  const serializableBubbles = bubblesResponse.map(bubble => ({
+    ...bubble,
+    createdAt: bubble.createdAt.toString(),
+
+    comments: bubble.comments.map(comment => ({
+      ...comment,
+      createdAt: comment.createdAt.toString(),
+    })),
+  }));
+  const labels =await prisma.label.findMany()
 
   return {
     props: {
-      initialBubblesData: bubbles,
+      initialBubblesData: serializableBubbles,
       initialLabelsData: labels,
     },
   };
@@ -52,7 +82,7 @@ type Props = {
   initialLabelsData: Label[];
 };
 
-const HomePage: React.FC<Props> = ( props: Props ) => {
+const HomePage: NextPage<Props> = ( props: Props ) => {
   const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
   const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData);
   const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
@@ -63,14 +93,14 @@ const HomePage: React.FC<Props> = ( props: Props ) => {
   const { data: labelsData } = useFetch('/labels');
 
   useEffect(() => {
-    if(bubblesData !== undefined) {
-      setBubbles(bubblesData?.map(bubble => ({
+    if(bubblesData != undefined) {
+      setBubbles(bubblesData.map(bubble => ({
         ...bubble,
         createdAt: new Date(bubble.createdAt),
       })));
     };
 
-    if(labelsData !== undefined) {
+    if(labelsData != undefined) {
       setLabels(labelsData);
     };
 

@@ -9,6 +9,7 @@ const postComments = async (content: String, author: User, id: Number) => {
   
   try {
     Mutate('/bubbles');
+    Mutate(`/bubbles/${bubbleId}`);
 
     await api.post('/comments', {
       content,
@@ -17,6 +18,7 @@ const postComments = async (content: String, author: User, id: Number) => {
     });
 
     Trigger('/bubbles');
+    Trigger(`/bubbles/${bubbleId}`);
 
     toast.success('Comment registrated!', {
       autoClose: 2500,

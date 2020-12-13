@@ -1,9 +1,9 @@
 import prisma from "../../../../prisma/client";
 
 export default async (req, res) => {
-  const { query: { id } } = req;
-
   if (req.method === 'GET') {
+    const { query: { id } } = req;
+
     const bubble = await prisma.bubble.findUnique({
       include: {
         labels: true,
@@ -24,12 +24,10 @@ export default async (req, res) => {
         },
       },
       where: {
-        id: parseInt(id as string)
+        id: parseInt(id as string),
       },
     });
-  
-    const labels = await prisma.label.findMany();
-  
+    
     const serializableBubble = {
       ...bubble,
       createdAt: bubble.createdAt.toString(),
@@ -40,6 +38,11 @@ export default async (req, res) => {
       })),
     };
     
-    return { props: { bubble: serializableBubble, labels } };
+    res.statusCode = 200;
+    res.json(serializableBubble);
+    
+  } else {
+    res.statusCode = 200;
+    res.json({ name: 'John Doe' });
   }
 } 
