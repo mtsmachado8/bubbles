@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
 
 import { Bubble, Label, Comment } from "@prisma/client";
-import prisma from '../../prisma/client';
+import useFetch from "../hooks/useFetch";
 
 import Header from '../components/Header/Header';
 import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
@@ -18,46 +17,7 @@ import postLabels from '../services/postLabels';
 import alteredLabels from '../services/alteredLabels';
 
 import styles from './_home.module.css';
-
-export const getStaticProps: GetStaticProps = async () => {
-  const bubblesResponse = await prisma.bubble.findMany({
-    include: {
-      labels: true,
-      comments: {
-        include: {
-          author: {
-            select: {
-              avatarUrl: true,
-              name: true,
-            },
-          },
-        },
-      },
-      author: {
-        select: {
-          avatarUrl: true,
-        },
-      },
-    },
-  });
-
-  const labels = await prisma.label.findMany();
-
-  const serializableBubbles = bubblesResponse.map(bubble => ({
-    ...bubble,
-    createdAt: bubble.createdAt.toString(),
-
-    comments: bubble.comments.map(comment => ({
-      ...comment,
-      createdAt: comment.createdAt.toString(),
-    })),
-  }));
-  
-  return {
-    props: { bubbles: serializableBubbles, labels },
-    revalidate: 1,
-  };
-};
+import api from "../services/api";
 
 type FilledComment = Comment & {
   author: {
@@ -74,23 +34,26 @@ type FilledBubble = Bubble & {
   };
 };
 
-type Props = {
-  bubbles: FilledBubble[];
-  labels: Label[];
-};
-
-const HomePage: React.FC<Props> = (props: Props) => {
+const HomePage: React.FC = () => {
+  const [ labels, setLabels ] = useState<Label[]>([]);
   const [ bubbles, setBubbles ] = useState<FilledBubble[]>([]);
-  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
   const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
+  const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
 
+  const { data: bubblesData } = useFetch('/bubbles');
+  const { data: labelsData } = useFetch('/labels');
+
   useEffect(() => {
-    setBubbles(props.bubbles.map(bubble => ({
-      ...bubble,
-      createdAt: new Date(bubble.createdAt),
-    })));
-  }, []);
+    if(bubblesData && labelsData !== undefined) {
+      setBubbles(bubblesData.map(bubble => ({
+        ...bubble,
+        createdAt: new Date(bubble.createdAt),
+      })));
+
+      setLabels(labelsData);
+    };
+  }, [bubblesData, labelsData]);
 
   const postBubble = (bubblInfo, userInfo) => {
     postBubbles(bubblInfo, userInfo);
@@ -132,7 +95,7 @@ const HomePage: React.FC<Props> = (props: Props) => {
                 <BubbleDetailsModal
                   onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/')}}
                   bubble={bubble}
-                  allLabels={props.labels}
+                  allLabels={labels}
                   onSubmitNewLabel={postLabel}
                   onConfigChange={alteredLabel}
                   onSubmitNewComment={postComment}

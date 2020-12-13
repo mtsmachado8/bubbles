@@ -1,13 +1,19 @@
 import api from './api';
+import { useMutate, useTrigger } from '../hooks/useFetch';
 import { toast } from 'react-toastify';
 
 const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId: Number) => {
-  try {
+  try {  
+    useMutate('/bubbles');
+
     await api.put(`/labels/${labelId}`, {
       labelId,
       bubbleId,
       isSelectedLabel,
     });
+
+    useTrigger('/bubbles');
+
     toast.success('Label altered!', {
       autoClose: 2500,
       pauseOnHover: false,

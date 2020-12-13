@@ -3,7 +3,7 @@ import prisma from "../../../../prisma/client";
 // 
 
 export default async (req, res) => {
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
     const labels = await prisma.label.findMany();
 
 

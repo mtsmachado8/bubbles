@@ -1,4 +1,4 @@
-import useSWR, { mutate } from 'swr';
+import useSWR, { mutate, trigger } from 'swr';
 import api from '../services/api';
 
 const useFetch = (url: string) => {
@@ -7,12 +7,16 @@ const useFetch = (url: string) => {
 
     return response;
   });
-
+  
   return { data, error };
 };
 
-export const useMutate = async (url: string) => {
-  await mutate(url, null, true);
+export const useMutate = (url: string,) => {
+  mutate(`/api${url}`, null, false);
+};
+
+export const useTrigger = (url: string) => {
+  trigger(`/api${url}`);
 };
 
 export default useFetch;
