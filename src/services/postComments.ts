@@ -1,5 +1,5 @@
 import api from './api';
-import { useMutate, useTrigger } from '../hooks/useFetch';
+import { Mutate, Trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
 import { User } from '@prisma/client';
@@ -8,7 +8,7 @@ const postComments = async (content: String, author: User, id: Number) => {
   const bubbleId = id;
   
   try {
-    useMutate('/bubbles');
+    Mutate('/bubbles');
 
     await api.post('/comments', {
       content,
@@ -16,7 +16,7 @@ const postComments = async (content: String, author: User, id: Number) => {
       bubbleId,
     });
 
-    useTrigger('/bubbles');
+    Trigger('/bubbles');
 
     toast.success('Comment registrated!', {
       autoClose: 2500,

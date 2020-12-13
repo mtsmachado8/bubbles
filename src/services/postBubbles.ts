@@ -1,13 +1,12 @@
 import api from './api';
-import Router from 'next/router';
-import { useMutate, useTrigger } from '../hooks/useFetch';
+import { Mutate, Trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
 import { User, Bubble } from '@prisma/client';
 
 const postBubble = async ({title, description, content}: Bubble, author: User) => {
   try {
-    useMutate('/bubbles');
+    Mutate('/bubbles');
     
     await api.post('/bubbles', {
       title,
@@ -16,14 +15,13 @@ const postBubble = async ({title, description, content}: Bubble, author: User) =
       author,
     });
 
-    useTrigger('/bubbles');
+    Trigger('/bubbles');
     
     toast.success('Bubble successfully registered!', {
       autoClose: 2500,
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-    Router.push('/');
 
   } catch {
     toast.error('Registration error! Please, reload the page and try again', {

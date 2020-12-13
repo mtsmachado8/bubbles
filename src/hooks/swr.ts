@@ -11,11 +11,11 @@ const useFetch = (url: string) => {
   return { data, error };
 };
 
-export const useMutate = (url: string,) => {
+export const Mutate = (url: string,) => {
   mutate(`/api${url}`, null, false);
 };
 
-export const useTrigger = (url: string) => {
+export const Trigger = (url: string) => {
   trigger(`/api${url}`);
 };
 

@@ -19,7 +19,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   const paths = bubbles.map((bubble) => ({ params: { id: `${bubble.id}` }}));
 
-  return { paths: paths, fallback: false };
+  return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { GetStaticProps } from "next";
 import Router from "next/router";
 import Link from 'next/link';
 
 import { Bubble, Label, Comment } from "@prisma/client";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/swr";
+import api from "../services/api";
 
 import Header from '../components/Header/Header';
 import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
@@ -17,7 +19,18 @@ import postLabels from '../services/postLabels';
 import alteredLabels from '../services/alteredLabels';
 
 import styles from './_home.module.css';
-import api from "../services/api";
+
+export const getStaticProps: GetStaticProps = async () => {
+  const bubbles = await api.get('/bubbles');
+  const labels = await api.get('/labels');
+
+  return {
+    props: {
+      initialBubblesData: bubbles,
+      initialLabelsData: labels,
+    },
+  };
+};
 
 type FilledComment = Comment & {
   author: {
@@ -34,9 +47,14 @@ type FilledBubble = Bubble & {
   };
 };
 
-const HomePage: React.FC = () => {
-  const [ labels, setLabels ] = useState<Label[]>([]);
-  const [ bubbles, setBubbles ] = useState<FilledBubble[]>([]);
+type Props = {
+  initialBubblesData: FilledBubble[];
+  initialLabelsData: Label[];
+};
+
+const HomePage: React.FC<Props> = ( props: Props ) => {
+  const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData);
   const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
   const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
@@ -45,18 +63,22 @@ const HomePage: React.FC = () => {
   const { data: labelsData } = useFetch('/labels');
 
   useEffect(() => {
-    if(bubblesData && labelsData !== undefined) {
-      setBubbles(bubblesData.map(bubble => ({
+    if(bubblesData !== undefined) {
+      setBubbles(bubblesData?.map(bubble => ({
         ...bubble,
         createdAt: new Date(bubble.createdAt),
       })));
+    };
 
+    if(labelsData !== undefined) {
       setLabels(labelsData);
     };
+
   }, [bubblesData, labelsData]);
 
   const postBubble = (bubblInfo, userInfo) => {
     postBubbles(bubblInfo, userInfo);
+    Router.push('/');
     setIsNewBubbleModalVisible(false);
   };
 

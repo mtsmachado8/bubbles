@@ -1,5 +1,5 @@
 import api from './api';
-import { useMutate, useTrigger } from '../hooks/useFetch';
+import { Mutate, Trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
 import { Label } from '@prisma/client';
@@ -8,7 +8,7 @@ const postLabels = async ({name, description, color}: Label, id: Number) => {
   const bubbleId = id;
 
   try {
-    useMutate('/bubbles');
+    Mutate('/bubbles');
 
     await api.post('/labels', {
       name,
@@ -17,7 +17,7 @@ const postLabels = async ({name, description, color}: Label, id: Number) => {
       bubbleId,
     });
 
-    useTrigger('/bubbles');
+    Trigger('/bubbles');
 
     toast.success('Label registered!', {
       autoClose: 2500,

@@ -1,10 +1,10 @@
 import api from './api';
-import { useMutate, useTrigger } from '../hooks/useFetch';
+import { Mutate, Trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
 const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId: Number) => {
   try {  
-    useMutate('/bubbles');
+    Mutate('/bubbles');
 
     await api.put(`/labels/${labelId}`, {
       labelId,
@@ -12,7 +12,7 @@ const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId
       isSelectedLabel,
     });
 
-    useTrigger('/bubbles');
+    Trigger('/bubbles');
 
     toast.success('Label altered!', {
       autoClose: 2500,
