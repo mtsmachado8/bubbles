@@ -1,17 +1,11 @@
 import api from './api';
-import { Mutate, Trigger } from '../hooks/swr';
+import { trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
 import { Label } from '@prisma/client';
 
-const postLabels = async ({name, description, color}: Label, id: Number) => {
-  const bubbleId = id;
-
+const postLabels = async ({name, description, color}: Label, bubbleId: Number) => {
   try {
-    Mutate('/bubbles');
-    Mutate('/labels');
-    Mutate(`/bubbles/${bubbleId}`);
-
     await api.post('/labels', {
       name,
       description,
@@ -19,9 +13,9 @@ const postLabels = async ({name, description, color}: Label, id: Number) => {
       bubbleId,
     });
 
-    Trigger('/bubbles');
-    Trigger('/labels');
-    Trigger(`/bubbles/${bubbleId}`);
+    trigger('/bubbles');
+    trigger('/labels');
+    trigger(`/bubbles/${bubbleId}`);
 
     toast.success('Label registered!', {
       autoClose: 2500,

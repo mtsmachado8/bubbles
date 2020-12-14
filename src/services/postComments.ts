@@ -1,24 +1,19 @@
 import api from './api';
-import { Mutate, Trigger } from '../hooks/swr';
+import { trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
 import { User } from '@prisma/client';
 
-const postComments = async (content: String, author: User, id: Number) => {
-  const bubbleId = id;
-  
+const postComments = async (content: String, author: User, bubbleId: Number) => {  
   try {
-    Mutate('/bubbles');
-    Mutate(`/bubbles/${bubbleId}`);
-
     await api.post('/comments', {
       content,
       author,
       bubbleId,
     });
 
-    Trigger('/bubbles');
-    Trigger(`/bubbles/${bubbleId}`);
+    trigger('/bubbles');
+    trigger(`/bubbles/${bubbleId}`);
 
     toast.success('Comment registrated!', {
       autoClose: 2500,

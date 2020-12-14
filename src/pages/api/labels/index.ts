@@ -1,48 +1,43 @@
-import prisma from "../../../../prisma/client";
-
-// 
+import { create, createAndLink, getAll } from './_repository';
 
 export default async (req, res) => {
   if (req.method === 'GET') {
-    const labels = await prisma.label.findMany();
-
+    const labels = await getAll();
 
     res.statusCode = 200;
     res.json(labels);
-
+    
   } if (req.method === 'POST') {
-
     const { name, description, color, bubbleId } = req.body;
 
     if(bubbleId) {
-      const createdLabel = await prisma.label.create({
-        data: {
+      try{
+        const createdLabel = await createAndLink(
           name,
           description,
           color,
-          Bubbles: {
-            connect: { id: bubbleId },
-          },
-        },
-      });
-      res.statusCode = 200;
-      res.json(createdLabel);
-
+          bubbleId
+        );
+        res.statusCode = 201;
+        res.json(createdLabel);
+      } catch (err) {
+        res.statusCode = 500;
+        res.json(err);
+      };
     } else {
-      const createdLabel = await prisma.label.create({
-        data: {
+      try{
+        const createdLabel = await create(
           name,
           description,
           color,
-        },
-      });
-      res.statusCode = 200;
-      res.json(createdLabel);
+        );
+        res.statusCode = 201;
+        res.json(createdLabel);
+      } catch (err) {
+        res.statusCode = 500;
+        res.json(err);
+      };
     };
-
-  } else {
-    res.statusCode = 200;
-    res.json({ name: 'John Doe' });
   };
 };
 
