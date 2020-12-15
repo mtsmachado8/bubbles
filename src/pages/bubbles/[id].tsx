@@ -22,7 +22,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   const paths = bubbles.map((bubble) => ({ params: { id: `${bubble.id}` }}));
 
-  return { paths, fallback: true };
+  return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -61,7 +61,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
   const [ bubble, setBubble ] = useState<FilledBubble>(props.initialBubbleData)
   const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData)
 
-  const { data: bubbleData } = useFetch(`/bubbles/${bubble.id}`);
+  const { data: bubbleData } = useFetch(`/bubbles/${props.initialBubbleData.id}`);
   const { data: labelsData } = useFetch('/labels');
 
   useEffect(() => {
