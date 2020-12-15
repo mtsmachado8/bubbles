@@ -1,4 +1,4 @@
-import prisma from "../../../../prisma/client";
+import { connect, disconnect } from "./_repository";
 
 export default async (req, res) => {
   if (req.method === 'PUT') {
@@ -7,32 +7,29 @@ export default async (req, res) => {
     const { isSelectedLabel, bubbleId, labelId } = req.body;
     
     if(isSelectedLabel) {
-      const alteredLabel = await prisma.label.update({
-        where: { id: labelId },
-        data: {
-          Bubbles: {
-            disconnect: { id: bubbleId },
-          },
-        },
-      });
-      res.statusCode = 200;
-      res.json(alteredLabel);
-
+      try {
+        const disconnectedLabel = await disconnect(
+          labelId,
+          bubbleId,
+        );
+        res.statusCode = 200;
+        res.json(disconnectedLabel);
+      } catch (err) {
+        res.statusCode = 500;
+        res.json(err);
+      };
     } else {
-      const alteredLabel = await prisma.label.update({
-        where: { id: labelId },
-        data: {
-          Bubbles: {
-            connect: { id: bubbleId },
-          },
-        },
-      });
-      res.statusCode = 200;
-      res.json(alteredLabel);
+      try {
+        const connectedLabel = await connect(
+          labelId,
+          bubbleId,
+        );
+        res.statusCode = 200;
+        res.json(connectedLabel);
+      } catch (err) {
+        res.statusCode = 500;
+        res.json(err);
+      };
     };
-
-  } else {
-    res.statusCode = 200;
-    res.json({ name: 'John Doe' });
   };
-}
+};

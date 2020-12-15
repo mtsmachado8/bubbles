@@ -1,20 +1,17 @@
 import api from './api';
-import { Mutate, Trigger } from '../hooks/swr';
+import { trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
 const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId: Number) => {
-  try {  
-    Mutate('/bubbles');
-    Mutate(`/bubbles/${bubbleId}`);
-
+  try {
     await api.put(`/labels/${labelId}`, {
       labelId,
       bubbleId,
       isSelectedLabel,
     });
 
-    Trigger('/bubbles');
-    Trigger(`/bubbles/${bubbleId}`);
+    trigger('/bubbles');
+    trigger(`/bubbles/${bubbleId}`);
 
     toast.success('Label altered!', {
       autoClose: 2500,

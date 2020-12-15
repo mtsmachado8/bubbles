@@ -11,6 +11,8 @@ import alteredLabels from '../../services/alteredLabels';
 import postComments from '../../services/postComments';
 import postLabels from '../../services/postLabels';
 import useFetch from "../../hooks/swr";
+import { getById as getBubbleById } from "../api/bubbles/_repository";
+import { getAll as getAllLabels } from "../api/labels/_repository";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const bubbles = await prisma.bubble.findMany({
@@ -24,47 +26,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const bubble = await prisma.bubble.findUnique({
-    include: {
-      labels: true,
-      comments: {
-        include: {
-          author: {
-            select: {
-              avatarUrl: true,
-              name: true,
-            },
-          },
-        },
-      },
-      author: {
-        select: {
-          avatarUrl: true,
-        },
-      },
-    },
-    where: {
-      id: parseInt(params.id as string)
-    },
-  });
-
-  const labels = await prisma.label.findMany();
-
-  const serializableBubble = {
-    ...bubble,
-    createdAt: bubble.createdAt.toString(),
-
-    comments: bubble.comments.map(comment => ({
-      ...comment,
-      createdAt: comment.createdAt.toString(),
-    })),
-  };
+  const bubble = await getBubbleById(params.id as string);
+  const labels = await getAllLabels();
   
   return { 
     props: { 
-      initialBubbleData: serializableBubble,
+      initialBubbleData: bubble,
       initialLabelsData: labels,
-    }, 
+    },
   };
 };
 
@@ -92,7 +61,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
   const [ bubble, setBubble ] = useState<FilledBubble>(props.initialBubbleData)
   const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData)
 
-  const { data: bubbleData } = useFetch(`/bubbles/${props.initialBubbleData.id}`);
+  const { data: bubbleData } = useFetch(`/bubbles/${bubble.id}`);
   const { data: labelsData } = useFetch('/labels');
 
   useEffect(() => {
@@ -106,7 +75,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     if(labelsData != undefined) {
       setLabels(labelsData);
     };
-  }, [bubbleData, labelsData, labels]);
+  }, [bubbleData, labelsData]);
 
   const postComment = (newComment, userInfo) => {
     postComments(newComment, userInfo, bubble.id);
