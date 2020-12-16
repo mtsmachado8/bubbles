@@ -1,4 +1,4 @@
-import { create } from "../labels/_repository";
+import { create } from "./_repository";
 
 export default async (req, res) => {
   if (req.method === 'POST') {
