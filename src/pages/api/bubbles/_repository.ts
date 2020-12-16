@@ -1,4 +1,5 @@
 import prisma from "../../../../prisma/client";
+import { User } from "@prisma/client";
 
 const getAll = async () => {
   const bubblesResponse = await prisma.bubble.findMany({
@@ -73,7 +74,7 @@ const getById = async (id: string) => {
   return serializedBubble;
 };
 
-const create = async (title, description, content, author) => {
+const create = async (title: string, description: string, content: string, author: User) => {
   const createdBubble = await prisma.bubble.create({
     data: {
       title,

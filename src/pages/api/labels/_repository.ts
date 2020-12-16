@@ -6,7 +6,7 @@ const getAll = async () => {
   return labels;
 };
 
-const create = async (name, description, color) => {
+const create = async (name: string, description: string, color: string) => {
   const createdLabel = await prisma.label.create({
     data: {
       name,
@@ -17,7 +17,7 @@ const create = async (name, description, color) => {
   return createdLabel
 };
 
-const createAndLink = async (name, description, color, bubbleId) => {
+const createAndLink = async (name: string, description: string, color: string, bubbleId: number) => {
   const createdLabel = await prisma.label.create({
     data: {
       name,
@@ -31,7 +31,7 @@ const createAndLink = async (name, description, color, bubbleId) => {
   return createdLabel;
 };
 
-const connect = async (labelId, bubbleId) => {
+const connect = async (labelId: number, bubbleId: number) => {
   const conectedLabel = await prisma.label.update({
     where: { id: labelId },
     data: {
