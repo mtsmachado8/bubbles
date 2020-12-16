@@ -16,7 +16,7 @@ export default async (req, res) => {
           name,
           description,
           color,
-          bubbleId
+          bubbleId,
         );
         res.statusCode = 201;
         res.json(createdLabel);

@@ -1,6 +1,7 @@
 import prisma from "../../../../prisma/client";
+import { User } from '@prisma/client';
 
-const create = async (bubbleId, author, content) => {
+const create = async (bubbleId: number, author: User, content: string) => {
   const createdComment = await prisma.comment.create({
     data: {
       bubble: {

@@ -6,9 +6,9 @@ export default async (req, res) => {
 
     try {
       const createdComment = await create(
-        content,
         bubbleId,
         author,
+        content,
       );
       res.statusCode = 200;
       res.json(createdComment);
