@@ -6,11 +6,13 @@
 ## The Problem explained, Concept and Benchmarking (only available in pt-br)
 https://www.notion.so/Bubbles-9f62cfeb5e8a4999adf7bdf5af8f359f
 
-Please leave your comments, feedback and feature ideas on the document (soon we can make a Bubble for that kind of thing 😄 )
-
 ## Demo
 A demo is worth a thousand words, so take a look:  
 [Bubbles Demo](https://bubbles-demo.vercel.app/)
+
+## Proposals
+A demo is worth a thousand words, so take a look:  
+[Bubbles Proposals](https://bubbles-proposals.vercel.app/)
 
 ## Up and running
 
