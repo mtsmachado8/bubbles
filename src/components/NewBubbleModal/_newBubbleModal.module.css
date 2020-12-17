@@ -10,22 +10,12 @@
   width: 100%;
   margin-left: 2%;
 
+  padding-top: 20px;
   position: relative;
 }
 
 .newBubblePage img {
   display: none;
-}
-
-.newBubblePage .square {
-  display: none;
-  width: 20px;
-  height: 20px;
-  top: 35px;
-  left: 65px;
-  transform: rotate(45deg);
-  position: absolute;
-  background-color: var(--color-primary);
 }
 
 .newBubblePage .newBubbleDetails {
@@ -224,7 +214,7 @@
     display: inline-block;
     width: 25px;
     height: 25px;
-    top: 32px;
+    top: 52px;
     left: 105px;
     transform: rotate(45deg);
     position: absolute;

@@ -1,17 +1,12 @@
 .newCommentBox {
   display: flex;
-
-  width: 90%;
-
-  margin-left: 30px;
+  width: 100%;
   position: relative;
 }
 
 .newCommentBox img {
-  height: 40px;
   border-radius: 50%;
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-  margin: 0 25px 0 15px;
   display: none;
 }
 
@@ -150,22 +145,32 @@
   border: none;
 }
 
-@media (min-width: 900px) {
-  .newCommentBox {
-    width: 100%;
-    margin-left: 0;
-  }
-
+@media (min-width: 600px) {
   .newCommentBox img {
     height: 50px;
-    margin: 2px 45px 0 35px;
+    margin: 0 30px 0 0;
     display: block;
   }
 
   .newCommentBox .square {
     top: 18px;
-    left: 122px;
+    left: 71px;
     display: inline-block;
+  }
+}
+
+@media (min-width: 900px) {
+  .newCommentBox {
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .newCommentBox img {
+    margin: 0 30px 0 27px;
+  }
+
+  .newCommentBox .square {
+    left: 98px;
   }
 
   .newCommentBox .commentDetails .nameBox {

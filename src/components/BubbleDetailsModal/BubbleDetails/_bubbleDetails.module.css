@@ -1,6 +1,7 @@
 .container {
   display: flex;
   width: 100%;
+  padding-top: 20px;
 }
 
 .details {
@@ -40,9 +41,8 @@
 
 .details .textArea {
   background-color: var(--color-object-background);
-  overflow: auto;
   width: 100%;
-  padding: 10px 10px 10px 15px;
+  padding: 10px 12px 5px 15px;
   border-radius: 0 0 10px 10px;
   overflow: auto;
 }
@@ -51,4 +51,10 @@
   margin: 0;
   font-size: 16px;
   line-height: 22px;
+}
+
+.details .textArea .reactions {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }

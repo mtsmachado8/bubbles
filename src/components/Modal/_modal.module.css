@@ -36,10 +36,9 @@
 
 .modalContainer {
   position: absolute;
-  height: 95%;
+  height: 100%;
   width: 100%;
   padding: 0 10px 0 0;
-  top: 20px;
 }
 
 @media (min-width: 900px) {

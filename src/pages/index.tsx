@@ -100,9 +100,8 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
   return (
     <div className={styles.homePage}>
       <main className={styles.container}>
-        <Header/>
-
         <div className={styles.bubblesContainer}>
+          <Header/>
 
           {bubbles.map((bubble) => (
             <div key={bubble.id}>
