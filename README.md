@@ -11,7 +11,7 @@ A demo is worth a thousand words, so take a look:
 [Bubbles Demo](https://bubbles-demo.vercel.app/)
 
 ## Proposals
-Please leave your comments, feedback and feature ideas on
+Please leave your comments, feedback and feature ideas on:  
 [Bubbles Proposals](https://bubbles-proposals.vercel.app/)
 
 ## Up and running
