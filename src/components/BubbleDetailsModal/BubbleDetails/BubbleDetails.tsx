@@ -2,6 +2,8 @@ import React from "react";
 
 import { Bubble, Label, Comment } from "@prisma/client";
 
+import Reactions from '../../Reactions/Reactions';
+
 import styles from './_bubbleDetails.module.css';
 import Avatar from "../../Avatar/Avatar";
 
@@ -34,7 +36,7 @@ const BubbleDetails: React.FC<Props> = ({ bubble }: Props) => {
       <Avatar
         src={authorAvatar}
         alt='Author Avatar'
-        size={60}
+        size={65}
       />
       <div className={styles.details}>
         <div className={styles.square}></div>
@@ -44,6 +46,11 @@ const BubbleDetails: React.FC<Props> = ({ bubble }: Props) => {
         </div>
         <div className={styles.textArea}>
           <p>{bubble.content}</p>
+          <div className={styles.reactions}>
+            <Reactions 
+              comments={bubble.comments}
+            />
+          </div>
         </div>
       </div>
     </div>

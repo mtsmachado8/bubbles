@@ -88,39 +88,46 @@ const NewComment: React.FC<Props> = (props: Props) => {
         </div>
         <div className={styles.commentArea}>
           <textarea onChange={e => setContent(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
-          <div className={styles.buttonContent}>
-            <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>
-            <button type='submit' className={styles.submitButton}>{submitButton}</button>
-            {isLogedIn 
-              ? <GoogleLogout
-                  clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                  onLogoutSuccess={onLogoutGoogle}
-                  render={renderProps => (
-                    <button 
-                      onClick={renderProps.onClick} 
-                      disabled={renderProps.disabled}
-                      className={styles.loginButton}
-                      type='button'
-                    >Logout</button>
-                  )}
-                /> 
-              : <GoogleLogin
-                  clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                  isSignedIn={true}
-                  onSuccess={onSuccessGoogle}
-                  onFailure={onFailureGoogle}
-                  cookiePolicy={'single_host_origin'}
-                  render={renderProps => (
-                    <button 
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                      className={styles.loginButton}
-                      type='button'
-                    >Login with Google</button>
-                  )}
-                />
-              }
-          </div>
+          
+          {isLogedIn
+          ? <div className={styles.buttonContent}>
+              <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>
+              <GoogleLogout
+                clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
+                onLogoutSuccess={onLogoutGoogle}
+                render={renderProps => (
+                  <button 
+                    onClick={renderProps.onClick} 
+                    disabled={renderProps.disabled}
+                    className={styles.logoutButton}
+                    type='button'
+                  >Logout</button>
+                )}
+              />
+              <button type='submit' className={styles.loginButton}>{submitButton}</button>
+            </div>
+
+          : <div className={styles.buttonContent}>
+              <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>
+              <button type='submit' className={styles.submitButton}>{submitButton}</button>
+              <GoogleLogin
+                clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
+                isSignedIn={true}
+                onSuccess={onSuccessGoogle}
+                onFailure={onFailureGoogle}
+                cookiePolicy={'single_host_origin'}
+                render={renderProps => (
+                  <button 
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    className={styles.loginButton}
+                    type='button'
+                  >Login</button>
+                )}
+              />
+            </div>
+          }
+          
         </div>
       </form>
     </div>

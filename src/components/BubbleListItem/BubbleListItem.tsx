@@ -1,19 +1,27 @@
 import React from "react";
-import { Bubble, Label } from "@prisma/client";
+import { Bubble, Label, Comment } from "@prisma/client";
 import { format } from 'date-fns';
 
 import styles from './_bubbleListItem.module.css';
-import Avatar from '../Avatar/Avatar'
+import Reactions from "../Reactions/Reactions";
 
-type BubbleProps = Bubble & {
-  labels: Array<Label>;
+type FilledComment = Comment & {
+  author: {
+    avatarUrl: string;
+    name: string;
+  };
+};
+
+type FilledBubble = Bubble & {
+  labels: Label[];
+  comments: FilledComment[];
   author: {
       avatarUrl: string;
   };
 };
 
 type Props = {
-  bubble: BubbleProps,
+  bubble: FilledBubble;
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 };
 
@@ -26,24 +34,25 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick }: Props) => {
 
   return (
     <div onClick={onClick} className={styles.bubbleContainer}>
-      <Avatar
-        src={authorAvatar}
-        alt='User Avatar'
-        size={50}
-      />
+      <img src={authorAvatar} alt="Avatar" />
       <div className={styles.textContent}>
         <div className={styles.title}>
           <h2>{bubble.title}</h2>
           <div className={styles.labels}>
-          {newLabelsArray.map(label => (
+            {newLabelsArray.map(label => (
               <p key={label.id} style={{backgroundColor: label.color}}>{label.name}</p>
-          ))}
+            ))}
           </div>
         </div>
         <div className={styles.description}>
           <p>{bubble.description}</p>
         </div>
-        <p className={styles.date}>{format(new Date(bubble.createdAt), 'dd/MM/yyyy')}</p>
+        <div className={styles.reactions}>
+          <Reactions 
+            comments={bubble.comments}
+          />
+          <p className={styles.date}>{format(new Date(bubble.createdAt), 'dd/MM/yyyy')}</p>
+        </div>
       </div>
     </div>
   );

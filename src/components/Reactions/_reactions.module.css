@@ -1,0 +1,36 @@
+.reactions {
+  display: flex;
+  margin: 10px 0 0;
+  height: 20px;
+}
+
+.reactions .comments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-left: 8px;
+  cursor: pointer;
+  color: var(--color-text-contrast-secondary);
+  transition: 200ms;
+}
+
+.reactions .comments:hover {
+  color: var(--color-primary-lighter);
+}
+
+.reactions .comments p {
+  font-size: 16px;
+  padding-left: 5px;
+  margin: 0;
+}
+
+@media (min-width: 700px) {
+  .reactions .comments {
+    font-size: 16px;
+  }
+
+  .reactions .comments p {
+    font-size: 18px;
+  }
+}

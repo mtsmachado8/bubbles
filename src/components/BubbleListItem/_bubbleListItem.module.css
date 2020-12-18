@@ -3,7 +3,7 @@
   background-color: var(--color-object-background);
   box-shadow: 1px 1px 5px -3px var(--color-text-contrast);
   border-radius: 10px;
-  padding: 5px 15px;
+  padding: 5px 15px 0 0;
   display: flex;
   transition: 200ms;
   margin: 5px 0 20px 8px;
@@ -14,11 +14,12 @@
   cursor: pointer;
 }
 
-.image {
+.bubbleContainer img {
+  height: 50px;
+  margin: 10px 15px;
+  display: block;
   border-radius: 50%;
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
-  margin-top: 10px;
-  margin-right: 10px;
 }
 
 .textContent {
@@ -30,7 +31,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  overflow: visible;
 }
 
 .textContent .title h2 {
@@ -42,39 +42,39 @@
 
 .textContent .title .labels {
   display: none;
+  transition: 300ms;
+}
+
+.textContent .title .labels p:hover {
+  opacity: 0.7;
 }
 
 .textContent .description {
   width: 100%;
 }
 
-.textContent .description::-webkit-scrollbar-track {
-  background-color: var(--color-text-primary);
-}
-
-.textContent .description::-webkit-scrollbar {
-  width: 6px;
-  background: #F4F4F4;
-}
-
-.textContent .description::-webkit-scrollbar-thumb {
-  background: #dad7d7;
-  border-radius: 15px;
-}
-
 .textContent .description p {
   font-size: 15px;
   font-weight: bold;
   line-height: 22px;
-  margin-top: 0;
+  margin: 0;
   color: var(--color-text-contrast-secondary);
 }
 
-.textContent .date {
-  text-align: right;
+.textContent .reactions {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 5px;
+  height: 40px;
+}
+
+.textContent .reactions .date {
   font-size: 10px;
   color: var(--color-text-contrast-secondary);
-  margin: 0;
+  padding-top: 5px;
+  margin: 0 0 3px;
 }
 
 @media (min-width: 900px) {
@@ -82,8 +82,9 @@
     padding: 5px 20px;
   }
 
-  .image {
+  .bubbleContainer img {
     height: 55px;
+    margin: 10px 15px 0 0;
   }
   
   .textContent .title h2 {
@@ -103,10 +104,11 @@
     color: var(--color-text-primary);
     width: 115px;
     height: 20px;
-    padding-top: 4px;
+    padding-top: 3px;
     text-align: center;
     border-radius: 30px;
     margin-left: 20px;
+    transition: 300ms;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   }
 
@@ -115,7 +117,7 @@
     line-height: 26px;
   }
 
-  .textContent .date {
+  .textContent .reactions .date {
     font-size: 12px;
     margin: 0;
   }

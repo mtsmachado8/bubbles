@@ -45,13 +45,15 @@ const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
           <Comments bubble={props.bubble} />
 
           {isNewCommentVisible
-          ? <NewComment 
-              onClick={() => setIsNewCommentVisible(false)}
-              onSubmitNewComment={props.onSubmitNewComment}
-            />
+          ? <div className={styles.newComment}>
+              <NewComment 
+                onClick={() => setIsNewCommentVisible(false)}
+                onSubmitNewComment={props.onSubmitNewComment}
+              />
+            </div>
 
           : <div className={styles.buttonBox}>
-              <button type='button' onClick={() => setIsNewCommentVisible(true)}>Comment here</button>
+              <button type='button' onClick={() => setIsNewCommentVisible(true)}>Comment</button>
             </div>
           }
         </section>
