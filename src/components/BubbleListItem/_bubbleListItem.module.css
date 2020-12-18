@@ -46,7 +46,7 @@
 }
 
 .textContent .title .labels p:hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .textContent .description {
@@ -63,17 +63,18 @@
 
 .textContent .reactions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
   margin-top: 5px;
   height: 40px;
 }
 
-.textContent .date {
+.textContent .reactions .date {
   font-size: 10px;
   color: var(--color-text-contrast-secondary);
-  padding-top: 15px;
-  margin: 0;
+  padding-top: 5px;
+  margin: 0 0 3px;
 }
 
 @media (min-width: 900px) {
@@ -116,7 +117,8 @@
     line-height: 26px;
   }
 
-  .textContent .date {
+  .textContent .reactions .date {
     font-size: 12px;
+    margin: 0;
   }
 }

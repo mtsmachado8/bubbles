@@ -4,27 +4,6 @@
   height: 20px;
 }
 
-.reactions .actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  cursor: pointer;
-  color: var(--color-text-contrast-secondary);
-  margin-right: 7px;
-  transition: 200ms;
-}
-
-.reactions .actions:hover {
-  color: var(--color-primary-lighter);
-}
-
-.reactions .actions p {
-  padding-left: 4px;
-  font-size: 16px;
-  margin: 0;
-}
-
 .reactions .comments {
   display: flex;
   align-items: center;
@@ -47,14 +26,6 @@
 }
 
 @media (min-width: 700px) {
-  .reactions .actions {
-    font-size: 20px;
-  }
-
-  .reactions .actions p {
-    font-size: 18px;
-  }
-
   .reactions .comments {
     font-size: 16px;
   }

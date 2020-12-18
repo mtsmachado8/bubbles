@@ -21,10 +21,6 @@ type Props = {
 const Reactions: React.FC<Props> = ({comments}: Props) => {
   return(
     <div className={styles.reactions}>
-      <div className={styles.actions}>
-        <BiLike className={styles.likeIcon} />
-        <p>0</p>
-      </div>
       <div className={styles.comments}>
         <FaRegCommentAlt />
         <p>{comments.length}</p>

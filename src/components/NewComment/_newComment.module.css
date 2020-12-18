@@ -95,7 +95,8 @@
 }
 
 .newCommentBox .commentDetails .commentArea .buttonContent .cancelButton, 
-.submitButton {
+.submitButton, 
+.logoutButton {
   background-color: var(--color-object-background);
   color: var(--color-primary);
   position: relative;
@@ -108,7 +109,7 @@
   background-color: var(--color-primary);
   position: absolute;
   bottom: 2px;
-  left: 25px;
+  left: 20px;
   transition: 300ms ease;
 }
 
@@ -124,7 +125,7 @@
   background-color: var(--color-primary);
   position: absolute;
   bottom: 0;
-  left: 5px;
+  left: 0;
   transition: 300ms ease;
 }
 
@@ -143,6 +144,22 @@
   background-color: var(--color-primary-light);
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
   border: none;
+}
+
+.newCommentBox .commentDetails .commentArea .buttonContent .logoutButton::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  position: absolute;
+  bottom: 2px;
+  left: 20px;
+  transition: 300ms ease;
+}
+
+.newCommentBox .commentDetails .commentArea .buttonContent .logoutButton:hover::after {
+  width: 53px;
+  transition: 300ms ease;
 }
 
 @media (min-width: 600px) {
@@ -198,7 +215,7 @@
   }
 
   .newCommentBox .commentDetails .commentArea .buttonContent .cancelButton::after {
-    bottom: 4px;
+    bottom: 0;
     left: 23px;
   }
 
@@ -207,11 +224,20 @@
   }
 
   .newCommentBox .commentDetails .commentArea .buttonContent .submitButton::after {
-    bottom: 6px;
+    bottom: 3px;
     left: 15px;
   }
 
   .newCommentBox .commentDetails .commentArea .buttonContent .submitButton:hover::after {
     width: 170px;
+  }
+
+  .newCommentBox .commentDetails .commentArea .buttonContent .logoutButton::after {
+    bottom: 0;
+    left: 20px;
+  }
+
+  .newCommentBox .commentDetails .commentArea .buttonContent .logoutButton:hover::after {
+    width: 63px;
   }
 }

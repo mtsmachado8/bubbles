@@ -117,22 +117,27 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                 placeholder={placeholder} 
                 onChange={e => setContent(e.target.value)}
               />
-              <div className={styles.buttonContent}>
-                <button type="submit" className={styles.submit}>{submitButton}</button>
 
-                {isLogedIn 
-                ? <GoogleLogout
-                    clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                    onLogoutSuccess={onLogoutGoogle}
-                    render={renderProps => (
-                      <button 
-                        onClick={renderProps.onClick} 
-                        disabled={renderProps.disabled}
-                        type='button'
-                      >Logout</button>
-                    )}
-                  /> 
-                : <GoogleLogin
+              {isLogedIn
+              ? <div className={styles.buttonContent}>
+                  <GoogleLogout
+                      clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
+                      onLogoutSuccess={onLogoutGoogle}
+                      render={renderProps => (
+                        <button
+                          className={styles.logout}
+                          onClick={renderProps.onClick} 
+                          disabled={renderProps.disabled}
+                          type='button'
+                        >Logout</button>
+                      )}
+                    /> 
+                  <button type="submit">{submitButton}</button>
+                </div>
+
+              : <div className={styles.buttonContent}>
+                  <button type="submit" className={styles.submit}>{submitButton}</button>
+                  <GoogleLogin
                     clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
                     isSignedIn={true}
                     onSuccess={onSuccessGoogle}
@@ -143,11 +148,12 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
                         type='button'
-                      >Login with Google</button>
+                      >Login</button>
                     )}
                   />
-                }
-              </div>
+                </div>
+              }
+              
             </div>
 
           </form>

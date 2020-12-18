@@ -53,7 +53,7 @@ const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
             </div>
 
           : <div className={styles.buttonBox}>
-              <button type='button' onClick={() => setIsNewCommentVisible(true)}>Comment here</button>
+              <button type='button' onClick={() => setIsNewCommentVisible(true)}>Comment</button>
             </div>
           }
         </section>
