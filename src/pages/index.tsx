@@ -20,8 +20,6 @@ import postBubbles from '../infra/services/postBubbles';
 import postLabels from '../infra/services/postLabels';
 
 import styles from './_home.module.css';
-import GoogleLogin from "react-google-login";
-import { toast } from "react-toastify";
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubbles = await getAllBubbles();
