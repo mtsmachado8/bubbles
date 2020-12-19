@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { getAll as getAllBubbles } from './api/bubbles/_repository';
 import { getAll as getAllLabels } from './api/labels/_repository';
 import { Bubble, Label, Comment } from "@prisma/client";
-import useFetch from "../hooks/swr";
+import useFetch from "../infra/hooks/swr";
 
 import BubbleDetailsModal from "../components/BubbleDetailsModal/BubbleDetailsModal";
 import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
@@ -14,12 +14,14 @@ import FloatingButton from '../components/FloatingButton/FloatingButton';
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 import Header from '../components/Header/Header';
 
-import alteredLabels from '../services/alteredLabels';
-import postComments from '../services/postComments';
-import postBubbles from '../services/postBubbles';
-import postLabels from '../services/postLabels';
+import alteredLabels from '../infra/services/alteredLabels';
+import postComments from '../infra/services/postComments';
+import postBubbles from '../infra/services/postBubbles';
+import postLabels from '../infra/services/postLabels';
 
 import styles from './_home.module.css';
+import GoogleLogin from "react-google-login";
+import { toast } from "react-toastify";
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubbles = await getAllBubbles();

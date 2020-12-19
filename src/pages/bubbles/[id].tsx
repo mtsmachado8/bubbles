@@ -7,10 +7,10 @@ import prisma from '../../../prisma/client';
 
 import BubbleDetailsModal from "../../components/BubbleDetailsModal/BubbleDetailsModal";
 
-import alteredLabels from '../../services/alteredLabels';
-import postComments from '../../services/postComments';
-import postLabels from '../../services/postLabels';
-import useFetch from "../../hooks/swr";
+import alteredLabels from '../../infra/services/alteredLabels';
+import postComments from '../../infra/services/postComments';
+import postLabels from '../../infra/services/postLabels';
+import useFetch from "../../infra/hooks/swr";
 import { getById as getBubbleById } from "../api/bubbles/_repository";
 import { getAll as getAllLabels } from "../api/labels/_repository";
 
