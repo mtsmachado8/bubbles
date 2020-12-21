@@ -25,10 +25,17 @@ const put = async (url: string, data: any) => {
   return response.data;
 };
 
+const remove = async (url: string) => {
+  const response = await createdApi.delete(url);
+
+  return response.data;
+};
+
 const api = {
   get,
   post,
   put,
+  remove,
 };
 
 export { api };

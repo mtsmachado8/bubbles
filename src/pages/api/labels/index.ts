@@ -11,32 +11,25 @@ export default async (req, res) => {
     const { name, description, color, bubbleId } = req.body;
 
     if(bubbleId) {
-      try{
-        const createdLabel = await createAndLink(
-          name,
-          description,
-          color,
-          bubbleId,
-        );
-        res.statusCode = 201;
-        res.json(createdLabel);
-      } catch (err) {
-        res.statusCode = 500;
-        res.json(err);
-      };
+      const createdLabel = await createAndLink(
+        name,
+        description,
+        color,
+        bubbleId,
+      );
+      
+      res.statusCode = 201;
+      res.json(createdLabel);
+
     } else {
-      try{
-        const createdLabel = await create(
-          name,
-          description,
-          color,
-        );
-        res.statusCode = 201;
-        res.json(createdLabel);
-      } catch (err) {
-        res.statusCode = 500;
-        res.json(err);
-      };
+      const createdLabel = await create(
+        name,
+        description,
+        color,
+      );
+
+      res.statusCode = 201;
+      res.json(createdLabel);
     };
   };
 };

@@ -1,6 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { toast } from 'react-toastify';
 import AuthContext from '../../infra/contexts/AuthContext';
 
 import Modal from '../Modal/Modal';
@@ -14,7 +12,7 @@ type Props = {
 
 const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
   const { 
-    userProfile,
+    loggedUser,
     login,
     logout,
   } = useContext(AuthContext);
@@ -24,9 +22,9 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   const [ title, setTitle ] = useState('');
 
   const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
-  const submitButton = userProfile ? `Submit with ${userProfile.firstName}` : 'Submit Anonymously';
-  const image = userProfile?.avatarUrl
-    ? userProfile?.avatarUrl
+  const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
+  const image = loggedUser?.avatarUrl
+    ? loggedUser?.avatarUrl
     : '/anonymous-image.png';
 
   const bubble = {
@@ -45,7 +43,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
             className={styles.newBubbleDetails}
             onSubmit={e => {
               e.preventDefault();
-              onSubmitNewBubble(bubble, userProfile);
+              onSubmitNewBubble(bubble, loggedUser);
             }}
           >
             <div className={styles.titleContainer}>
@@ -77,19 +75,27 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                 onChange={e => setContent(e.target.value)}
               />
 
-                {userProfile 
-                  ? 
-                    <button 
-                      onClick={logout} 
-                      type='button'
-                    >Logout
-                    </button>
-                  : 
-                    <button 
-                      onClick={login}
-                    >Login</button>
-                }
-              </div>
+              {loggedUser
+              ? <div className={styles.buttonContent}>
+                  <button 
+                    className={styles.logout}
+                    onClick={logout} 
+                    type='button'
+                  >Logout</button>
+
+                  <button type='submit'>{submitButton}</button>
+                </div>
+
+              : <div className={styles.buttonContent}>
+                  <button type='submit' className={styles.submit}>{submitButton}</button>
+
+                  <button
+                    onClick={login}
+                    type='button'
+                  >Login</button>
+                </div>
+              }
+            </div>
           </form>
         </section>
 

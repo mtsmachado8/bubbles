@@ -1,5 +1,5 @@
 import React from "react";
-import { Bubble, Label, Comment } from "@prisma/client";
+import { Bubble, Label, Comment, Like } from "@prisma/client";
 import { format } from 'date-fns';
 
 import styles from './_bubbleListItem.module.css';
@@ -12,8 +12,15 @@ type FilledComment = Comment & {
   };
 };
 
+type FilledLike = Like & {
+  author: {
+    email: string;
+  };
+};
+
 type FilledBubble = Bubble & {
   labels: Label[];
+  likes: FilledLike[];
   comments: FilledComment[];
   author: {
       avatarUrl: string;
@@ -23,9 +30,10 @@ type FilledBubble = Bubble & {
 type Props = {
   bubble: FilledBubble;
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+  onSubmitNewLike: Function;
 };
 
-const BubbleListItem: React.FC<Props> = ({ bubble, onClick }: Props) => {
+const BubbleListItem: React.FC<Props> = ({ bubble, onClick, onSubmitNewLike }: Props) => {
   const authorAvatar = bubble.author?.avatarUrl
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
@@ -48,8 +56,10 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick }: Props) => {
           <p>{bubble.description}</p>
         </div>
         <div className={styles.reactions}>
-          <Reactions 
+          <Reactions
             comments={bubble.comments}
+            likes={bubble.likes}
+            onSubmitNewLike={onSubmitNewLike}
           />
           <p className={styles.date}>{format(new Date(bubble.createdAt), 'dd/MM/yyyy')}</p>
         </div>

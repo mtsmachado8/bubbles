@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Bubble, Label, Comment } from "@prisma/client";
+import { Bubble, Label, Comment, Like } from "@prisma/client";
 
 import Modal from "../Modal/Modal";
 import Comments from '../Comments/Comments';
@@ -16,8 +16,15 @@ type FilledComment = Comment & {
   };
 };
 
+type FilledLike = Like & {
+  author: {
+    email: string;
+  };
+};
+
 type FilledBubble = Bubble & {
   labels: Label[];
+  likes: FilledLike[];
   comments: FilledComment[];
   author: {
       avatarUrl: string;
@@ -31,6 +38,7 @@ type Props = {
   onSubmitNewComment: Function;
   onSubmitNewLabel: Function;
   onConfigChange: Function;
+  onSubmitNewLike: Function;
 };
 
 const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
@@ -40,7 +48,10 @@ const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
     <Modal onClose={props.onClose}>
       <div className={styles.content}>
         <section className={styles.detailsContent}>
-          <BubbleDetails bubble={props.bubble}/>
+          <BubbleDetails 
+            bubble={props.bubble}
+            onSubmitNewLike={props.onSubmitNewLike}
+          />
 
           <Comments bubble={props.bubble} />
 

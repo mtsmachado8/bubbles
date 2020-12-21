@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Bubble, Label, Comment } from "@prisma/client";
+import { Bubble, Label, Comment, Like } from "@prisma/client";
 
 import Reactions from '../../Reactions/Reactions';
 
@@ -14,8 +14,15 @@ type FilledComment = Comment & {
   };
 };
 
+type FilledLike = Like & {
+  author: {
+    email: string;
+  };
+};
+
 type FilledBubble = Bubble & {
   labels: Label[];
+  likes: FilledLike[];
   comments: FilledComment[];
   author: {
       avatarUrl: string;
@@ -24,9 +31,10 @@ type FilledBubble = Bubble & {
 
 type Props = {
   bubble: FilledBubble;
+  onSubmitNewLike: Function;
 };
 
-const BubbleDetails: React.FC<Props> = ({ bubble }: Props) => {
+const BubbleDetails: React.FC<Props> = ({ bubble, onSubmitNewLike }: Props) => {
   const authorAvatar = bubble.author?.avatarUrl 
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
@@ -49,6 +57,8 @@ const BubbleDetails: React.FC<Props> = ({ bubble }: Props) => {
           <div className={styles.reactions}>
             <Reactions 
               comments={bubble.comments}
+              likes={bubble.likes}
+              onSubmitNewLike={onSubmitNewLike}
             />
           </div>
         </div>

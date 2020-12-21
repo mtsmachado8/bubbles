@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GetStaticProps, NextPage } from "next";
 import Router from "next/router";
 import Link from 'next/link';
 
 import { getAll as getAllBubbles } from './api/bubbles/_repository';
 import { getAll as getAllLabels } from './api/labels/_repository';
-import { Bubble, Label, Comment } from "@prisma/client";
+import { Bubble, Label, Comment, Like } from "@prisma/client";
+import AuthContext from "../infra/contexts/AuthContext";
 import useFetch from "../infra/hooks/swr";
 
 import BubbleDetailsModal from "../components/BubbleDetailsModal/BubbleDetailsModal";
@@ -15,6 +16,7 @@ import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 import Header from '../components/Header/Header';
 
 import alteredLabels from '../infra/services/alteredLabels';
+import alteredLikes from '../infra/services/alteredLikes';
 import postComments from '../infra/services/postComments';
 import postBubbles from '../infra/services/postBubbles';
 import postLabels from '../infra/services/postLabels';
@@ -40,9 +42,16 @@ type FilledComment = Comment & {
   };
 };
 
+type FilledLike = Like & {
+  author: {
+    email: string;
+  };
+};
+
 type FilledBubble = Bubble & {
   labels: Label[];
   comments: FilledComment[];
+  likes: FilledLike[];
   author: {
       avatarUrl: string;
   };
@@ -79,6 +88,12 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
   }, [bubblesData, labelsData]);
 
+  const { 
+    loggedUser,
+    login,
+    logout,
+  } = useContext(AuthContext);
+
   const postBubble = (bubblInfo, userInfo) => {
     postBubbles(bubblInfo, userInfo);
     Router.push('/');
@@ -97,6 +112,10 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
     alteredLabels(id , selectedLabel, oppenedBubbleId);
   };
 
+  const alteredLike = (id) => {
+    alteredLikes(oppenedBubbleId, loggedUser, id);
+  };
+
   return (
     <div className={styles.homePage}>
       <main className={styles.container}>
@@ -112,17 +131,19 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
                     setOppenedBubbleId(bubble.id)}
                   }
                   bubble={bubble}
+                  onSubmitNewLike={alteredLike}
                 />
               </Link>
 
               {isBubbleDetailsVisible && bubble.id === oppenedBubbleId ?
                 <BubbleDetailsModal
-                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/')}}
+                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/'); setOppenedBubbleId(null)}}
                   bubble={bubble}
                   allLabels={labels}
                   onSubmitNewLabel={postLabel}
                   onConfigChange={alteredLabel}
                   onSubmitNewComment={postComment}
+                  onSubmitNewLike={alteredLike}
                 />
               : null}
             </div>

@@ -20,6 +20,7 @@ model Bubble {
   authorId    Int?
   labels      Label[]
   comments    Comment[]
+  likes       Like[]
 }
 
 model User {
@@ -44,5 +45,12 @@ model Comment {
   authorId    Int?
   content     String
   createdAt   DateTime @default(now())
+  bubble      Bubble
+}
+
+model Like {
+  id          Int      @default(autoincrement()) @id
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
   bubble      Bubble
 }

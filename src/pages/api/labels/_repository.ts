@@ -31,9 +31,9 @@ const createAndLink = async (name: string, description: string, color: string, b
   return createdLabel;
 };
 
-const connect = async (labelId: number, bubbleId: number) => {
+const connect = async (labelId: string, bubbleId: number) => {
   const conectedLabel = await prisma.label.update({
-    where: { id: labelId },
+    where: { id: parseInt(labelId) },
     data: {
       Bubbles: {
         connect: { id: bubbleId },
@@ -43,9 +43,9 @@ const connect = async (labelId: number, bubbleId: number) => {
   return conectedLabel;
 };
 
-const disconnect = async (labelId: number, bubbleId: number) => {
+const disconnect = async (labelId: string, bubbleId: number) => {
   const disconnectedLabel = await prisma.label.update({
-    where: { id: labelId },
+    where: { id: parseInt(labelId) },
     data: {
       Bubbles: {
         disconnect: { id: bubbleId },

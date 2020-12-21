@@ -9,7 +9,7 @@ import {
 import { toast } from 'react-toastify';
 
 const AuthContext = createContext<{
-  userProfile: UserProfile,
+  loggedUser: UserProfile,
   login: () => void,
   logout: () => void,
 }>(null);
@@ -23,12 +23,11 @@ type Props = {
 type UserProfile = {
   name: string,
   email: string,
-  firstName: string,
   avatarUrl: string,
 }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [userProfile, _setUserProfile] = useState<UserProfile>(null);
+  const [loggedUser, _setUserProfile] = useState<UserProfile>(null);
   
   const onFailureGoogle = (error: any) => {
     console.log(error)
@@ -54,7 +53,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     _setUserProfile({
       name: profileObj.name,
       email: profileObj.email,
-      firstName: profileObj.givenName,
       avatarUrl: profileObj.imageUrl,
     })
 
@@ -82,7 +80,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     <>
       <Provider
         value={{
-          userProfile,
+          loggedUser,
           login,
           logout
         }}
