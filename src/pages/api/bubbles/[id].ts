@@ -8,8 +8,5 @@ export default async (req, res) => {
     
     res.statusCode = 200;
     res.json(bubble);
-  } else {
-    res.statusCode = 200;
-    res.json({ name: 'John Doe' });
   };
 };

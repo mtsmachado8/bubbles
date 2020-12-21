@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { toast } from 'react-toastify';
+import React, { useContext, useState } from 'react';
+import AuthContext from '../../infra/contexts/AuthContext';
 
 import styles from './_newComment.module.css';
 
@@ -11,65 +10,23 @@ type Props = {
 }
 
 const NewComment: React.FC<Props> = (props: Props) => {
-  const [ isLogedIn, setIsLogedIn ] = useState(false);
-
-  const [ avatarUrl, setAvatarUrl ] = useState('');
-  const [ firstName, setFirstName ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ name, setName ] = useState('');
-
   const [ content, setContent ] = useState('');
 
-  const submitButton = isLogedIn ? `Comment with ${firstName}` : 'Comment Anonymously';
-  const userName = isLogedIn ? `${name}` : 'Anonymous'
-  const image = avatarUrl
-    ? avatarUrl
-    : '/anonymous-image.png';
+  const { 
+    loggedUser,
+    login,
+    logout,
+  } = useContext(AuthContext);
 
-  const user = {
-    avatarUrl,
-    email,
-    name,
-  };
+  const submitButton = loggedUser ? `Comment with ${loggedUser.name.split(' ')[0]}` : 'Comment Anonymously';
+  const userName = loggedUser ? `${loggedUser.name}` : 'Anonymous'
+  const image = loggedUser
+  ? loggedUser.avatarUrl
+  : '/anonymous-image.png';
 
   const onSubmitNewComment = (content, user, e) => {
     props.onClick(e);
     props.onSubmitNewComment(content, user);
-  };
-
-  const onSuccessGoogle = response => {
-    setAvatarUrl(response.profileObj.imageUrl);
-    setEmail(response.profileObj.email);
-    setName(response.profileObj.name);
-    setFirstName(response.profileObj.givenName);
-    setIsLogedIn(true);
-    toast.dark(`Welcome Mr(s) ${response.profileObj.familyName}`, {
-      autoClose: 2500,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-    });
-  };
-
-  const onFailureGoogle = response => {
-    console.log(response);
-    toast.error('Ops... There was a connection error', {
-      autoClose: 2500,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-    });
-  };
-
-  const onLogoutGoogle = () => {
-    setAvatarUrl('');
-    setEmail('');
-    setName('');
-    setFirstName('');
-    setIsLogedIn(false);
-    toast.dark('Bye! See you later', {
-      autoClose: 2500,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-    });
   };
 
   return(
@@ -80,7 +37,7 @@ const NewComment: React.FC<Props> = (props: Props) => {
         className={styles.commentDetails}
         onSubmit={e => {
           e.preventDefault();
-          onSubmitNewComment(content, user, e);
+          onSubmitNewComment(content, loggedUser, e);
         }}
       >
         <div className={styles.nameBox}>
@@ -89,42 +46,27 @@ const NewComment: React.FC<Props> = (props: Props) => {
         <div className={styles.commentArea}>
           <textarea onChange={e => setContent(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
           
-          {isLogedIn
+          {loggedUser
           ? <div className={styles.buttonContent}>
               <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>
-              <GoogleLogout
-                clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                onLogoutSuccess={onLogoutGoogle}
-                render={renderProps => (
-                  <button 
-                    onClick={renderProps.onClick} 
-                    disabled={renderProps.disabled}
-                    className={styles.logoutButton}
-                    type='button'
-                  >Logout</button>
-                )}
-              />
+              
+              <button
+                className={styles.logoutButton}
+                onClick={logout}
+                type='button'
+              >Logout</button>
+
               <button type='submit' className={styles.loginButton}>{submitButton}</button>
             </div>
 
           : <div className={styles.buttonContent}>
               <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>
               <button type='submit' className={styles.submitButton}>{submitButton}</button>
-              <GoogleLogin
-                clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                isSignedIn={true}
-                onSuccess={onSuccessGoogle}
-                onFailure={onFailureGoogle}
-                cookiePolicy={'single_host_origin'}
-                render={renderProps => (
-                  <button 
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                    className={styles.loginButton}
-                    type='button'
-                  >Login</button>
-                )}
-              />
+              <button
+                className={styles.loginButton}
+                onClick={login}
+                type='button'
+              >Login</button>
             </div>
           }
           

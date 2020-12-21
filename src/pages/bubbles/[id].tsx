@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Router from "next/router";
 
-import { Bubble, Label, Comment } from "@prisma/client";
+import { Bubble, Label, Comment, Like } from "@prisma/client";
 import prisma from '../../../prisma/client';
 
 import BubbleDetailsModal from "../../components/BubbleDetailsModal/BubbleDetailsModal";
 
-import alteredLabels from '../../services/alteredLabels';
-import postComments from '../../services/postComments';
-import postLabels from '../../services/postLabels';
-import useFetch from "../../hooks/swr";
+import alteredLabels from '../../infra/services/alteredLabels';
+import postComments from '../../infra/services/postComments';
+import postLabels from '../../infra/services/postLabels';
+import useFetch from "../../infra/hooks/swr";
 import { getById as getBubbleById } from "../api/bubbles/_repository";
 import { getAll as getAllLabels } from "../api/labels/_repository";
 
@@ -47,6 +47,7 @@ type FilledComment = Comment & {
 type FilledBubble = Bubble & {
   labels: Label[];
   comments: FilledComment[];
+  likes: Like[];
   author: {
       avatarUrl: string;
   };

@@ -71,7 +71,7 @@
 }
 
 .textContent .reactions .date {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--color-text-contrast-secondary);
   padding-top: 5px;
   margin: 0 0 3px;
@@ -118,7 +118,7 @@
   }
 
   .textContent .reactions .date {
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
   }
 }

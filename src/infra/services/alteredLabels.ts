@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 const alteredLabels = async (labelId: Number, isSelectedLabel: Boolean, bubbleId: Number) => {
   try {
     await api.put(`/labels/${labelId}`, {
-      labelId,
       bubbleId,
       isSelectedLabel,
     });

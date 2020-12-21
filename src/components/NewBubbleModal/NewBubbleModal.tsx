@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { toast } from 'react-toastify';
+import React, { useContext, useState } from 'react';
+import AuthContext from '../../infra/contexts/AuthContext';
 
 import Modal from '../Modal/Modal';
 
@@ -12,68 +11,26 @@ type Props = {
 };
 
 const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) => {
-  const [ isLogedIn, setIsLogedIn ] = useState(false);
-
+  const { 
+    loggedUser,
+    login,
+    logout,
+  } = useContext(AuthContext);
+  
   const [ description, setDescription ] = useState('');
   const [ content, setContent ] = useState('');
   const [ title, setTitle ] = useState('');
 
-  const [ avatarUrl, setAvatarUrl ] = useState('');
-  const [ firstName, setFirstName ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ name, setName ] = useState('');
-
   const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
-  const submitButton = isLogedIn ? `Submit with ${firstName}` : 'Submit Anonymously';
-  const image = avatarUrl
-    ? avatarUrl
+  const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
+  const image = loggedUser?.avatarUrl
+    ? loggedUser?.avatarUrl
     : '/anonymous-image.png';
-
-  const user = {
-    avatarUrl,
-    email,
-    name,
-  };
 
   const bubble = {
     description,
     content,
     title,
-  };
-
-  const onSuccessGoogle = response => {
-    setAvatarUrl(response.profileObj.imageUrl);
-    setEmail(response.profileObj.email);
-    setName(response.profileObj.name);
-    setFirstName(response.profileObj.givenName);
-    setIsLogedIn(true);
-    toast.dark(`Welcome Mr(s) ${response.profileObj.familyName}`, {
-      autoClose: 2500,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-    });
-  };
-
-  const onFailureGoogle = response => {
-    console.log(response);
-    toast.error('Ops... There was a connection error', {
-      autoClose: 2500,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-    });
-  };
-
-  const onLogoutGoogle = () => {
-    setAvatarUrl('');
-    setEmail('');
-    setName('');
-    setFirstName('');
-    setIsLogedIn(false);
-    toast.dark('Bye! See you later', {
-      autoClose: 2500,
-      pauseOnHover: false,
-      pauseOnFocusLoss: false,
-    });
   };
 
   return(
@@ -86,7 +43,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
             className={styles.newBubbleDetails}
             onSubmit={e => {
               e.preventDefault();
-              onSubmitNewBubble(bubble, user);
+              onSubmitNewBubble(bubble, loggedUser);
             }}
           >
             <div className={styles.titleContainer}>
@@ -118,44 +75,27 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                 onChange={e => setContent(e.target.value)}
               />
 
-              {isLogedIn
+              {loggedUser
               ? <div className={styles.buttonContent}>
-                  <GoogleLogout
-                      clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                      onLogoutSuccess={onLogoutGoogle}
-                      render={renderProps => (
-                        <button
-                          className={styles.logout}
-                          onClick={renderProps.onClick} 
-                          disabled={renderProps.disabled}
-                          type='button'
-                        >Logout</button>
-                      )}
-                    /> 
-                  <button type="submit">{submitButton}</button>
+                  <button 
+                    className={styles.logout}
+                    onClick={logout} 
+                    type='button'
+                  >Logout</button>
+
+                  <button type='submit'>{submitButton}</button>
                 </div>
 
               : <div className={styles.buttonContent}>
-                  <button type="submit" className={styles.submit}>{submitButton}</button>
-                  <GoogleLogin
-                    clientId="17940802887-ohvi1iv0t9bi0npo26cetochgff4u16e.apps.googleusercontent.com"
-                    isSignedIn={true}
-                    onSuccess={onSuccessGoogle}
-                    onFailure={onFailureGoogle}
-                    cookiePolicy={'single_host_origin'}
-                    render={renderProps => (
-                      <button 
-                        onClick={renderProps.onClick}
-                        disabled={renderProps.disabled}
-                        type='button'
-                      >Login</button>
-                    )}
-                  />
+                  <button type='submit' className={styles.submit}>{submitButton}</button>
+
+                  <button
+                    onClick={login}
+                    type='button'
+                  >Login</button>
                 </div>
               }
-              
             </div>
-
           </form>
         </section>
 

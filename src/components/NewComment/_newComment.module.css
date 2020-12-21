@@ -220,7 +220,7 @@
   }
 
   .newCommentBox .commentDetails .commentArea .buttonContent .cancelButton:hover::after {
-    width: 55px;
+    width: 58px;
   }
 
   .newCommentBox .commentDetails .commentArea .buttonContent .submitButton::after {

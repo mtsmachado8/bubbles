@@ -3,7 +3,7 @@ import Router from 'next/router';
 
 import NewBubbleModal from '../../components/NewBubbleModal/NewBubbleModal';
 
-import postBubbles from '../../services/postBubbles';
+import postBubbles from '../../infra/services/postBubbles';
 
 const NewBubble: React.FC = () => {
   

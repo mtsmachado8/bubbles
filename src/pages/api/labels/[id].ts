@@ -4,32 +4,25 @@ export default async (req, res) => {
   if (req.method === 'PUT') {
     const { query: { id } } = req;
     
-    const { isSelectedLabel, bubbleId, labelId } = req.body;
+    const { isSelectedLabel, bubbleId } = req.body;
     
     if(isSelectedLabel) {
-      try {
-        const disconnectedLabel = await disconnect(
-          labelId,
-          bubbleId,
-        );
-        res.statusCode = 200;
-        res.json(disconnectedLabel);
-      } catch (err) {
-        res.statusCode = 500;
-        res.json(err);
-      };
+      const disconnectedLabel = await disconnect(
+        id,
+        bubbleId,
+      );
+
+      res.statusCode = 200;
+      res.json(disconnectedLabel);
+      
     } else {
-      try {
-        const connectedLabel = await connect(
-          labelId,
-          bubbleId,
-        );
-        res.statusCode = 200;
-        res.json(connectedLabel);
-      } catch (err) {
-        res.statusCode = 500;
-        res.json(err);
-      };
+      const connectedLabel = await connect(
+        id,
+        bubbleId,
+      );
+
+      res.statusCode = 200;
+      res.json(connectedLabel);
     };
   };
 };

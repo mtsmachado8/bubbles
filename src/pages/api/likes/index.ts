@@ -2,15 +2,14 @@ import { create } from "./_repository";
 
 export default async (req, res) => {
   if (req.method === 'POST') {
-    const { content, author, bubbleId} = req.body;
+    const { bubbleId, author } = req.body;
 
-    const createdComment = await create(
-      content,
-      author,
+    const liked = await create(
       bubbleId,
+      author,
     );
 
     res.statusCode = 201;
-    res.json(createdComment);
+    res.json(liked);
   };
 };
