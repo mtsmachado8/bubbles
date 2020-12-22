@@ -31,10 +31,10 @@ type FilledBubble = Bubble & {
 
 type Props = {
   bubble: FilledBubble;
-  onSubmitNewLike: Function;
+  alteredLike: Function;
 };
 
-const BubbleDetails: React.FC<Props> = ({ bubble, onSubmitNewLike }: Props) => {
+const BubbleDetails: React.FC<Props> = ({ bubble, alteredLike }: Props) => {
   const authorAvatar = bubble.author?.avatarUrl 
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
@@ -58,7 +58,7 @@ const BubbleDetails: React.FC<Props> = ({ bubble, onSubmitNewLike }: Props) => {
             <Reactions 
               comments={bubble.comments}
               likes={bubble.likes}
-              onSubmitNewLike={onSubmitNewLike}
+              alteredLike={alteredLike}
             />
           </div>
         </div>

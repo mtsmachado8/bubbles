@@ -4,12 +4,12 @@ export default async (req, res) => {
   if (req.method === 'POST') {
     const { bubbleId, author } = req.body;
 
-    const liked = await create(
+    const like = await create(
       bubbleId,
       author,
     );
 
     res.statusCode = 201;
-    res.json(liked);
+    res.json(like);
   };
 };

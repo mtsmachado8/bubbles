@@ -2,7 +2,7 @@ import api from './api';
 import { trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
-const alteredLabels = async (bubbleId: Number, author: Object, id: Number) => {
+const alteredLikes = async (bubbleId: Number, author: Object, id: Number) => {
   if(author) {
     if(bubbleId) {
       if(id) {
@@ -12,7 +12,7 @@ const alteredLabels = async (bubbleId: Number, author: Object, id: Number) => {
           trigger('/bubbles');
           trigger(`/bubbles/${bubbleId}`);
         } catch {
-          toast.error('Alteration error! Please, reload the page and try again', {
+          toast.error("Couldn't unlike bubble! Please, reload the page and try again", {
             autoClose: 2500,
             pauseOnFocusLoss: false,
             pauseOnHover: false,
@@ -29,7 +29,7 @@ const alteredLabels = async (bubbleId: Number, author: Object, id: Number) => {
           trigger(`/bubbles/${bubbleId}`);
       
         } catch {
-          toast.error('Alteration error! Please, reload the page and try again', {
+          toast.error("Couldn't like bubble! Please, reload the page and try again", {
             autoClose: 2500,
             pauseOnFocusLoss: false,
             pauseOnHover: false,
@@ -52,4 +52,4 @@ const alteredLabels = async (bubbleId: Number, author: Object, id: Number) => {
   };
 };
 
-export default alteredLabels;
+export default alteredLikes;

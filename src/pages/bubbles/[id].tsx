@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Router from "next/router";
 
@@ -13,6 +13,8 @@ import postLabels from '../../infra/services/postLabels';
 import useFetch from "../../infra/hooks/swr";
 import { getById as getBubbleById } from "../api/bubbles/_repository";
 import { getAll as getAllLabels } from "../api/labels/_repository";
+import alteredLikes from "../../infra/services/alteredLikes";
+import AuthContext from "../../infra/contexts/AuthContext";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const bubbles = await prisma.bubble.findMany({
@@ -44,10 +46,16 @@ type FilledComment = Comment & {
   };
 };
 
+type FilledLike = Like & {
+  author: {
+    email: string;
+  };
+};
+
 type FilledBubble = Bubble & {
   labels: Label[];
+  likes: FilledLike[];
   comments: FilledComment[];
-  likes: Like[];
   author: {
       avatarUrl: string;
   };
@@ -64,6 +72,8 @@ const BubblePage: React.FC<Props> = (props: Props) => {
 
   const { data: bubbleData } = useFetch(`/bubbles/${props.initialBubbleData.id}`);
   const { data: labelsData } = useFetch('/labels');
+
+  const { loggedUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (bubbleData != undefined) {
@@ -90,6 +100,10 @@ const BubblePage: React.FC<Props> = (props: Props) => {
     alteredLabels(id, selectedLabel, bubble.id);
   };
 
+  const alteredLike = (id) => {
+    alteredLikes(bubble.id, loggedUser, id)
+  }
+
   return(
     <BubbleDetailsModal
       onClose={() => Router.push('/')}
@@ -98,6 +112,7 @@ const BubblePage: React.FC<Props> = (props: Props) => {
       onSubmitNewComment={postComment}
       onSubmitNewLabel={postLabel}
       onConfigChange={alteredLabel}
+      alteredLike={alteredLike}
     />
   );
 };
