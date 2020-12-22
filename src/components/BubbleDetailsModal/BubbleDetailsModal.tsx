@@ -38,7 +38,7 @@ type Props = {
   onSubmitNewComment: Function;
   onSubmitNewLabel: Function;
   onConfigChange: Function;
-  onSubmitNewLike: Function;
+  alteredLike: Function;
 };
 
 const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
@@ -50,7 +50,7 @@ const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
         <section className={styles.detailsContent}>
           <BubbleDetails 
             bubble={props.bubble}
-            onSubmitNewLike={props.onSubmitNewLike}
+            alteredLike={props.alteredLike}
           />
 
           <Comments bubble={props.bubble} />

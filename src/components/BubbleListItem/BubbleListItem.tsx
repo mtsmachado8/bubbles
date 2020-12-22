@@ -30,10 +30,10 @@ type FilledBubble = Bubble & {
 type Props = {
   bubble: FilledBubble;
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
-  onSubmitNewLike: Function;
+  alteredLike: Function;
 };
 
-const BubbleListItem: React.FC<Props> = ({ bubble, onClick, onSubmitNewLike }: Props) => {
+const BubbleListItem: React.FC<Props> = ({ bubble, onClick, alteredLike }: Props) => {
   const authorAvatar = bubble.author?.avatarUrl
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
@@ -59,7 +59,7 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, onSubmitNewLike }: P
           <Reactions
             comments={bubble.comments}
             likes={bubble.likes}
-            onSubmitNewLike={onSubmitNewLike}
+            alteredLike={alteredLike}
           />
           <p className={styles.date}>{format(new Date(bubble.createdAt), 'dd/MM/yyyy')}</p>
         </div>

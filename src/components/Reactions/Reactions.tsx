@@ -24,18 +24,23 @@ type FilledLike = Like & {
 type Props = {
   comments: FilledComment[];
   likes: FilledLike[];
-  onSubmitNewLike: Function;
+  alteredLike: Function;
 };
 
 const Reactions: React.FC<Props> = (props: Props) => {
   const { loggedUser } = useContext(AuthContext);
-  const [ alreadyLiked, setAlreadyLiked ] = useState(undefined);
+  const [ alreadyLiked, setAlreadyLiked ] = useState(false);
+  const [ likeId, setLikeId ] = useState(null);
 
   const likes = props.likes ? props.likes.length : 0;
 
   useEffect(() => {
     if(loggedUser) {
       setAlreadyLiked(
+        props.likes.some(like => like.author.email === loggedUser?.email)
+      );
+        
+      setLikeId(
         props.likes.find(like => like.author.email === loggedUser?.email)
       );
     };
@@ -47,11 +52,11 @@ const Reactions: React.FC<Props> = (props: Props) => {
         className={styles.actions}
         onClick={e => {
           e.preventDefault();
-          props.onSubmitNewLike(alreadyLiked ? alreadyLiked.id : null);
+          props.alteredLike(likeId?.id);
         }}
       >
-        <BiLike className={alreadyLiked ? styles.unliked : styles.liked} />
-        <p className={alreadyLiked ? styles.unliked : styles.liked}>{likes}</p>
+        <BiLike className={alreadyLiked ? styles.unlike : styles.like} />
+        <p className={alreadyLiked ? styles.unlike : styles.like}>{likes}</p>
       </div>
 
       <div className={styles.comments}>

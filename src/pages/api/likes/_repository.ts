@@ -2,7 +2,7 @@ import prisma from "../../../../prisma/client";
 import { User } from '@prisma/client';
 
 const create = async (bubbleId: number, author: User) => {
-  const liked = await prisma.like.create({
+  const like = await prisma.like.create({
     data: {
       bubble: {
         connect: { id: bubbleId }
@@ -15,15 +15,15 @@ const create = async (bubbleId: number, author: User) => {
       },
     },
   });
-  return liked;
+  return like;
 };
 
 const remove = async (id: string) => {
-  const disliked = await prisma.like.delete({
+  const removedLike = await prisma.like.delete({
     where: { id: parseInt(id) },
   });
 
-  return disliked;
+  return removedLike;
 };
 
 export { create, remove };

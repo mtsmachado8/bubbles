@@ -13,6 +13,7 @@ import BubbleDetailsModal from "../components/BubbleDetailsModal/BubbleDetailsMo
 import BubbleListItem from "../components/BubbleListItem/BubbleListItem";
 import FloatingButton from '../components/FloatingButton/FloatingButton';
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
+import AsideHome from "../components/AsideHome/AsideHome";
 import Header from '../components/Header/Header';
 
 import alteredLabels from '../infra/services/alteredLabels';
@@ -74,6 +75,8 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
   const { data: bubblesData } = useFetch('/bubbles');
   const { data: labelsData } = useFetch('/labels');
 
+  const { loggedUser } = useContext(AuthContext);
+
   useEffect(() => {
     if(bubblesData != undefined) {
       setBubbles(bubblesData.map(bubble => ({
@@ -87,12 +90,6 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
     };
 
   }, [bubblesData, labelsData]);
-
-  const { 
-    loggedUser,
-    login,
-    logout,
-  } = useContext(AuthContext);
 
   const postBubble = (bubblInfo, userInfo) => {
     postBubbles(bubblInfo, userInfo);
@@ -131,7 +128,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
                     setOppenedBubbleId(bubble.id)}
                   }
                   bubble={bubble}
-                  onSubmitNewLike={alteredLike}
+                  alteredLike={alteredLike}
                 />
               </Link>
 
@@ -143,7 +140,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
                   onSubmitNewLabel={postLabel}
                   onConfigChange={alteredLabel}
                   onSubmitNewComment={postComment}
-                  onSubmitNewLike={alteredLike}
+                  alteredLike={alteredLike}
                 />
               : null}
             </div>
@@ -167,7 +164,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
       </main>
       <aside className={styles.menu}>
-
+        <AsideHome />
       </aside>
     </div>
   );

@@ -9,7 +9,7 @@ import {
 import { toast } from 'react-toastify';
 
 const AuthContext = createContext<{
-  loggedUser: UserProfile,
+  loggedUser: LoggedUser,
   login: () => void,
   logout: () => void,
 }>(null);
@@ -20,14 +20,14 @@ type Props = {
   children: ReactNode
 }
 
-type UserProfile = {
+type LoggedUser = {
   name: string,
   email: string,
   avatarUrl: string,
 }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [loggedUser, _setUserProfile] = useState<UserProfile>(null);
+  const [loggedUser, _setLoggedUser] = useState<LoggedUser>(null);
   
   const onFailureGoogle = (error: any) => {
     console.log(error)
@@ -40,7 +40,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const onLogoutGoogle = () => {
-    _setUserProfile(null)
+    _setLoggedUser(null)
 
     toast.dark('Bye! See you later', {
       autoClose: 2500,
@@ -50,7 +50,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const onSuccessGoogle = ({ profileObj }: GoogleLoginResponse) => {
-    _setUserProfile({
+    _setLoggedUser({
       name: profileObj.name,
       email: profileObj.email,
       avatarUrl: profileObj.imageUrl,

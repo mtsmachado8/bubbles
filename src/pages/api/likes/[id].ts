@@ -4,11 +4,11 @@ export default async (req, res) => {
   if (req.method === 'DELETE') {
     const { query: { id } } = req;
 
-    const disliked = await remove(
+    const removedLike = await remove(
       id,
     );
 
     res.statusCode = 200;
-    res.json(disliked);
+    res.json(removedLike);
   };
 };
