@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 
 import styles from './_bubbleListItem.module.css';
 import Reactions from "../Reactions/Reactions";
+import Avatar from "../Avatar/Avatar";
 
 type FilledComment = Comment & {
   author: {
@@ -34,7 +35,7 @@ type Props = {
 };
 
 const BubbleListItem: React.FC<Props> = ({ bubble, onClick, alteredLike }: Props) => {
-  const authorAvatar = bubble.author?.avatarUrl
+  const image = bubble.author?.avatarUrl
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
 
@@ -42,7 +43,14 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, alteredLike }: Props
 
   return (
     <div onClick={onClick} className={styles.bubbleContainer}>
-      <img src={authorAvatar} alt="Avatar" />
+      <div className={styles.image}>
+        <Avatar 
+          alt='User Avatar'
+          key={image}
+          size={50}
+          src={image}
+        />
+      </div>
       <div className={styles.textContent}>
         <div className={styles.title}>
           <h2>{bubble.title}</h2>

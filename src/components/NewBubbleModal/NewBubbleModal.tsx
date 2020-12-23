@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
+import Avatar from '../Avatar/Avatar';
 
 import Modal from '../Modal/Modal';
 
@@ -23,7 +24,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
 
   const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
   const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
-  const image = loggedUser?.avatarUrl
+  const image = loggedUser
     ? loggedUser?.avatarUrl
     : '/anonymous-image.png';
 
@@ -37,7 +38,14 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     <Modal onClose={onClose}>
       <div className={styles.content}>
         <section className={styles.newBubblePage}>
-          <img src={image} alt="Avatar"/>
+          <div className={styles.image}>
+            <Avatar 
+              alt='User Avatar'
+              key={image}
+              size={80}
+              src={image}
+            />
+          </div>
           <div className={styles.square}></div>
           <form
             className={styles.newBubbleDetails}

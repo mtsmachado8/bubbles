@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
+import Avatar from '../Avatar/Avatar';
 
 import styles from './_newComment.module.css';
 
@@ -31,7 +32,14 @@ const NewComment: React.FC<Props> = (props: Props) => {
 
   return(
     <div className={styles.newCommentBox}>
-      <img src={image} alt="Avatar Image"/>
+      <div className={styles.image}>
+        <Avatar
+          alt='User Avatar'
+          key={image}
+          size={50}
+          src={image}
+        />
+      </div>
       <div className={styles.square}></div>
       <form
         className={styles.commentDetails}

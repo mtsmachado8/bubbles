@@ -32,14 +32,16 @@ const Comments: React.FC<Props> = ({ bubble }: Props) => {
       <div className={styles.alreadyCommented}>
         {bubble.comments.map(comment => (
           <div className={styles.cardBox} key={comment.id} >
-
-            <Avatar
-              src={comment.author?.avatarUrl
-                ? comment.author.avatarUrl
-                : '/anonymous-image.png'}
-              alt='Author Avatar'
-              size={50}
-            />
+            <div className={styles.image}>
+              <Avatar
+                src={comment.author?.avatarUrl
+                  ? comment.author.avatarUrl
+                  : '/anonymous-image.png'}
+                key={comment.author?.avatarUrl}
+                alt='Author Avatar'
+                size={50}
+              />
+            </div>
 
             <div className={styles.commentDetail}>
               <div className={styles.square}/>
