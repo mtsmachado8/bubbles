@@ -15,7 +15,7 @@
 }
 
 .menu {
-  opacity: 0;
+  display: none;
   background-color: var(--color-primary);
   padding: 0 5px;
 }
@@ -55,7 +55,8 @@
   }
 
   .menu {
-    opacity: 1;
+    display: flex;
+    flex-direction: column;
     height: 100%;
     width: 25%;
   }

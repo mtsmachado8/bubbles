@@ -4,9 +4,7 @@
   position: relative;
 }
 
-.newCommentBox img {
-  border-radius: 50%;
-  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+.newCommentBox .image {
   display: none;
 }
 
@@ -163,15 +161,21 @@
 }
 
 @media (min-width: 600px) {
-  .newCommentBox img {
-    height: 50px;
-    margin: 0 30px 0 0;
-    display: block;
+  .newCommentBox .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 58px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+    margin: 0 45px 0 20px;
   }
 
   .newCommentBox .square {
     top: 18px;
-    left: 71px;
+    left: 105px;
     display: inline-block;
   }
 }
@@ -182,12 +186,13 @@
     margin-left: 0;
   }
   
-  .newCommentBox img {
-    margin: 0 30px 0 27px;
+  .newCommentBox .image {
+    width: 56px;
+    margin: 0 45px 0 40px;
   }
 
   .newCommentBox .square {
-    left: 98px;
+    left: 121px;
   }
 
   .newCommentBox .commentDetails .nameBox {
@@ -239,5 +244,22 @@
 
   .newCommentBox .commentDetails .commentArea .buttonContent .logoutButton:hover::after {
     width: 63px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .newCommentBox .image {
+    width: 54px;
+  }
+
+  .newCommentBox .square {
+    left: 124px;
+  }
+}
+
+
+@media (min-width: 1500px) {
+  .newCommentBox .image {
+    width: 52px;
   }
 }

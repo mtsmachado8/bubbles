@@ -13,23 +13,22 @@ const AsideHome: React.FC = () => {
 
   const name = loggedUser ? loggedUser.name : 'Anonymous';
   const email = loggedUser ? loggedUser.email : null;
+  const image = loggedUser ? loggedUser.avatarUrl : '/anonymous-image.png';
 
   return (
     <div className={styles.asideHome}>
       <div className={styles.userContent}>
         <div className={styles.image}>
           <Avatar 
-            src={loggedUser
-            ? loggedUser.avatarUrl
-            : '/anonymous-image.png'
-            }
+            src={image}
+            key={image}
             alt='Author Avatar'
             size={80}
           />
         </div>
         <div className={styles.userDetails}>
-          <p>{name}</p>
-          <p>{email}</p>
+          <p className={styles.name}>{name}</p>
+          <p className={styles.email}>{email}</p>
         </div>
       </div>
       <div className={styles.buttonContent}>

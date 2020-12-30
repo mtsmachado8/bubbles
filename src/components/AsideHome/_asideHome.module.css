@@ -5,9 +5,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   text-align: center;
-  padding: 40px 0;
+  justify-content: space-between;
+  padding: 20px 0 40px;
 }
 
 .asideHome .userContent {
@@ -17,15 +17,30 @@
 }
 
 .asideHome .userContent .image {
-  padding-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
 }
 
 .asideHome .userContent .userDetails {
   color: var(--color-text-primary-grey);
 }
 
-.asideHome .userContent .userDetails p {
-  margin: 8px 0 0;
+.asideHome .userContent .userDetails .name {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  word-break: keep-all;
+}
+
+.asideHome .userContent .userDetails .email {
+  margin: 0;
+  font-size: 14px;
 }
 
 .asideHome .buttonContent {
@@ -37,21 +52,21 @@
 }
 
 .asideHome .buttonContent .button {
-  width: 150px;
-  height: 35px;
+  width: 110px;
+  height: 32px;
   font-size: 16px;
   border-radius: 8px;
   border: none;
-  transition: 200ms;
+  transition: 300ms;
   font-weight: bold;
-  background-color: var(--color-primary-lighter);
+  background-color: var(--color-primary-light);
   color: var(--color-text-primary);
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
   cursor: pointer;
 }
 
 .asideHome .buttonContent .button:hover {
-  opacity: 0.7;
-  transition: 200ms;
+  opacity: 0.8;
+  transition: 300ms;
   outline: none;
 }

@@ -16,6 +16,18 @@
   margin-bottom: 50px;
 }
 
+.cardBox .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 64px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+  margin: 0 10px 0 16px;
+}
+
 .commentDetail {
   position: relative;
   display: flex;
@@ -30,7 +42,7 @@
   width: 18px;
   height: 18px;
   top: 12px;
-  left: -9px;
+  left: -8px;
   transform: rotate(45deg);
   position: absolute;
   background-color: var(--color-comment-background);
@@ -90,7 +102,19 @@
   border-radius: 15px;
 }
 
+@media (min-width: 600px) {
+  .cardBox .image {
+    width: 58px;
+    margin-left: 30px;
+    margin-right: 20px;
+  }
+}
+
 @media (min-width: 900px) {
+  .cardBox .image {
+    width: 56px;
+  }
+
   .cardBox .square {
     top: 18px;
     left: -9px;
@@ -109,4 +133,17 @@
   .cardBox .commentDetail .nameBox p {
     font-size: 16px;
   } 
+}
+
+@media (min-width: 1200px) {
+  .cardBox .image {
+    width: 54px;
+  }
+}
+
+
+@media (min-width: 1500px) {
+  .cardBox .image {
+    width: 52px;
+  }
 }

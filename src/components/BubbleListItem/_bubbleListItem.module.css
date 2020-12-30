@@ -14,10 +14,14 @@
   cursor: pointer;
 }
 
-.bubbleContainer img {
-  height: 50px;
+.bubbleContainer .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 60px;
   margin: 10px 15px;
-  display: block;
+  overflow: hidden;
   border-radius: 50%;
   box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
 }
@@ -77,14 +81,20 @@
   margin: 0 0 3px;
 }
 
+@media (min-width: 600px) {
+  .bubbleContainer .image {
+    width: 57px;
+  }
+}
+
 @media (min-width: 900px) {
   .bubbleContainer {
     padding: 5px 20px;
   }
 
-  .bubbleContainer img {
-    height: 55px;
-    margin: 10px 15px 0 0;
+  .bubbleContainer .image {
+    width: 56px;
+    margin: 15px 15px 0 0;
   }
   
   .textContent .title h2 {
@@ -120,5 +130,17 @@
   .textContent .reactions .date {
     font-size: 14px;
     margin: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .bubbleContainer .image {
+    width: 54px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .bubbleContainer .image {
+    width: 52px;
   }
 }

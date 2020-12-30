@@ -1,29 +1,28 @@
 import Image from 'next/image';
 import React from 'react';
-import styles from './_avatar.module.css';
 
 type Props = {
   size: number,
   src: string,
   alt: string,
+  key: string,
   props?: ImageProps
 };
 
-const Avatar: React.FC<Props> = ({ src, size, alt, ...props }: Props) => {
+const Avatar: React.FC<Props> = ({ src, size, alt, key, ...props }: Props) => {
   return (
-    <div
-      className={styles.avatar}
-    >
+    <div>
       <Image
         src={src}
         alt={alt}
         width={size}
         height={size}
+        key={key}
         {...props}
       />
     </div>
-  )
-}
+  );
+};
 
 type ImageProps = Omit<JSX.IntrinsicElements['img'], 'src' | 'srcSet' | 'ref' | 'width' | 'height' | 'loading'> & {
   src: string;

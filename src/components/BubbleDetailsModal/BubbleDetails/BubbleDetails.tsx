@@ -35,17 +35,20 @@ type Props = {
 };
 
 const BubbleDetails: React.FC<Props> = ({ bubble, alteredLike }: Props) => {
-  const authorAvatar = bubble.author?.avatarUrl 
+  const image = bubble.author 
     ? bubble.author.avatarUrl
     : '/anonymous-image.png';
 
   return (
     <div className={styles.container}>
-      <Avatar
-        src={authorAvatar}
-        alt='Author Avatar'
-        size={65}
-      />
+      <div className={styles.image}>
+        <Avatar
+          src={image}
+          key={image}
+          alt='Author Avatar'
+          size={65}
+        />
+      </div>
       <div className={styles.details}>
         <div className={styles.square}></div>
         <div className={styles.titleContainer}>
