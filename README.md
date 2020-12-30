@@ -24,7 +24,7 @@ yarn
 Then run your migrations to dabase (heroku for now)
 
 ```bash
-yarn migrate:up
+yarn migration:up
 ```
 Then, start your development server
 
@@ -49,18 +49,18 @@ docker-compose down --volumes
 ## Prisma
 To map your data model to the database schema, you need to use the prisma migrate
 ```bash
-npx prisma migrate save --name "name-of-the-migration" --experimental
+yarn migration:generate
 yarn migration:up
 ```
 
 ## TO DO
-- Labels
-- Bubble Reactions (Likes)
+- I18N
+- Notion like text editor
+- Configurable themes
 - bubbles.config.[js | json | yml] to configure specific things
 - Template for new Bubbles, like github issue ones (on bubbles.config or template.md)
 - Easily configurable Logotype of the company implementing Bubbles (in bubbles.config)
 - Admins that can promote a bubble (proposal) or archieve it (email of admins in bubbles.config)
-- Configurable themes
 
 ## Learn More
 
