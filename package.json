@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "studio": "prisma studio",
-    "generate:client": "prisma generate",
+    "generate": "prisma generate",
     "migration:generate": "prisma migrate save --experimental",
     "migration:up": "prisma migrate up --experimental"
   },
