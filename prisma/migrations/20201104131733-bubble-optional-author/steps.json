@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateField",
+      "model": "Bubble",
+      "field": "author",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Bubble",
+      "field": "authorId",
+      "arity": "Optional"
+    }
+  ]
+}

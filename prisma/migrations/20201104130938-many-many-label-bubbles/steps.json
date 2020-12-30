@@ -1,0 +1,19 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Bubble",
+      "field": "labels",
+      "type": "Label",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Label",
+      "field": "Bubbles",
+      "type": "Bubble",
+      "arity": "List"
+    }
+  ]
+}

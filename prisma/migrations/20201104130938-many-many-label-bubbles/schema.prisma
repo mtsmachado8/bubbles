@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Bubble {
+  id          Int      @default(autoincrement()) @id
+  createdAt   DateTime @default(now())
+  title       String
+  description String
+  content     String?
+  author      User     @relation(fields: [authorId], references: [id])
+  labels      Label[]
+  authorId    Int
+}
+
+model User {
+  id        Int      @default(autoincrement()) @id
+  email     String   @unique
+  name      String?
+  avatarUrl String
+  bubbles   Bubble[]
+}
+
+model Label {
+  id          Int      @default(autoincrement()) @id
+  name        String   @unique
+  description String?
+  Bubbles     Bubble[]
+}
