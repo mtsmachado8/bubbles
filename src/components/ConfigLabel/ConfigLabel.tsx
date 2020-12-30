@@ -50,7 +50,7 @@ const ConfigLabel: React.FC<Props> = ( props: Props ) => {
             }}
           >
             <div className={label.selected ? styles.selectedLabel : styles.unselectedLabel}>
-              <p style={{color: label.color}}>&#x02518;</p>
+              <p>&#x02518;</p>
             </div>
             <div className={styles.labelDetails}>
               <div className={styles.labelName}>
