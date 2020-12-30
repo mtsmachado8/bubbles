@@ -10,11 +10,12 @@
     "build": "next build",
     "start": "next start",
     "studio": "prisma studio",
-    "generate": "prisma generate",
-    "migrate:up": "prisma migrate dev --preview-feature"
+    "generate:client": "prisma generate",
+    "migration:generate": "prisma migrate save --experimental",
+    "migration:up": "prisma migrate up --experimental"
   },
   "dependencies": {
-    "@prisma/client": "2.13.0",
+    "@prisma/client": "2.12.0",
     "axios": "^0.21.0",
     "date-fns": "^2.16.1",
     "next": "10.0.0",
@@ -27,7 +28,7 @@
     "swr": "^0.3.9"
   },
   "devDependencies": {
-    "@prisma/cli": "2.13.0",
+    "@prisma/cli": "2.12.0",
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.55",
     "typescript": "^4.0.5"
