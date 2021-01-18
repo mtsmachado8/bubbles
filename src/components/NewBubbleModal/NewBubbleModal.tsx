@@ -3,6 +3,7 @@ import AuthContext from '../../infra/contexts/AuthContext';
 import Avatar from '../Avatar/Avatar';
 
 import Modal from '../Modal/Modal';
+import RichTextArea from '../RichTextArea/RichTextArea';
 
 import styles from './_newBubbleModal.module.css';
 
@@ -75,14 +76,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
               <div className={styles.typeText}>
                 <p>Write</p>
               </div>
-              <textarea
-                name='content'
-                required 
-                className={styles.textArea}
-                placeholder={placeholder} 
-                onChange={e => setContent(e.target.value)}
-              />
-
+              <RichTextArea/>
               {loggedUser
               ? <div className={styles.buttonContent}>
                   <button 

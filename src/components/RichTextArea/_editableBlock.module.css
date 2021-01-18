@@ -1,0 +1,13 @@
+.Block {
+  margin: 0.25rem 0;
+  padding: 0.5rem;
+  background: #fafafa;
+  border-radius: 0.25rem;
+}
+.Block:hover {
+  background: #f8f8f8;
+  outline-color: #f5f6fb;
+}
+.Block:focus {
+  background: #f5f6fb;
+}

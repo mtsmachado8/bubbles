@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { matchSorter } from 'match-sorter'
+import styles from './_selectMenu.module.css'
 
 const MENU_HEIGHT = 150;
 const allowedTags = [
@@ -82,13 +83,13 @@ const SelectMenu: React.FC<Props> = ({ onSelect, close, position }: Props) => {
   const positionAttributes = { top: y, left: x };
 
     return (
-      <div className="SelectMenu" style={positionAttributes}>
-        <div className="Items">
+      <div className={styles.SelectMenu} style={positionAttributes}>
+        <div className={styles.Items}>
           {items.map((item, key) => {
             const isSelected = items.indexOf(item) === selectedItem;
             return (
               <div
-                className={isSelected ? "Selected" : null}
+                className={isSelected ? styles.Selected : null}
                 key={key}
                 role="button"
                 tabIndex={0}

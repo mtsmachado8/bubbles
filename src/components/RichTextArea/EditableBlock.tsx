@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getCaretCoordinates, setCaretToEnd } from "../../infra/helpers";
 import SelectMenu from "./SelectMenu";
 import ContentEditable from 'react-contenteditable';
+import styles from './_editableBlock.module.css';
 
 type Props = {
   id: string,
@@ -89,7 +90,7 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
         />
       )}
       <ContentEditable
-        className="Block"
+        className={styles.Block}
         innerRef={contentEditable}
         html={html}
         tagName={tag}
