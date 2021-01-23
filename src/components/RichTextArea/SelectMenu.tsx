@@ -5,9 +5,9 @@ import styles from './_selectMenu.module.css'
 const MENU_HEIGHT = 150;
 const allowedTags = [
   {
-    id: "page-title",
+    id: "title",
     tag: "h1",
-    label: "Page Title"
+    label: "Title"
   },
   {
     id: "heading",
@@ -83,13 +83,13 @@ const SelectMenu: React.FC<Props> = ({ onSelect, close, position }: Props) => {
   const positionAttributes = { top: y, left: x };
 
     return (
-      <div className={styles.SelectMenu} style={positionAttributes}>
-        <div className={styles.Items}>
+      <div className={styles.selectMenu} style={positionAttributes}>
+        <div className={styles.items}>
           {items.map((item, key) => {
             const isSelected = items.indexOf(item) === selectedItem;
             return (
               <div
-                className={isSelected ? styles.Selected : null}
+                className={isSelected ? styles.selected : null}
                 key={key}
                 role="button"
                 tabIndex={0}

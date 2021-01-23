@@ -10,10 +10,10 @@ type Props = {
   initTag: string,
   addBlock: Function,
   deleteBlock: Function,
-  updatePage: Function,
+  updateTextArea: Function,
 };
 
-const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, deleteBlock, updatePage }: Props) => {
+const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, deleteBlock, updateTextArea }: Props) => {
   const [isSelectMenuOpen, setIsSelectMenuOpen] = useState(false);
   const [selectMenuPosition, setSelectMenuPosition] = useState({ x: null, y: null })
   const [htmlBackup, setHtmlBackup] = useState(null);
@@ -73,7 +73,7 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
   const onChangeHandler = (e) => setHtml(e.target.value);
 
   useEffect(() => {
-    updatePage({
+    updateTextArea({
       id,
       html,
       tag
@@ -90,13 +90,14 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
         />
       )}
       <ContentEditable
-        className={styles.Block}
+        className={styles.block}
         innerRef={contentEditable}
         html={html}
         tagName={tag}
         onChange={onChangeHandler}
         onKeyDown={onKeyDownHandler}
         onKeyUp={onKeyUpHandler}
+        placeholder={"Type '/' for commands"}
       />
     </>
   );

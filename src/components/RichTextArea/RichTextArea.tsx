@@ -7,7 +7,7 @@ const initialBlock = { id: uid(), html: "", tag: "p" };
 const RichTextArea: React.FC = () => {
   const [blocks, setBlocks] = useState([initialBlock])
 
-  const updatePageHandler = (updatedBlock) => {
+  const updateTextArea = (updatedBlock) => {
     const index = blocks.map((b) => b.id).indexOf(updatedBlock.id);
     const updatedBlocks = [...blocks];
     updatedBlocks[index] = {
@@ -20,11 +20,9 @@ const RichTextArea: React.FC = () => {
 
   const addBlockHandler = (currentBlock) => {
     const newBlock = { id: uid(), html: "", tag: "p" };
-    const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
-    const updatedBlocks = [...blocks];
-    updatedBlocks.splice(index + 1, 0, newBlock);
+    const updatedBlocks = [...blocks, newBlock];
     setBlocks(updatedBlocks);
-    currentBlock.ref.nextElementSibling.focus();
+    setTimeout(() => {currentBlock.ref.nextElementSibling.focus();}, 200);
   }
 
   const deleteBlockHandler = (currentBlock) => {
@@ -48,7 +46,7 @@ const RichTextArea: React.FC = () => {
             id={block.id}
             initTag={block.tag}
             initHtml={block.html}
-            updatePage={updatePageHandler}
+            updateTextArea={updateTextArea}
             addBlock={addBlockHandler}
             deleteBlock={deleteBlockHandler}
           />

@@ -76,7 +76,9 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
               <div className={styles.typeText}>
                 <p>Write</p>
               </div>
-              <RichTextArea/>
+              <div className={styles.textArea}>
+                <RichTextArea/>
+              </div>
               {loggedUser
               ? <div className={styles.buttonContent}>
                   <button 
