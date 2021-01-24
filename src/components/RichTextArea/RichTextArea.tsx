@@ -1,11 +1,24 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { setCaretToEnd, uid } from '../../infra/helpers'
 import EditableBlock from './EditableBlock';
 
-const initialBlock = { id: uid(), html: "", tag: "p" };
+const initialBlock = { id: undefined, html: "", tag: "h1" };
 
-const RichTextArea: React.FC = () => {
-  const [blocks, setBlocks] = useState([initialBlock])
+type Block = {
+  id: string,
+  html: string,
+  tag: 'h1' | 'h2' | 'h3' | 'p'
+}
+
+type Props = {
+  blocks: Block[],
+  setBlocks: Function
+}
+
+const RichTextArea: React.FC<Props> = ({ blocks, setBlocks }: Props) => {
+  useEffect(() => {
+    setBlocks([initialBlock])
+  }, [])
 
   const updateTextArea = (updatedBlock) => {
     const index = blocks.map((b) => b.id).indexOf(updatedBlock.id);
@@ -15,11 +28,12 @@ const RichTextArea: React.FC = () => {
       tag: updatedBlock.tag,
       html: updatedBlock.html
     };
+    updatedBlock.ref.focus()
     setBlocks(updatedBlocks);
   }
 
   const addBlockHandler = (currentBlock) => {
-    const newBlock = { id: uid(), html: "", tag: "p" };
+    const newBlock = { id: undefined, html: "", tag: "p" };
     const updatedBlocks = [...blocks, newBlock];
     setBlocks(updatedBlocks);
     setTimeout(() => {currentBlock.ref.nextElementSibling.focus();}, 200);
@@ -38,7 +52,7 @@ const RichTextArea: React.FC = () => {
   }
 
   return (
-    <div className="Page">
+    <div className="Content">
       {blocks.map((block, key) => {
         return (
           <EditableBlock

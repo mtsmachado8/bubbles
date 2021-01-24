@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
 import Avatar from '../Avatar/Avatar';
+import RichTextArea from '../RichTextArea/RichTextArea';
 
 import styles from './_newComment.module.css';
 
@@ -11,7 +12,7 @@ type Props = {
 }
 
 const NewComment: React.FC<Props> = (props: Props) => {
-  const [ content, setContent ] = useState('');
+  const [ blocks, setBlocks ] = useState([]);
 
   const { 
     loggedUser,
@@ -45,14 +46,17 @@ const NewComment: React.FC<Props> = (props: Props) => {
         className={styles.commentDetails}
         onSubmit={e => {
           e.preventDefault();
-          onSubmitNewComment(content, loggedUser, e);
+          onSubmitNewComment(blocks, loggedUser, e);
         }}
       >
         <div className={styles.nameBox}>
           <h4>{userName}</h4>
         </div>
         <div className={styles.commentArea}>
-          <textarea onChange={e => setContent(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
+          <div className={styles.textArea}>
+            <RichTextArea blocks={blocks} setBlocks={setBlocks}/>
+          </div>
+            
           
           {loggedUser
           ? <div className={styles.buttonContent}>

@@ -26,6 +26,12 @@ Then run your migrations to dabase (heroku for now)
 ```bash
 yarn migration:up
 ```
+
+Generate prisma dependencies based on schema
+
+```bash
+yarn generate
+```
 Then, start your development server
 
 ```bash
@@ -55,10 +61,6 @@ yarn migration:up
 
 ## TO DO
 - I18N
-- Notion like text editor
-- Configurable themes
-- bubbles.config.[js | json | yml] to configure specific things
-- Template for new Bubbles, like github issue ones (on bubbles.config or template.md)
 - Easily configurable Logotype of the company implementing Bubbles (in bubbles.config)
 - Admins that can promote a bubble (proposal) or archieve it (email of admins in bubbles.config)
 

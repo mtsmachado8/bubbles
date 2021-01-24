@@ -20,10 +20,9 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   } = useContext(AuthContext);
   
   const [ description, setDescription ] = useState('');
-  const [ content, setContent ] = useState('');
+  const [ blocks, setBlocks ] = useState([]);
   const [ title, setTitle ] = useState('');
 
-  const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
   const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
   const image = loggedUser
     ? loggedUser?.avatarUrl
@@ -31,7 +30,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
 
   const bubble = {
     description,
-    content,
+    content: blocks,
     title,
   };
 
@@ -77,7 +76,10 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                 <p>Write</p>
               </div>
               <div className={styles.textArea}>
-                <RichTextArea/>
+                <RichTextArea
+                  blocks={blocks}
+                  setBlocks={setBlocks}
+                />
               </div>
               {loggedUser
               ? <div className={styles.buttonContent}>

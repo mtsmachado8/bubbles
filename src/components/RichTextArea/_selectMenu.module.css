@@ -20,7 +20,7 @@
   border-bottom: 1px solid f5f6fb;
 }
 .selectMenu .items div[role="button"]:hover {
-  background: #f5f6fb;
+  background: var(--color-background);
   cursor: pointer;
 }
 .selectMenu .items div[role="button"]:last-of-type {
@@ -28,7 +28,7 @@
 }
 .selectMenu .items div[role="button"]:hover,
 .selectMenu .items div[role="button"]:focus {
-  background: #f5f6fb;
+  background: var(--color-background);
   cursor: pointer;
 }
 .selectMenu .items div[role="button"]:first-of-type:hover,
@@ -41,7 +41,8 @@
   border-bottom-right-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
 }
+
 .selected {
-  background: #f5f6fb;
+  background: var(--color-background);
   border-radius: 0.5rem;
 }

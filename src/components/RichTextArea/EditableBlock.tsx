@@ -66,6 +66,7 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
   const tagSelectionHandler = (tag) => {
     setTag(tag)
     setHtml(htmlBackup);
+    console.log(contentEditable.current)
     setCaretToEnd(contentEditable.current);
     closeSelectMenuHandler();
   }
@@ -76,7 +77,8 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
     updateTextArea({
       id,
       html,
-      tag
+      tag,
+      ref: contentEditable.current
     })
   }, [id, html, tag])
 

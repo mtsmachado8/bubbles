@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { matchSorter } from 'match-sorter'
 import styles from './_selectMenu.module.css'
 
@@ -40,11 +40,12 @@ const SelectMenu: React.FC<Props> = ({ onSelect, close, position }: Props) => {
   const [selectedItem, setSelectedItem] = useState(0);
   const [command, setCommand] = useState('');
 
-  const keyDownHandler = (e) => {
+  const keyDownHandler = useCallback((e) => {
     switch (e.key) {
       case "Enter":
-        e.preventDefault();
-        onSelect(items[selectedItem].tag);
+        // TODO - Not working for now
+        // e.preventDefault();
+        // onSelect(items[selectedItem].tag);
         break;
       case "Backspace":
         if (!command) close();
@@ -65,13 +66,12 @@ const SelectMenu: React.FC<Props> = ({ onSelect, close, position }: Props) => {
         setCommand(command + e.key);
         break;
     }
-  }
+  }, [selectedItem, onSelect, setCommand])
 
   useEffect(() => {
     document.addEventListener("keydown", keyDownHandler);
-
-    return document.removeEventListener("keydown", keyDownHandler);
-  }, [])
+    return () => document.removeEventListener("keydown", keyDownHandler);
+  }, [keyDownHandler])
 
   useEffect(() => {
     const newItems = matchSorter(allowedTags, command, { keys: ["tag"] });
