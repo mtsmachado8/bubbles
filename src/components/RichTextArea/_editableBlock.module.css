@@ -1,6 +1,6 @@
 .block {
   margin: 0.25rem 0;
-  background: var(--color-text-primary-grey);
+  /* background: var(--color-text-primary-grey); */
 }
 
 .block:focus {

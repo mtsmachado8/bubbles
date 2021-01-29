@@ -66,7 +66,7 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
   const tagSelectionHandler = (tag) => {
     setTag(tag)
     setHtml(htmlBackup);
-    console.log(contentEditable.current)
+    // TODO - Fix Enter
     setCaretToEnd(contentEditable.current);
     closeSelectMenuHandler();
   }

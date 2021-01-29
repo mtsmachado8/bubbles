@@ -1,24 +1,34 @@
 import React from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 
-import { Bubble, Comment, Label } from '@prisma/client';
+import { Bubble, Comment, ContentBlock, Label, Like } from '@prisma/client';
 
 import styles from './_comments.module.css';
 import Avatar from '../Avatar/Avatar';
+import HtmlContent from '../RichTextArea/HtmlContent';
 
 type FilledComment = Comment & {
   author: {
     avatarUrl: string;
     name: string;
   };
+  content: ContentBlock[]
+};
+
+type FilledLike = Like & {
+  author: {
+    email: string;
+  };
 };
 
 type FilledBubble = Bubble & {
-  labels: Label[],
-  comments: FilledComment[],
+  labels: Label[];
+  likes: FilledLike[];
+  comments: FilledComment[];
   author: {
       avatarUrl: string;
   };
+  content: ContentBlock[];
 };
 
 type Props = {
@@ -66,7 +76,9 @@ const Comments: React.FC<Props> = ({ bubble }: Props) => {
                 </p>
               </div>
               <div className={styles.commentText}>
-                <p>{comment.content}</p>
+              {comment.content?.map(({ html, tag }, index) => (
+                <HtmlContent key={index} html={html} tag={tag}/>
+              ))}
               </div>
             </div>
           </div>

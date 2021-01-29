@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { setCaretToEnd, uid } from '../../infra/helpers'
 import EditableBlock from './EditableBlock';
 
-const initialBlock = { id: undefined, html: "", tag: "h1" };
+const initialBlock = { id: uid(), html: "", tag: "h1" };
 
 type Block = {
   id: string,
@@ -33,7 +33,7 @@ const RichTextArea: React.FC<Props> = ({ blocks, setBlocks }: Props) => {
   }
 
   const addBlockHandler = (currentBlock) => {
-    const newBlock = { id: undefined, html: "", tag: "p" };
+    const newBlock = { id: uid(), html: "", tag: "p" };
     const updatedBlocks = [...blocks, newBlock];
     setBlocks(updatedBlocks);
     setTimeout(() => {currentBlock.ref.nextElementSibling.focus();}, 200);

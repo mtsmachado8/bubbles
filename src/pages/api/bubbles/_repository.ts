@@ -22,6 +22,12 @@ const getAll = async () => {
               name: true,
             },
           },
+          content: {
+            select: {
+              html: true,
+              tag: true
+            }
+          }
         },
       },
       author: {
@@ -29,6 +35,12 @@ const getAll = async () => {
           avatarUrl: true,
         },
       },
+      content: {
+        select: {
+          html: true,
+          tag: true
+        }
+      }
     },
   });
 
@@ -66,6 +78,12 @@ const getById = async (id: string) => {
               name: true,
             },
           },
+          content: {
+            select: {
+              html: true,
+              tag: true
+            }
+          }
         },
       },
       author: {
@@ -73,6 +91,12 @@ const getById = async (id: string) => {
           avatarUrl: true,
         },
       },
+      content: {
+        select: {
+          html: true,
+          tag: true
+        }
+      }
     },
     where: {
       id: parseInt(id),

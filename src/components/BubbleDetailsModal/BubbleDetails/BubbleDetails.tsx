@@ -1,11 +1,12 @@
 import React from "react";
 
-import { Bubble, Label, Comment, Like } from "@prisma/client";
+import { Bubble, Label, Comment, Like, ContentBlock } from "@prisma/client";
 
 import Reactions from '../../Reactions/Reactions';
 
 import styles from './_bubbleDetails.module.css';
 import Avatar from "../../Avatar/Avatar";
+import HtmlContent from "../../RichTextArea/HtmlContent";
 
 type FilledComment = Comment & {
   author: {
@@ -27,6 +28,7 @@ type FilledBubble = Bubble & {
   author: {
       avatarUrl: string;
   };
+  content: ContentBlock[];
 };
 
 type Props = {
@@ -56,7 +58,9 @@ const BubbleDetails: React.FC<Props> = ({ bubble, alteredLike }: Props) => {
           <p>{bubble.description}</p>
         </div>
         <div className={styles.textArea}>
-          <p>{bubble.content}</p>
+          {bubble.content?.map(({ html, tag }, index) => (
+            <HtmlContent key={index} html={html} tag={tag}/>
+          ))}
           <div className={styles.reactions}>
             <Reactions 
               comments={bubble.comments}

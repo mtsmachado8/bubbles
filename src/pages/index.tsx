@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { getAll as getAllBubbles } from './api/bubbles/_repository';
 import { getAll as getAllLabels } from './api/labels/_repository';
-import { Bubble, Label, Comment, Like } from "@prisma/client";
+import { Bubble, Label, Comment, Like, ContentBlock } from "@prisma/client";
 import AuthContext from "../infra/contexts/AuthContext";
 import useFetch from "../infra/hooks/swr";
 
@@ -41,6 +41,7 @@ type FilledComment = Comment & {
     avatarUrl: string;
     name: string;
   };
+  content: ContentBlock[]
 };
 
 type FilledLike = Like & {
@@ -56,6 +57,7 @@ type FilledBubble = Bubble & {
   author: {
       avatarUrl: string;
   };
+  content: ContentBlock[]
 };
 
 type Props = {

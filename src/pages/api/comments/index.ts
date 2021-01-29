@@ -4,8 +4,13 @@ export default async (req, res) => {
   if (req.method === 'POST') {
     const { content, author, bubbleId} = req.body;
 
+    const updatedContent = content.map(content => ({
+      ...content,
+      id: undefined
+    }))
+    
     const createdComment = await create(
-      content,
+      updatedContent,
       author,
       bubbleId,
     );
