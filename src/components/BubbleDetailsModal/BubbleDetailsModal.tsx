@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Bubble, Label, Comment, Like } from "@prisma/client";
+import { Bubble, Label, Comment, Like, ContentBlock } from "@prisma/client";
 
 import Modal from "../Modal/Modal";
 import Comments from '../Comments/Comments';
@@ -14,6 +14,7 @@ type FilledComment = Comment & {
     avatarUrl: string;
     name: string;
   };
+  content: ContentBlock[];
 };
 
 type FilledLike = Like & {
@@ -29,6 +30,7 @@ type FilledBubble = Bubble & {
   author: {
       avatarUrl: string;
   };
+  content: ContentBlock[];
 };
 
 type Props = {

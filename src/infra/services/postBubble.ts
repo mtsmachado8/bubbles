@@ -2,9 +2,13 @@ import api from './api';
 import { trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
-import { User, Bubble } from '@prisma/client';
+import { User, Bubble, ContentBlock } from '@prisma/client';
 
-const postBubble = async ({title, description, content}: Bubble, author: User) => {
+type FilledBubble = Bubble & {
+  content: ContentBlock[];
+};
+
+const postBubble = async ({title, description, content}: FilledBubble, author: User) => {
   try {
     await api.post('/bubbles', {
       title,
@@ -27,7 +31,6 @@ const postBubble = async ({title, description, content}: Bubble, author: User) =
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-
   };
 };
 

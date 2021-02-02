@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { getAll as getAllBubbles } from './api/bubbles/_repository';
 import { getAll as getAllLabels } from './api/labels/_repository';
-import { Bubble, Label, Comment, Like } from "@prisma/client";
+import { Bubble, Label, Comment, Like, ContentBlock } from "@prisma/client";
 import AuthContext from "../infra/contexts/AuthContext";
 import useFetch from "../infra/hooks/swr";
 
@@ -19,7 +19,7 @@ import Header from '../components/Header/Header';
 import alteredLabels from '../infra/services/alteredLabels';
 import alteredLikes from '../infra/services/alteredLikes';
 import postComments from '../infra/services/postComments';
-import postBubbles from '../infra/services/postBubbles';
+import postBubble from '../infra/services/postBubble';
 import postLabels from '../infra/services/postLabels';
 
 import styles from './_home.module.css';
@@ -41,6 +41,7 @@ type FilledComment = Comment & {
     avatarUrl: string;
     name: string;
   };
+  content: ContentBlock[]
 };
 
 type FilledLike = Like & {
@@ -56,6 +57,7 @@ type FilledBubble = Bubble & {
   author: {
       avatarUrl: string;
   };
+  content: ContentBlock[]
 };
 
 type Props = {
@@ -91,8 +93,8 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
   }, [bubblesData, labelsData]);
 
-  const postBubble = (bubblInfo, userInfo) => {
-    postBubbles(bubblInfo, userInfo);
+  const postBubbleHandler = (bubblInfo, userInfo) => {
+    postBubble(bubblInfo, userInfo);
     Router.push('/');
     setIsNewBubbleModalVisible(false);
   };
@@ -158,7 +160,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
         {isNewBubbleModalVisible ?
           <NewBubbleModal
             onClose={() => {setIsNewBubbleModalVisible(false); Router.push('/')}}
-            onSubmitNewBubble={postBubble}
+            onSubmitNewBubble={postBubbleHandler}
           />
         : null}
 

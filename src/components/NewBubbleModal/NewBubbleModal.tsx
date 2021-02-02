@@ -3,6 +3,7 @@ import AuthContext from '../../infra/contexts/AuthContext';
 import Avatar from '../Avatar/Avatar';
 
 import Modal from '../Modal/Modal';
+import RichTextArea from '../RichTextArea/RichTextArea';
 
 import styles from './_newBubbleModal.module.css';
 
@@ -19,10 +20,9 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   } = useContext(AuthContext);
   
   const [ description, setDescription ] = useState('');
-  const [ content, setContent ] = useState('');
+  const [ blocks, setBlocks ] = useState([]);
   const [ title, setTitle ] = useState('');
 
-  const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
   const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
   const image = loggedUser
     ? loggedUser?.avatarUrl
@@ -30,7 +30,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
 
   const bubble = {
     description,
-    content,
+    content: blocks,
     title,
   };
 
@@ -75,14 +75,12 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
               <div className={styles.typeText}>
                 <p>Write</p>
               </div>
-              <textarea
-                name='content'
-                required 
-                className={styles.textArea}
-                placeholder={placeholder} 
-                onChange={e => setContent(e.target.value)}
-              />
-
+              <div className={styles.textArea}>
+                <RichTextArea
+                  blocks={blocks}
+                  setBlocks={setBlocks}
+                />
+              </div>
               {loggedUser
               ? <div className={styles.buttonContent}>
                   <button 

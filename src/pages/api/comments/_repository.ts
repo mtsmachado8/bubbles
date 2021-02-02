@@ -1,7 +1,7 @@
 import prisma from "../../../../prisma/client";
 import { User } from '@prisma/client';
 
-const create = async (content: string, author: User, bubbleId: number) => {
+const create = async (content: any, author: User, bubbleId: number) => {
   if(author) {
     const createdComment = await prisma.comment.create({
       data: {
@@ -14,7 +14,9 @@ const create = async (content: string, author: User, bubbleId: number) => {
             create: author,
           },
         },
-        content,
+        content: {
+          create: content
+        }
       },
     });
     return createdComment;
@@ -25,7 +27,9 @@ const create = async (content: string, author: User, bubbleId: number) => {
         bubble: {
           connect: { id: bubbleId }
         },
-        content,
+        content: {
+          create: content
+        }
       },
     });
     return createdComment;
