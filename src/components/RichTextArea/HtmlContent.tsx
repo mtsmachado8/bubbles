@@ -1,6 +1,5 @@
-import styles from './_editableBlock.module.css';
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
-import { createRef } from 'react';
+import ContentEditable, { ContentEditableEvent } from './ContentEditable';
+import { useRef } from 'react';
 
 type Props = {
   contentEditableRef?: React.Ref<HTMLElement>,
@@ -12,18 +11,16 @@ type Props = {
 };
 
 const HtmlContent: React.FC<Props> = ({ html, tag, onChangeHandler, onKeyDownHandler, onKeyUpHandler }: Props) => {
-  const contentEditableRef = createRef<HTMLElement>();
+  const contentEditableRef = useRef<HTMLElement>();
   
   return (
     <ContentEditable
-      className={styles.block}
       innerRef={contentEditableRef}
       html={html}
       tagName={tag}
       onChange={onChangeHandler}
       onKeyDown={onKeyDownHandler}
       onKeyUp={onKeyUpHandler}
-      placeholder={"Type '/' for commands"}
     />
   )
 }

@@ -2,20 +2,22 @@ import { useEffect } from 'react';
 import { setCaretToEnd, uid } from '../../infra/helpers'
 import EditableBlock from './EditableBlock';
 
-const initialBlock = { id: uid(), html: "", tag: "h1" };
+const defaultInitialBlock = { id: uid(), html: "", tag: "h1", placeholder: 'Title' };
 
 type Block = {
   id: string,
   html: string,
-  tag: 'h1' | 'h2' | 'h3' | 'p'
+  tag: string, // 'h1' | 'h2' | 'h3' | 'p'
+  placeholder: string
 }
 
 type Props = {
+  initialBlock: Block,
   blocks: Block[],
   setBlocks: Function
 }
 
-const RichTextArea: React.FC<Props> = ({ blocks, setBlocks }: Props) => {
+const RichTextArea: React.FC<Props> = ({ initialBlock = defaultInitialBlock, blocks, setBlocks }: Props) => {
   useEffect(() => {
     setBlocks([initialBlock])
   }, [])
@@ -26,17 +28,18 @@ const RichTextArea: React.FC<Props> = ({ blocks, setBlocks }: Props) => {
     updatedBlocks[index] = {
       ...updatedBlocks[index],
       tag: updatedBlock.tag,
-      html: updatedBlock.html
+      html: updatedBlock.html,
+      placeholder: updatedBlock.placeholder
     };
     updatedBlock.ref.focus()
     setBlocks(updatedBlocks);
   }
 
   const addBlockHandler = (currentBlock) => {
-    const newBlock = { id: uid(), html: "", tag: "p" };
+    const newBlock = { id: uid(), html: "", tag: "p", placeholder: `Type '/' for commands` };
     const updatedBlocks = [...blocks, newBlock];
     setBlocks(updatedBlocks);
-    setTimeout(() => {currentBlock.ref.nextElementSibling.focus();}, 200);
+    setTimeout(() => {currentBlock.ref.nextElementSibling?.focus();}, 200);
   }
 
   const deleteBlockHandler = (currentBlock) => {
@@ -60,6 +63,7 @@ const RichTextArea: React.FC<Props> = ({ blocks, setBlocks }: Props) => {
             id={block.id}
             initTag={block.tag}
             initHtml={block.html}
+            initPlaceholder={block.placeholder}
             updateTextArea={updateTextArea}
             addBlock={addBlockHandler}
             deleteBlock={deleteBlockHandler}

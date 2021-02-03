@@ -6,7 +6,8 @@ export default async (req, res) => {
 
     const updatedContent = content.map(content => ({
       ...content,
-      id: undefined
+      id: undefined,
+      placeholder: undefined
     }))
     
     const createdComment = await create(
