@@ -6,3 +6,9 @@
 .block:focus {
   outline: none;
 }
+
+.block[placeholder]:focus:empty:before {
+  content: attr(placeholder);
+  color: #555;
+  cursor: text;
+}

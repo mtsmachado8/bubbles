@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getCaretCoordinates, setCaretToEnd } from "../../infra/helpers";
 import SelectMenu from "./SelectMenu";
-import ContentEditable from 'react-contenteditable';
-import styles from './_editableBlock.module.css';
+import ContentEditable from './ContentEditable';
 
 type Props = {
   id: string,
   initHtml: string,
   initTag: string,
+  initPlaceholder: string,
   addBlock: Function,
   deleteBlock: Function,
   updateTextArea: Function,
 };
 
-const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, deleteBlock, updateTextArea }: Props) => {
+const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, initPlaceholder, addBlock, deleteBlock, updateTextArea }: Props) => {
   const [isSelectMenuOpen, setIsSelectMenuOpen] = useState(false);
   const [selectMenuPosition, setSelectMenuPosition] = useState({ x: null, y: null })
   const [htmlBackup, setHtmlBackup] = useState(null);
   const [previousKey, setPreviousKey] = useState('');
   const [tag, setTag] = useState(initTag)
   const [html, setHtml] = useState(initHtml)
-  const contentEditable = React.createRef<HTMLElement>();
+  const [placeholder, setPlaceholder] = useState(initPlaceholder)
+  const contentEditable = useRef<HTMLElement>();
   
   const closeSelectMenuHandler = () => {
     setHtmlBackup(null)
@@ -63,10 +64,10 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
     setPreviousKey(e.key);
   }
 
-  const tagSelectionHandler = (tag) => {
-    setTag(tag)
+  const tagSelectionHandler = (item: any) => {
+    setTag(item.tag)
+    setPlaceholder(item.placeholder)
     setHtml(htmlBackup);
-    // TODO - Fix Enter
     setCaretToEnd(contentEditable.current);
     closeSelectMenuHandler();
   }
@@ -78,9 +79,10 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
       id,
       html,
       tag,
+      placeholder,
       ref: contentEditable.current
     })
-  }, [id, html, tag])
+  }, [id, html, tag, placeholder])
 
   return (
     <>
@@ -92,14 +94,13 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, addBlock, delet
         />
       )}
       <ContentEditable
-        className={styles.block}
         innerRef={contentEditable}
         html={html}
         tagName={tag}
         onChange={onChangeHandler}
         onKeyDown={onKeyDownHandler}
         onKeyUp={onKeyUpHandler}
-        placeholder={"Type '/' for commands"}
+        placeholder={placeholder}
       />
     </>
   );

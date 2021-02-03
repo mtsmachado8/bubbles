@@ -7,22 +7,26 @@ const allowedTags = [
   {
     id: "title",
     tag: "h1",
-    label: "Title"
+    label: "Title",
+    placeholder: 'Title'
   },
   {
     id: "heading",
     tag: "h2",
-    label: "Heading"
+    label: "Heading 1",
+    placeholder: 'Heading 1'
   },
   {
-    id: "subheading",
+    id: "heading2",
     tag: "h3",
-    label: "Subheading"
+    label: "Heading 2",
+    placeholder: 'Heading 2'
   },
   {
     id: "paragraph",
     tag: "p",
-    label: "Paragraph"
+    label: "Paragraph",
+    placeholder: `Type '/' for commands`
   }
 ];
 
@@ -43,9 +47,8 @@ const SelectMenu: React.FC<Props> = ({ onSelect, close, position }: Props) => {
   const keyDownHandler = useCallback((e) => {
     switch (e.key) {
       case "Enter":
-        // TODO - Not working for now
-        // e.preventDefault();
-        // onSelect(items[selectedItem].tag);
+        e.preventDefault();
+        onSelect(items[selectedItem]);
         break;
       case "Backspace":
         if (!command) close();
@@ -93,7 +96,7 @@ const SelectMenu: React.FC<Props> = ({ onSelect, close, position }: Props) => {
                 key={key}
                 role="button"
                 tabIndex={0}
-                onClick={() => onSelect(item.tag)}
+                onClick={() => onSelect(item)}
               >
                 {item.label}
               </div>

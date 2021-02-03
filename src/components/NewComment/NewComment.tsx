@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
+import { uid } from '../../infra/helpers';
 import Avatar from '../Avatar/Avatar';
 import RichTextArea from '../RichTextArea/RichTextArea';
 
@@ -12,6 +13,7 @@ type Props = {
 }
 
 const NewComment: React.FC<Props> = (props: Props) => {
+  const initialBlock = { id: uid(), html: "", tag: "p", placeholder: `Type '/' for commands` };
   const [ blocks, setBlocks ] = useState([]);
 
   const { 
@@ -54,7 +56,7 @@ const NewComment: React.FC<Props> = (props: Props) => {
         </div>
         <div className={styles.commentArea}>
           <div className={styles.textArea}>
-            <RichTextArea blocks={blocks} setBlocks={setBlocks}/>
+            <RichTextArea initialBlock={initialBlock} blocks={blocks} setBlocks={setBlocks}/>
           </div>
             
           
