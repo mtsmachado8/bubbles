@@ -81,10 +81,16 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
   useEffect(() => {
     if(bubblesData != undefined) {
-      setBubbles(bubblesData.map(bubble => ({
+      const filledBubbles = bubblesData.map(bubble => ({
         ...bubble,
         createdAt: new Date(bubble.createdAt),
-      })));
+      }));
+
+      const sortBubblesByLikes = filledBubbles.sort((bubble1, bubble2) => {
+        return bubble2.likes.length - bubble1.likes.length
+      })
+
+      setBubbles(sortBubblesByLikes)
     };
 
     if(labelsData != undefined) {
