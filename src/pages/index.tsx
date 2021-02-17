@@ -66,7 +66,9 @@ type Props = {
 };
 
 const HomePage: NextPage<Props> = ( props: Props ) => {
-  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData);
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData.sort((bubble1, bubble2) => (
+    bubble2.likes.length - bubble1.likes.length
+  )));
   const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
 
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
@@ -86,12 +88,13 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
         createdAt: new Date(bubble.createdAt),
       }));
 
-      const sortBubblesByLikes = filledBubbles.sort((bubble1, bubble2) => {
-        return bubble2.likes.length - bubble1.likes.length
-      })
-
-      setBubbles(sortBubblesByLikes)
+      const sortedBubbles = filledBubbles.sort((bubble1, bubble2) => (
+        bubble2.likes.length - bubble1.likes.length
+      ))
+      
+      setBubbles(sortedBubbles)
     };
+
 
     if(labelsData != undefined) {
       setLabels(labelsData);
