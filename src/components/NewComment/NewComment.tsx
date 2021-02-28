@@ -12,7 +12,7 @@ type Props = {
 }
 
 const NewComment: React.FC<Props> = (props: Props) => {
-  const [ content, setContent ] = useState([])
+  const [ content, setContent ] = useState('')
 
   const { 
     loggedUser,
