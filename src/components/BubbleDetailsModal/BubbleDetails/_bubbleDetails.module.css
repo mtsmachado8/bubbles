@@ -63,6 +63,7 @@
   margin: 0;
   font-size: 16px;
   line-height: 22px;
+  white-space: pre-wrap;
 }
 
 .details .textArea .reactions {
