@@ -1,0 +1,14 @@
+.block {
+  margin: 0.25rem 0;
+  /* background: var(--color-text-primary-grey); */
+}
+
+.block:focus {
+  outline: none;
+}
+
+.block[placeholder]:focus:empty:before {
+  content: attr(placeholder);
+  color: #555;
+  cursor: text;
+}

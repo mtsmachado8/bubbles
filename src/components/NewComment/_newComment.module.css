@@ -54,11 +54,11 @@
   border-radius: 0 0 10px 10px;
 }
 
-.newCommentBox .commentDetails .commentArea textarea {
+.newCommentBox .commentDetails .commentArea .textArea {
   background-color: var(--color-background);
   overflow: auto;
   width: 100%;
-  height: 100px;
+  height: 300px;
   padding: 10px 10px;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -68,7 +68,7 @@
   font-family: Roboto;
 }
 
-.newCommentBox .commentDetails .commentArea textarea:focus {
+.newCommentBox .commentDetails .commentArea .textArea:focus {
   outline: none;
 }
 

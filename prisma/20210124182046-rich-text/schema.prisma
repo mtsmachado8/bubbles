@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -15,7 +15,7 @@ model Bubble {
   createdAt   DateTime @default(now())
   title       String
   description String
-  content     String
+  content     ContentBlock[]
   author      User?     @relation(fields: [authorId], references: [id])
   authorId    Int?
   labels      Label[]
@@ -43,16 +43,16 @@ model Comment {
   id          Int      @default(autoincrement()) @id
   author      User?    @relation(fields: [authorId], references: [id])
   authorId    Int?
-  content     String
+  content     ContentBlock[]
   createdAt   DateTime @default(now())
   bubble      Bubble
 }
 
-// model ContentBlock {
-//   id    Int  @default(autoincrement()) @id
-//   html  String
-//   tag   String
-// }
+model ContentBlock {
+  id    Int  @default(autoincrement()) @id
+  html  String
+  tag   String
+}
 
 model Like {
   id          Int      @default(autoincrement()) @id

@@ -1,10 +1,11 @@
 import React from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 
-import { Bubble, Comment, Label } from '@prisma/client';
+import { Bubble, Comment, Label, Like } from '@prisma/client';
 
 import styles from './_comments.module.css';
 import Avatar from '../Avatar/Avatar';
+import HtmlContent from '../RichTextArea/HtmlContent';
 
 type FilledComment = Comment & {
   author: {
@@ -13,9 +14,16 @@ type FilledComment = Comment & {
   };
 };
 
+type FilledLike = Like & {
+  author: {
+    email: string;
+  };
+};
+
 type FilledBubble = Bubble & {
-  labels: Label[],
-  comments: FilledComment[],
+  labels: Label[];
+  likes: FilledLike[];
+  comments: FilledComment[];
   author: {
       avatarUrl: string;
   };

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
 import Avatar from '../Avatar/Avatar';
+import RichTextArea from '../RichTextArea/RichTextArea';
 
 import styles from './_newComment.module.css';
 
@@ -11,7 +12,7 @@ type Props = {
 }
 
 const NewComment: React.FC<Props> = (props: Props) => {
-  const [ content, setContent ] = useState('');
+  const [ content, setContent ] = useState('')
 
   const { 
     loggedUser,
@@ -53,7 +54,6 @@ const NewComment: React.FC<Props> = (props: Props) => {
         </div>
         <div className={styles.commentArea}>
           <textarea onChange={e => setContent(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
-          
           {loggedUser
           ? <div className={styles.buttonContent}>
               <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>

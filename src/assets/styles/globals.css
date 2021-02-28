@@ -16,6 +16,10 @@
   --color-comment-background: #A39BA7;
 }
 
+h2 {
+  font-size: 1.33em;
+}
+
 html,
 body {
   padding: 0;
