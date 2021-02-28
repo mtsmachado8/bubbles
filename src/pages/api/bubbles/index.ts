@@ -9,17 +9,11 @@ export default async (req, res) => {
 
   } if (req.method === 'POST') {
     const { title, description, content, author } = req.body;
-    
-    const updatedContent = content.map(content => ({
-      ...content,
-      id: undefined,
-      placeholder: undefined
-    }))
 
     const createdBubble = await create(
       title,
       description,
-      updatedContent,
+      content,
       author,
     );
     res.statusCode = 201;

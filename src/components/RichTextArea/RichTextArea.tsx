@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { setCaretToEnd, uid } from '../../infra/helpers'
+import { setCaretToEnd, uid } from './helpers'
 import EditableBlock from './EditableBlock';
 
 type Block = {

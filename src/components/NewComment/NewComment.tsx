@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
-import { uid } from '../../infra/helpers';
 import Avatar from '../Avatar/Avatar';
 import RichTextArea from '../RichTextArea/RichTextArea';
 
@@ -13,9 +12,7 @@ type Props = {
 }
 
 const NewComment: React.FC<Props> = (props: Props) => {
-  const [ blocks, setBlocks ] = useState([
-    { id: uid(), html: "", tag: "p", placeholder: `Type '/' for commands` }
-  ]);
+  const [ content, setContent ] = useState([])
 
   const { 
     loggedUser,
@@ -49,18 +46,14 @@ const NewComment: React.FC<Props> = (props: Props) => {
         className={styles.commentDetails}
         onSubmit={e => {
           e.preventDefault();
-          onSubmitNewComment(blocks, loggedUser, e);
+          onSubmitNewComment(content, loggedUser, e);
         }}
       >
         <div className={styles.nameBox}>
           <h4>{userName}</h4>
         </div>
         <div className={styles.commentArea}>
-          <div className={styles.textArea}>
-            <RichTextArea blocks={blocks} setBlocks={setBlocks}/>
-          </div>
-            
-          
+          <textarea onChange={e => setContent(e.target.value)} autoFocus required className={styles.textArea} placeholder='Text your comment here' />
           {loggedUser
           ? <div className={styles.buttonContent}>
               <button type='button' className={styles.cancelButton} onClick={props.onClick}>Cancel</button>

@@ -15,7 +15,7 @@ model Bubble {
   createdAt   DateTime @default(now())
   title       String
   description String
-  content     ContentBlock[]
+  content     String
   author      User?     @relation(fields: [authorId], references: [id])
   authorId    Int?
   labels      Label[]
@@ -43,16 +43,16 @@ model Comment {
   id          Int      @default(autoincrement()) @id
   author      User?    @relation(fields: [authorId], references: [id])
   authorId    Int?
-  content     ContentBlock[]
+  content     String
   createdAt   DateTime @default(now())
   bubble      Bubble
 }
 
-model ContentBlock {
-  id    Int  @default(autoincrement()) @id
-  html  String
-  tag   String
-}
+// model ContentBlock {
+//   id    Int  @default(autoincrement()) @id
+//   html  String
+//   tag   String
+// }
 
 model Like {
   id          Int      @default(autoincrement()) @id

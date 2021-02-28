@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Bubble, Label, Comment, Like, ContentBlock } from "@prisma/client";
+import { Bubble, Label, Comment, Like } from "@prisma/client";
 
 import Reactions from '../../Reactions/Reactions';
 
@@ -28,7 +28,6 @@ type FilledBubble = Bubble & {
   author: {
       avatarUrl: string;
   };
-  content: ContentBlock[];
 };
 
 type Props = {
@@ -58,9 +57,7 @@ const BubbleDetails: React.FC<Props> = ({ bubble, alteredLike }: Props) => {
           <p>{bubble.description}</p>
         </div>
         <div className={styles.textArea}>
-          {bubble.content?.map(({ html, tag }, index) => (
-            <HtmlContent key={index} html={html} tag={tag}/>
-          ))}
+          <p>{bubble.content}</p>
           <div className={styles.reactions}>
             <Reactions 
               comments={bubble.comments}
