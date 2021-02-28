@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getCaretCoordinates, setCaretToEnd } from "../../infra/helpers";
+import { getCaretCoordinates, setCaretToEnd } from "./helpers";
 import SelectMenu from "./SelectMenu";
 import ContentEditable from './ContentEditable';
 

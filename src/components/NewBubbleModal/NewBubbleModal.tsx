@@ -20,7 +20,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How would you fix it?\n3 - Are there alternatives for fixing it?';
 
   const [ description, setDescription ] = useState('');
-  const [ content, setContent ] = useState([])
+  const [ content, setContent ] = useState('')
   const [ title, setTitle ] = useState('');
 
   const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
