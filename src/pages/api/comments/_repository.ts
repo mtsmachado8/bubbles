@@ -14,9 +14,7 @@ const create = async (content: any, author: User, bubbleId: number) => {
             create: author,
           },
         },
-        content: {
-          create: content
-        }
+        content,
       },
     });
     return createdComment;
@@ -27,9 +25,7 @@ const create = async (content: any, author: User, bubbleId: number) => {
         bubble: {
           connect: { id: bubbleId }
         },
-        content: {
-          create: content
-        }
+        content,
       },
     });
     return createdComment;

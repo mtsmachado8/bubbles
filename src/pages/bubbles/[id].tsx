@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Router from "next/router";
 
-import { Bubble, Label, Comment, Like, ContentBlock } from "@prisma/client";
+import { Bubble, Label, Comment, Like } from "@prisma/client";
 import prisma from '../../../prisma/client';
 
 import BubbleDetailsModal from "../../components/BubbleDetailsModal/BubbleDetailsModal";
@@ -44,7 +44,6 @@ type FilledComment = Comment & {
     avatarUrl: string;
     name: string;
   };
-  content: ContentBlock[]
 };
 
 type FilledLike = Like & {
@@ -60,7 +59,6 @@ type FilledBubble = Bubble & {
   author: {
       avatarUrl: string;
   };
-  content: ContentBlock[]
 };
 
 type Props = {

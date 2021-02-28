@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 
-import { Bubble, Comment, ContentBlock, Label, Like } from '@prisma/client';
+import { Bubble, Comment, Label, Like } from '@prisma/client';
 
 import styles from './_comments.module.css';
 import Avatar from '../Avatar/Avatar';
@@ -12,7 +12,6 @@ type FilledComment = Comment & {
     avatarUrl: string;
     name: string;
   };
-  content: ContentBlock[]
 };
 
 type FilledLike = Like & {
@@ -28,7 +27,6 @@ type FilledBubble = Bubble & {
   author: {
       avatarUrl: string;
   };
-  content: ContentBlock[];
 };
 
 type Props = {
@@ -76,9 +74,7 @@ const Comments: React.FC<Props> = ({ bubble }: Props) => {
                 </p>
               </div>
               <div className={styles.commentText}>
-              {comment.content?.map(({ html, tag }, index) => (
-                <HtmlContent key={index} html={html} tag={tag}/>
-              ))}
+                <p>{comment.content}</p>
               </div>
             </div>
           </div>

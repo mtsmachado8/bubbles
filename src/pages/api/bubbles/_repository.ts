@@ -22,12 +22,6 @@ const getAll = async () => {
               name: true,
             },
           },
-          content: {
-            select: {
-              html: true,
-              tag: true
-            }
-          }
         },
       },
       author: {
@@ -35,12 +29,6 @@ const getAll = async () => {
           avatarUrl: true,
         },
       },
-      content: {
-        select: {
-          html: true,
-          tag: true
-        }
-      }
     },
   });
 
@@ -78,12 +66,6 @@ const getById = async (id: string) => {
               name: true,
             },
           },
-          content: {
-            select: {
-              html: true,
-              tag: true
-            }
-          }
         },
       },
       author: {
@@ -91,12 +73,6 @@ const getById = async (id: string) => {
           avatarUrl: true,
         },
       },
-      content: {
-        select: {
-          html: true,
-          tag: true
-        }
-      }
     },
     where: {
       id: parseInt(id),
@@ -116,15 +92,13 @@ const getById = async (id: string) => {
   return serializedBubble;
 };
 
-const create = async (title: string, description: string, content: any, author: User) => {
+const create = async (title: string, description: string, content: string, author: User) => {
   if(author) {
     const createdBubble = await prisma.bubble.create({
       data: {
         title,
         description,
-        content: {
-          create: content
-        },
+        content,
         author: {
           connectOrCreate: {
             where: { email: author.email },
@@ -139,9 +113,7 @@ const create = async (title: string, description: string, content: any, author: 
       data: {
         title,
         description,
-        content: {
-          create: content
-        },
+        content,
       },
     });
     return createdBubble;

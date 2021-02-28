@@ -1,10 +1,8 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
-import { uid } from '../../infra/helpers';
 import Avatar from '../Avatar/Avatar';
 
 import Modal from '../Modal/Modal';
-import RichTextArea from '../RichTextArea/RichTextArea';
 
 import styles from './_newBubbleModal.module.css';
 
@@ -19,13 +17,10 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     login,
     logout,
   } = useContext(AuthContext);
-  
+  const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How would you fix it?\n3 - Are there alternatives for fixing it?';
+
   const [ description, setDescription ] = useState('');
-  const [ blocks, setBlocks ] = useState([
-    { id: uid(), html: "The problem", tag: "h2", placeholder: 'Heading 1' },
-    { id: uid(), html: "Your proposal for fixing it", tag: "h2", placeholder: 'Heading 1' },
-    { id: uid(), html: "Alternative ways for fixing it", tag: "h2", placeholder: 'Heading 1' },
-  ]);
+  const [ content, setContent ] = useState([])
   const [ title, setTitle ] = useState('');
 
   const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
@@ -35,7 +30,7 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
 
   const bubble = {
     description,
-    content: blocks,
+    content,
     title,
   };
 
@@ -80,12 +75,13 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
               <div className={styles.typeText}>
                 <p>Write</p>
               </div>
-              <div className={styles.textArea}>
-                <RichTextArea
-                  blocks={blocks}
-                  setBlocks={setBlocks}
-                />
-              </div>
+              <textarea
+                name='content'
+                required 
+                className={styles.textArea}
+                placeholder={placeholder}
+                onChange={e => setContent(e.target.value)}
+              />
               {loggedUser
               ? <div className={styles.buttonContent}>
                   <button 
