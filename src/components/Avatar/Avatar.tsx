@@ -5,11 +5,10 @@ type Props = {
   size: number,
   src: string,
   alt: string,
-  key: string,
   props?: ImageProps
 };
 
-const Avatar: React.FC<Props> = ({ src, size, alt, key, ...props }: Props) => {
+const Avatar: React.FC<Props> = ({ src, size, alt, ...props }: Props) => {
   return (
     <div>
       <Image
@@ -17,7 +16,6 @@ const Avatar: React.FC<Props> = ({ src, size, alt, key, ...props }: Props) => {
         alt={alt}
         width={size}
         height={size}
-        key={key}
         {...props}
       />
     </div>

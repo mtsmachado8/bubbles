@@ -19,7 +19,7 @@ import Header from '../components/Header/Header';
 import alteredLabels from '../infra/services/alteredLabels';
 import alteredLikes from '../infra/services/alteredLikes';
 import postComments from '../infra/services/postComments';
-import postBubbles from '../infra/services/postBubbles';
+import postBubble from '../infra/services/postBubble';
 import postLabels from '../infra/services/postLabels';
 
 import styles from './_home.module.css';
@@ -64,7 +64,9 @@ type Props = {
 };
 
 const HomePage: NextPage<Props> = ( props: Props ) => {
-  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData);
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData.sort((bubble1, bubble2) => (
+    bubble2.likes.length - bubble1.likes.length
+  )));
   const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
 
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
@@ -84,12 +86,13 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
         createdAt: new Date(bubble.createdAt),
       }));
 
-      const sortBubblesByLikes = filledBubbles.sort((bubble1, bubble2) => {
-        return bubble2.likes.length - bubble1.likes.length
-      })
-
-      setBubbles(sortBubblesByLikes)
+      const sortedBubbles = filledBubbles.sort((bubble1, bubble2) => (
+        bubble2.likes.length - bubble1.likes.length
+      ))
+      
+      setBubbles(sortedBubbles)
     };
+
 
     if(labelsData != undefined) {
       setLabels(labelsData);
@@ -97,8 +100,8 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
   }, [bubblesData, labelsData]);
 
-  const postBubble = (bubblInfo, userInfo) => {
-    postBubbles(bubblInfo, userInfo);
+  const postBubbleHandler = (bubblInfo, userInfo) => {
+    postBubble(bubblInfo, userInfo);
     Router.push('/');
     setIsNewBubbleModalVisible(false);
   };
@@ -127,7 +130,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
           {bubbles.map((bubble) => (
             <div key={bubble.id}>
-              <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`}>
+              <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} passHref>
                 <BubbleListItem
                   onClick={() => {
                     setIsBubbleDetailsVisible(true);
@@ -154,7 +157,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
         </div>
 
-        <Link href='/' as='/bubbles/new'>
+        <Link href='/' as='/bubbles/new' passHref>
           <FloatingButton 
             onClick={() => setIsNewBubbleModalVisible(true)} 
             isVisible={!isNewBubbleModalVisible && !isBubbleDetailsVisible}
@@ -164,7 +167,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
         {isNewBubbleModalVisible ?
           <NewBubbleModal
             onClose={() => {setIsNewBubbleModalVisible(false); Router.push('/')}}
-            onSubmitNewBubble={postBubble}
+            onSubmitNewBubble={postBubbleHandler}
           />
         : null}
 

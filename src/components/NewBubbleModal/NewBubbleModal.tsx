@@ -17,12 +17,12 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
     login,
     logout,
   } = useContext(AuthContext);
-  
+  const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How would you fix it?\n3 - Are there alternatives for fixing it?';
+
   const [ description, setDescription ] = useState('');
-  const [ content, setContent ] = useState('');
+  const [ content, setContent ] = useState('')
   const [ title, setTitle ] = useState('');
 
-  const placeholder = 'Tell us:\n\n1 - What is the problem?\n2 - How to fix?\n3 - What are the possible problems after fix it?';
   const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';
   const image = loggedUser
     ? loggedUser?.avatarUrl
@@ -79,10 +79,9 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
                 name='content'
                 required 
                 className={styles.textArea}
-                placeholder={placeholder} 
+                placeholder={placeholder}
                 onChange={e => setContent(e.target.value)}
               />
-
               {loggedUser
               ? <div className={styles.buttonContent}>
                   <button 

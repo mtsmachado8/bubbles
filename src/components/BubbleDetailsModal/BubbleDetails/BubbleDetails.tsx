@@ -6,6 +6,7 @@ import Reactions from '../../Reactions/Reactions';
 
 import styles from './_bubbleDetails.module.css';
 import Avatar from "../../Avatar/Avatar";
+import HtmlContent from "../../RichTextArea/HtmlContent";
 
 type FilledComment = Comment & {
   author: {

@@ -27,7 +27,6 @@ const postBubble = async ({title, description, content}: Bubble, author: User) =
       pauseOnHover: false,
       pauseOnFocusLoss: false,
     });
-
   };
 };
 

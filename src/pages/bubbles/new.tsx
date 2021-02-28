@@ -3,19 +3,19 @@ import Router from 'next/router';
 
 import NewBubbleModal from '../../components/NewBubbleModal/NewBubbleModal';
 
-import postBubbles from '../../infra/services/postBubbles';
+import postBubble from '../../infra/services/postBubble';
 
 const NewBubble: React.FC = () => {
   
-  const postBubble = (bubbleInfo, userInfo) => {
-    postBubbles(bubbleInfo, userInfo)
+  const postBubbleHandler = (bubbleInfo, userInfo) => {
+    postBubble(bubbleInfo, userInfo)
     Router.push('/')
   };
 
   return (
     <NewBubbleModal 
       onClose={() => Router.push('/')}
-      onSubmitNewBubble={postBubble}
+      onSubmitNewBubble={postBubbleHandler}
     />
   );
 };
