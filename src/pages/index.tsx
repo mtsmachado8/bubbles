@@ -132,7 +132,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
           {bubbles.map((bubble) => (
             <div key={bubble.id}>
-              <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`}>
+              <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} passHref>
                 <BubbleListItem
                   onClick={() => {
                     setIsBubbleDetailsVisible(true);
@@ -159,7 +159,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
         </div>
 
-        <Link href='/' as='/bubbles/new'>
+        <Link href='/' as='/bubbles/new' passHref>
           <FloatingButton 
             onClick={() => setIsNewBubbleModalVisible(true)} 
             isVisible={!isNewBubbleModalVisible && !isBubbleDetailsVisible}

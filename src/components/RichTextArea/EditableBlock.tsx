@@ -3,24 +3,25 @@ import { getCaretCoordinates, setCaretToEnd } from "../../infra/helpers";
 import SelectMenu from "./SelectMenu";
 import ContentEditable from './ContentEditable';
 
-type Props = {
+type Block = {
   id: string,
-  initHtml: string,
-  initTag: string,
-  initPlaceholder: string,
+  html: string,
+  tag: string, // 'h1' | 'h2' | 'h3' | 'p'
+  placeholder: string
+}
+
+type Props = {
+  block: Block,
   addBlock: Function,
   deleteBlock: Function,
-  updateTextArea: Function,
+  updateBlock: Function,
 };
 
-const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, initPlaceholder, addBlock, deleteBlock, updateTextArea }: Props) => {
+const EditableBlock: React.FC<Props> = ({ block, addBlock, deleteBlock, updateBlock }: Props) => {
   const [isSelectMenuOpen, setIsSelectMenuOpen] = useState(false);
   const [selectMenuPosition, setSelectMenuPosition] = useState({ x: null, y: null })
   const [htmlBackup, setHtmlBackup] = useState(null);
   const [previousKey, setPreviousKey] = useState('');
-  const [tag, setTag] = useState(initTag)
-  const [html, setHtml] = useState(initHtml)
-  const [placeholder, setPlaceholder] = useState(initPlaceholder)
   const contentEditable = useRef<HTMLElement>();
   
   const closeSelectMenuHandler = () => {
@@ -44,20 +45,20 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, initPlaceholder
   }
 
   const onKeyDownHandler = (e) => {
-    if (e.key === "/") setHtmlBackup(html);
+    if (e.key === "/") setHtmlBackup(block.html);
     if (e.key === "Enter") {
       if (previousKey !== "Shift") {
         e.preventDefault();
         addBlock({
-          id,
+          id: block.id,
           ref: contentEditable.current
         });
       }
     }
-    if (e.key === "Backspace" && !html) {
+    if (e.key === "Backspace" && !block.html) {
       e.preventDefault();
       deleteBlock({
-        id,
+        id: block.id,
         ref: contentEditable.current
       });
     }
@@ -65,24 +66,27 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, initPlaceholder
   }
 
   const tagSelectionHandler = (item: any) => {
-    setTag(item.tag)
-    setPlaceholder(item.placeholder)
-    setHtml(htmlBackup);
+    updateBlock({
+      ...block,
+      tag: item.tag,
+      html: htmlBackup,
+      placeholder: item.placeholder
+    })
     setCaretToEnd(contentEditable.current);
     closeSelectMenuHandler();
   }
 
-  const onChangeHandler = (e) => setHtml(e.target.value);
+  const onChangeHandler = (e) => updateBlock({
+    ...block,
+    html: e.target.value
+  });
 
   useEffect(() => {
-    updateTextArea({
-      id,
-      html,
-      tag,
-      placeholder,
+    updateBlock({
+      ...block,
       ref: contentEditable.current
     })
-  }, [id, html, tag, placeholder])
+  }, [block])
 
   return (
     <>
@@ -95,12 +99,12 @@ const EditableBlock: React.FC<Props> = ({ id, initHtml, initTag, initPlaceholder
       )}
       <ContentEditable
         innerRef={contentEditable}
-        html={html}
-        tagName={tag}
+        html={block?.html}
+        tagName={block?.tag}
+        placeholder={block?.placeholder}
         onChange={onChangeHandler}
         onKeyDown={onKeyDownHandler}
         onKeyUp={onKeyUpHandler}
-        placeholder={placeholder}
       />
     </>
   );

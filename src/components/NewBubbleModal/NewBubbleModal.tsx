@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import AuthContext from '../../infra/contexts/AuthContext';
+import { uid } from '../../infra/helpers';
 import Avatar from '../Avatar/Avatar';
 
 import Modal from '../Modal/Modal';
@@ -20,7 +21,11 @@ const BubbleDetails: React.FC<Props> = ({ onClose, onSubmitNewBubble }: Props) =
   } = useContext(AuthContext);
   
   const [ description, setDescription ] = useState('');
-  const [ blocks, setBlocks ] = useState([]);
+  const [ blocks, setBlocks ] = useState([
+    { id: uid(), html: "The problem", tag: "h2", placeholder: 'Heading 1' },
+    { id: uid(), html: "Your proposal for fixing it", tag: "h2", placeholder: 'Heading 1' },
+    { id: uid(), html: "Alternative ways for fixing it", tag: "h2", placeholder: 'Heading 1' },
+  ]);
   const [ title, setTitle ] = useState('');
 
   const submitButton = loggedUser ? `Submit with ${loggedUser.name.split(' ')[0]}` : 'Submit Anonymously';

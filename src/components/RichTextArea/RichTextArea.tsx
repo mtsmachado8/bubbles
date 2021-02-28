@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { setCaretToEnd, uid } from '../../infra/helpers'
 import EditableBlock from './EditableBlock';
 
-const defaultInitialBlock = { id: uid(), html: "", tag: "h1", placeholder: 'Title' };
-
 type Block = {
   id: string,
   html: string,
@@ -12,17 +10,17 @@ type Block = {
 }
 
 type Props = {
-  initialBlock: Block,
   blocks: Block[],
   setBlocks: Function
 }
 
-const RichTextArea: React.FC<Props> = ({ initialBlock = defaultInitialBlock, blocks, setBlocks }: Props) => {
-  useEffect(() => {
-    setBlocks([initialBlock])
-  }, [])
+const RichTextArea: React.FC<Props> = ({ blocks, setBlocks }: Props) => {
 
-  const updateTextArea = (updatedBlock) => {
+  useEffect(() => {
+    console.log('effect', blocks)
+  }, [blocks])
+
+  const updateBlockHandler = (updatedBlock) => {
     const index = blocks.map((b) => b.id).indexOf(updatedBlock.id);
     const updatedBlocks = [...blocks];
     updatedBlocks[index] = {
@@ -31,14 +29,16 @@ const RichTextArea: React.FC<Props> = ({ initialBlock = defaultInitialBlock, blo
       html: updatedBlock.html,
       placeholder: updatedBlock.placeholder
     };
-    updatedBlock.ref.focus()
+    updatedBlock?.ref?.focus()
     setBlocks(updatedBlocks);
   }
 
   const addBlockHandler = (currentBlock) => {
     const newBlock = { id: uid(), html: "", tag: "p", placeholder: `Type '/' for commands` };
-    const updatedBlocks = [...blocks, newBlock];
-    setBlocks(updatedBlocks);
+    const currentBlockIndex = blocks.findIndex(block => block.id === currentBlock.id)
+    const newBlocks = [...blocks]
+    newBlocks.splice(currentBlockIndex + 1, 0, ...[newBlock])
+    setBlocks(newBlocks);
     setTimeout(() => {currentBlock.ref.nextElementSibling?.focus();}, 200);
   }
 
@@ -60,11 +60,8 @@ const RichTextArea: React.FC<Props> = ({ initialBlock = defaultInitialBlock, blo
         return (
           <EditableBlock
             key={key}
-            id={block.id}
-            initTag={block.tag}
-            initHtml={block.html}
-            initPlaceholder={block.placeholder}
-            updateTextArea={updateTextArea}
+            block={block}
+            updateBlock={updateBlockHandler}
             addBlock={addBlockHandler}
             deleteBlock={deleteBlockHandler}
           />

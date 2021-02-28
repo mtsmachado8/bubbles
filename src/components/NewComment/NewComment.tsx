@@ -13,8 +13,9 @@ type Props = {
 }
 
 const NewComment: React.FC<Props> = (props: Props) => {
-  const initialBlock = { id: uid(), html: "", tag: "p", placeholder: `Type '/' for commands` };
-  const [ blocks, setBlocks ] = useState([]);
+  const [ blocks, setBlocks ] = useState([
+    { id: uid(), html: "", tag: "p", placeholder: `Type '/' for commands` }
+  ]);
 
   const { 
     loggedUser,
@@ -56,7 +57,7 @@ const NewComment: React.FC<Props> = (props: Props) => {
         </div>
         <div className={styles.commentArea}>
           <div className={styles.textArea}>
-            <RichTextArea initialBlock={initialBlock} blocks={blocks} setBlocks={setBlocks}/>
+            <RichTextArea blocks={blocks} setBlocks={setBlocks}/>
           </div>
             
           
