@@ -38,7 +38,7 @@ type Props = {
   onSubmitNewComment: Function;
   onSubmitNewLabel: Function;
   onConfigChange: Function;
-  alteredLike: Function;
+  alteredLike: (likeId: Number, bubbleId: Number) => void;
 };
 
 const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
