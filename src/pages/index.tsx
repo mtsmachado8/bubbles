@@ -65,7 +65,7 @@ type Props = {
 };
 
 const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData }: Props ) => {
-  const [ currentLabelState, setCurrentLabelState ] = useState(1)
+  const [ currentLabelState, setCurrentLabelState ] = useState<Number>(1)
 
   const shouldShowBubble = bubble => {
     const notInAnyState = () => bubble.labels.every(label => !label.isState)
