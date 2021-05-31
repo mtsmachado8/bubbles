@@ -15,6 +15,7 @@ import FloatingButton from '../components/FloatingButton/FloatingButton';
 import NewBubbleModal from "../components/NewBubbleModal/NewBubbleModal";
 import AsideHome from "../components/AsideHome/AsideHome";
 import Header from '../components/Header/Header';
+import SegmentedPicker from "../components/SegmentedPicker/SegmentedPicker";
 
 import alteredLabels from '../infra/services/alteredLabels';
 import alteredLikes from '../infra/services/alteredLikes';
@@ -27,7 +28,7 @@ import styles from './_home.module.css';
 export const getStaticProps: GetStaticProps = async () => {
   const bubbles = await getAllBubbles();
   const labels = await getAllLabels();
-
+  
   return {
     props: {
       initialBubblesData: bubbles,
@@ -63,16 +64,45 @@ type Props = {
   initialLabelsData: Label[];
 };
 
-const HomePage: NextPage<Props> = ( props: Props ) => {
-  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(props.initialBubblesData.sort((bubble1, bubble2) => (
+const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData }: Props ) => {
+  const [ currentLabelState, setCurrentLabelState ] = useState(1)
+
+  const shouldShowBubble = bubble => {
+    const notInAnyState = () => bubble.labels.every(label => !label.isState)
+    const currentStateLabel = () => {
+      return bubble.labels.some(label => label.stateIndex === currentLabelState)
+    }
+    const isOnDefaultLabelState = currentLabelState === 1
+    if(isOnDefaultLabelState){
+      return (notInAnyState() || currentStateLabel())
+    } else {
+      return currentStateLabel()
+    }
+  }
+  const mostLikes = (bubble1, bubble2) => (
     bubble2.likes.length - bubble1.likes.length
-  )));
-  const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData);
+  )
+  const fillCreatedAt = bubble => ({
+    ...bubble,
+    createdAt: new Date(bubble.createdAt),
+  })
+
+  const [ bubbles, setBubbles ] = useState<FilledBubble[]>(
+    initialBubblesData
+      .sort(mostLikes)
+      .filter(shouldShowBubble)
+  );
+
+  const [ labels, setLabels ] = useState<Label[]>(initialLabelsData);
+  const stateLabels = labels
+    .filter(label => label.isState)
+    .sort(label => label.stateIndex)
+    .map(label => label.name)
 
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
   const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
   
-  const [ oppenedBubbleId, setOppenedBubbleId ] = useState(null);
+  const [ oppenedBubble, setOppenedBubble ] = useState<FilledBubble>(null);
 
   const { data: bubblesData } = useFetch('/bubbles');
   const { data: labelsData } = useFetch('/labels');
@@ -81,24 +111,25 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
 
   useEffect(() => {
     if(bubblesData != undefined) {
-      const filledBubbles = bubblesData.map(bubble => ({
-        ...bubble,
-        createdAt: new Date(bubble.createdAt),
-      }));
+      const filledBubbles: FilledBubble[] = bubblesData.map(fillCreatedAt);
 
-      const sortedBubbles = filledBubbles.sort((bubble1, bubble2) => (
-        bubble2.likes.length - bubble1.likes.length
-      ))
+      const sortedBubbles = filledBubbles
+        .sort(mostLikes)
+        .filter(shouldShowBubble)
       
       setBubbles(sortedBubbles)
-    };
 
+      if(oppenedBubble){ // Refresh Oppened Bubble
+        setOppenedBubble(filledBubbles.find(bubble => bubble.id === oppenedBubble.id))
+      }
+    };
+    
 
     if(labelsData != undefined) {
       setLabels(labelsData);
     };
 
-  }, [bubblesData, labelsData]);
+  }, [bubblesData, labelsData, currentLabelState]);
 
   const postBubbleHandler = (bubblInfo, userInfo) => {
     postBubble(bubblInfo, userInfo);
@@ -107,19 +138,19 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
   };
 
   const postComment = (newComment, userInfo) => {
-    postComments(newComment, userInfo, oppenedBubbleId);
+    postComments(newComment, userInfo, oppenedBubble.id);
   };
 
   const postLabel = (newLabel) => {
-    postLabels(newLabel, oppenedBubbleId);
+    postLabels(newLabel, oppenedBubble.id);
   };
 
   const alteredLabel = (id, selectedLabel) => {
-    alteredLabels(id , selectedLabel, oppenedBubbleId);
+    alteredLabels(id , selectedLabel, oppenedBubble.id);
   };
 
-  const alteredLike = (id) => {
-    alteredLikes(oppenedBubbleId, loggedUser, id);
+  const alteredLike = (likeId: Number, bubbleId: Number) => {
+    alteredLikes(bubbleId, loggedUser, likeId);
   };
 
   return (
@@ -128,33 +159,36 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
         <div className={styles.bubblesContainer}>
           <Header/>
 
+          <SegmentedPicker
+            stateLabels={stateLabels.length ? stateLabels : undefined}
+            currentLabelState={currentLabelState}
+            onSelectedState={setCurrentLabelState}
+          />
           {bubbles.map((bubble) => (
             <div key={bubble.id}>
               <Link href={`/?[id]=${bubble.id}`} as={`/bubbles/${bubble.id}`} passHref>
                 <BubbleListItem
                   onClick={() => {
                     setIsBubbleDetailsVisible(true);
-                    setOppenedBubbleId(bubble.id)}
+                    setOppenedBubble(bubble)}
                   }
                   bubble={bubble}
                   alteredLike={alteredLike}
                 />
               </Link>
-
-              {isBubbleDetailsVisible && bubble.id === oppenedBubbleId ?
-                <BubbleDetailsModal
-                  onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/'); setOppenedBubbleId(null)}}
-                  bubble={bubble}
-                  allLabels={labels}
-                  onSubmitNewLabel={postLabel}
-                  onConfigChange={alteredLabel}
-                  onSubmitNewComment={postComment}
-                  alteredLike={alteredLike}
-                />
-              : null}
             </div>
           ))}
-
+          {isBubbleDetailsVisible &&
+            <BubbleDetailsModal
+              onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/'); setOppenedBubble(null)}}
+              bubble={oppenedBubble}
+              allLabels={labels}
+              onSubmitNewLabel={postLabel}
+              onConfigChange={alteredLabel}
+              onSubmitNewComment={postComment}
+              alteredLike={alteredLike}
+            />
+          }
         </div>
 
         <Link href='/' as='/bubbles/new' passHref>
@@ -178,5 +212,7 @@ const HomePage: NextPage<Props> = ( props: Props ) => {
     </div>
   );
 };
+
+
 
 export default HomePage;

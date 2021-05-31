@@ -24,13 +24,13 @@ type FilledLike = Like & {
 type Props = {
   comments: FilledComment[];
   likes: FilledLike[];
-  alteredLike: Function;
+  alteredLike: (likeId: Number) => void;
 };
 
 const Reactions: React.FC<Props> = (props: Props) => {
   const { loggedUser } = useContext(AuthContext);
   const [ alreadyLiked, setAlreadyLiked ] = useState(false);
-  const [ likeId, setLikeId ] = useState(null);
+  const [ like, setLike ] = useState(null);
 
   const likes = props.likes ? props.likes.length : 0;
 
@@ -40,7 +40,7 @@ const Reactions: React.FC<Props> = (props: Props) => {
         props.likes.some(like => like.author.email === loggedUser?.email)
       );
         
-      setLikeId(
+      setLike(
         props.likes.find(like => like.author.email === loggedUser?.email)
       );
     };
@@ -52,7 +52,7 @@ const Reactions: React.FC<Props> = (props: Props) => {
         className={styles.actions}
         onClick={e => {
           e.preventDefault();
-          props.alteredLike(likeId?.id);
+          props.alteredLike(like?.id);
         }}
       >
         <BiLike className={alreadyLiked ? styles.unlike : styles.like} />

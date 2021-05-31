@@ -32,7 +32,7 @@ type FilledBubble = Bubble & {
 
 type Props = {
   bubble: FilledBubble;
-  alteredLike: Function;
+  alteredLike: (likeId: Number, bubbleId: Number) => void;
 };
 
 const BubbleDetails: React.FC<Props> = ({ bubble, alteredLike }: Props) => {
@@ -62,7 +62,7 @@ const BubbleDetails: React.FC<Props> = ({ bubble, alteredLike }: Props) => {
             <Reactions 
               comments={bubble.comments}
               likes={bubble.likes}
-              alteredLike={alteredLike}
+              alteredLike={(likeId) => alteredLike(likeId, bubble.id)}
             />
           </div>
         </div>

@@ -31,7 +31,7 @@ type FilledBubble = Bubble & {
 type Props = {
   bubble: FilledBubble;
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
-  alteredLike: Function;
+  alteredLike: (likeId: Number, bubbleId: Number) => void;
 };
 
 const BubbleListItem: React.FC<Props> = ({ bubble, onClick, alteredLike }: Props) => {
@@ -67,7 +67,7 @@ const BubbleListItem: React.FC<Props> = ({ bubble, onClick, alteredLike }: Props
           <Reactions
             comments={bubble.comments}
             likes={bubble.likes}
-            alteredLike={alteredLike}
+            alteredLike={(likeId) => alteredLike(likeId, bubble.id)}
           />
           <p className={styles.date}>{format(new Date(bubble.createdAt), 'dd/MM/yyyy')}</p>
         </div>
