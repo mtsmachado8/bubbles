@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import styles from './_SegmentedPicker.module.css';
+import styles from './_segmentedPicker.module.css';
 
 type Props = {
   stateLabels?: String[]
