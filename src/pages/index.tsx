@@ -28,11 +28,16 @@ import styles from './_home.module.css';
 export const getStaticProps: GetStaticProps = async () => {
   const bubbles = await getAllBubbles();
   const labels = await getAllLabels();
-  
+  const stateLabels = labels
+    .filter(label => label.isState)
+    .sort((label1, label2) => label2.stateIndex - label1.stateIndex)
+    .map(label => label.name)
+
   return {
     props: {
       initialBubblesData: bubbles,
       initialLabelsData: labels,
+      stateLabels
     },
   };
 };
@@ -62,9 +67,10 @@ type FilledBubble = Bubble & {
 type Props = {
   initialBubblesData: FilledBubble[];
   initialLabelsData: Label[];
+  stateLabels: String[];
 };
 
-const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData }: Props ) => {
+const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, stateLabels }: Props ) => {
   const [ currentLabelState, setCurrentLabelState ] = useState<Number>(1)
 
   const shouldShowBubble = bubble => {
@@ -94,10 +100,6 @@ const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData }: P
   );
 
   const [ labels, setLabels ] = useState<Label[]>(initialLabelsData);
-  const stateLabels = labels
-    .filter(label => label.isState)
-    .sort(label => label.stateIndex)
-    .map(label => label.name)
 
   const [ isNewBubbleModalVisible, setIsNewBubbleModalVisible ] = useState(false);
   const [ isBubbleDetailsVisible, setIsBubbleDetailsVisible ] = useState(false);
