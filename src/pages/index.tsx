@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const labels = await getAllLabels();
   const stateLabels = labels
     .filter(label => label.isState)
-    .sort((label1, label2) => label2.stateIndex - label1.stateIndex)
+    .sort((label1, label2) => label1.stateIndex - label2.stateIndex)
     .map(label => label.name)
 
   return {
