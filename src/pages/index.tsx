@@ -127,6 +127,7 @@ const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, sta
     };
     
 
+
     if(labelsData != undefined) {
       setLabels(labelsData);
     };
