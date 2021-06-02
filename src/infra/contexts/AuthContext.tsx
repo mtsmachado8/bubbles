@@ -50,10 +50,12 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const onSuccessGoogle = ({ profileObj }: GoogleLoginResponse) => {
+    console.log(profileObj)
+
     _setLoggedUser({
       name: profileObj.name,
       email: profileObj.email,
-      avatarUrl: profileObj.imageUrl,
+      avatarUrl: profileObj.imageUrl || '/anonymous-image.png',
     })
 
     toast.dark(`Welcome Mr(s) ${profileObj.familyName}`, {
