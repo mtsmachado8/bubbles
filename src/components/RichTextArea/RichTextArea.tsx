@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
 import { setCaretToEnd, uid } from './helpers'
 import EditableBlock from './EditableBlock';
-
-type Block = {
-  id: string,
-  html: string,
-  tag: string, // 'h1' | 'h2' | 'h3' | 'p'
-  placeholder: string
-}
+import { Block } from '../../infra/types';
 
 type Props = {
   blocks: Block[],

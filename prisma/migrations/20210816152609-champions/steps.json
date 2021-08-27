@@ -1,0 +1,191 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateModel",
+      "model": "ChampionsOnBubbles"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ChampionsOnBubbles",
+      "field": "champion",
+      "type": "User",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "champion"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "champion"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[championId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "champion"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ChampionsOnBubbles",
+      "field": "championId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ChampionsOnBubbles",
+      "field": "bubble",
+      "type": "Bubble",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "bubble"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "bubble"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[bubbleId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "bubble"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ChampionsOnBubbles",
+      "field": "bubbleId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ChampionsOnBubbles",
+      "field": "assignedAt",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "assignedAt"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "ChampionsOnBubbles",
+          "field": "assignedAt"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ChampionsOnBubbles",
+      "field": "assignedBy",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Model",
+          "model": "ChampionsOnBubbles"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Model",
+          "model": "ChampionsOnBubbles"
+        },
+        "directive": "id"
+      },
+      "argument": "",
+      "value": "[championId, bubbleId]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Bubble",
+      "field": "champions",
+      "type": "ChampionsOnBubbles",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "bubblesChampionShip",
+      "type": "ChampionsOnBubbles",
+      "arity": "List"
+    }
+  ]
+}

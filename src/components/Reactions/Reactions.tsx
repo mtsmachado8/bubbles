@@ -1,25 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { FaRegCommentAlt } from 'react-icons/fa';
-import { BiLike, BiDislike } from 'react-icons/bi';
+import { BiLike } from 'react-icons/bi';
 
 import AuthContext from '../../infra/contexts/AuthContext';
-import { Comment, Like } from '@prisma/client';
 
 import styles from './_reactions.module.css';
-
-type FilledComment = Comment & {
-  author: {
-    avatarUrl: string;
-    name: string;
-  };
-};
-
-type FilledLike = Like & {
-  author: {
-    email: string;
-  };
-};
+import { FilledComment, FilledLike } from '../../infra/types';
 
 type Props = {
   comments: FilledComment[];

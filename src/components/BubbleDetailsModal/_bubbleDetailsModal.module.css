@@ -1,6 +1,6 @@
 .content {
   display: flex;
-  width: 100%;
+  width: 98%;
   height: 100%;
 }
 
@@ -68,8 +68,9 @@
   border: none;
 }
 
-.labelsContent {
-  display: none;
+.toolsContent {
+  display: flex;
+  flex-direction: column;
   padding-top: 20px;
 }
 

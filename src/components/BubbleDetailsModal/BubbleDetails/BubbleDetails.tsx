@@ -1,34 +1,12 @@
 import React from "react";
 
-import { Bubble, Label, Comment, Like } from "@prisma/client";
+import { Comment, Like } from "@prisma/client";
 
 import Reactions from '../../Reactions/Reactions';
 
 import styles from './_bubbleDetails.module.css';
 import Avatar from "../../Avatar/Avatar";
-import HtmlContent from "../../RichTextArea/HtmlContent";
-
-type FilledComment = Comment & {
-  author: {
-    avatarUrl: string;
-    name: string;
-  };
-};
-
-type FilledLike = Like & {
-  author: {
-    email: string;
-  };
-};
-
-type FilledBubble = Bubble & {
-  labels: Label[];
-  likes: FilledLike[];
-  comments: FilledComment[];
-  author: {
-      avatarUrl: string;
-  };
-};
+import { FilledBubble } from "../../../infra/types";
 
 type Props = {
   bubble: FilledBubble;

@@ -3,13 +3,22 @@
   height: 50px;
   text-align: center;
   margin: 15px 0;
+  align-items: center;
 }
 
 .headerContent h1 {
   font-weight: bold;
   font-size: 36px;
   color: var(--color-primary);
+  text-shadow: var(--color-primary-light) 0.1em 0.1em 0.2em;
   margin: 0;
+}
+
+.headerContent img {
+  height: 100px;
+  width: 100px;
+  top: 0;
+  margin-left: 0;
 }
 
 @media (min-width: 600px) {

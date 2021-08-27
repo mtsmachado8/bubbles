@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Bubble, Label, Comment, Like } from "@prisma/client";
+import {  Label, User } from "@prisma/client";
 
 import Modal from "../Modal/Modal";
 import Comments from '../Comments/Comments';
@@ -8,47 +8,32 @@ import NewComment from '../NewComment/NewComment';
 import Labels from "../Labels/Labels";
 import styles from './_bubbleDetailsModal.module.css';
 import BubbleDetails from "./BubbleDetails/BubbleDetails";
+import Champions from "../Champions/Champions"
+import { FilledBubble, FilledChampion } from "../../infra/types";
 
-type FilledComment = Comment & {
-  author: {
-    avatarUrl: string;
-    name: string;
-  };
-};
-
-type FilledLike = Like & {
-  author: {
-    email: string;
-  };
-};
-
-type FilledBubble = Bubble & {
-  labels: Label[];
-  likes: FilledLike[];
-  comments: FilledComment[];
-  author: {
-      avatarUrl: string;
-  };
-};
 
 type Props = {
+  champions: FilledChampion[];
+  allUsers: User[];
   bubble: FilledBubble;
   allLabels: Label[];
+  onSubmitNewChampion: Function;
   onClose: (event: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void;
   onSubmitNewComment: Function;
   onSubmitNewLabel: Function;
-  onConfigChange: Function;
+  onConfigLabelChange: Function;
+  onConfigChampionChange: Function;
   alteredLike: (likeId: Number, bubbleId: Number) => void;
 };
 
 const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
   const [isNewCommentVisible, setIsNewCommentVisible] = useState(false);
 
-  return(
+  return (
     <Modal onClose={props.onClose}>
       <div className={styles.content}>
         <section className={styles.detailsContent}>
-          <BubbleDetails 
+          <BubbleDetails
             bubble={props.bubble}
             alteredLike={props.alteredLike}
           />
@@ -56,25 +41,32 @@ const BubbleDetailsModal: React.FC<Props> = (props: Props) => {
           <Comments bubble={props.bubble} />
 
           {isNewCommentVisible
-          ? <div className={styles.newComment}>
-              <NewComment 
+            ? <div className={styles.newComment}>
+              <NewComment
                 onClick={() => setIsNewCommentVisible(false)}
                 onSubmitNewComment={props.onSubmitNewComment}
               />
             </div>
 
-          : <div className={styles.buttonBox}>
+            : <div className={styles.buttonBox}>
               <button type='button' onClick={() => setIsNewCommentVisible(true)}>Comment</button>
             </div>
           }
         </section>
 
-        <aside className={styles.labelsContent}>
-          <Labels 
+        <aside className={styles.toolsContent}>
+          <Labels
             onSubmitNewLabel={props.onSubmitNewLabel}
             labels={props.bubble.labels}
             allLabels={props.allLabels}
-            onConfigChange={props.onConfigChange}
+            onConfigChange={props.onConfigLabelChange}
+          />
+          <Champions
+            onSubmitNewChampion={props.onSubmitNewChampion}
+            bubble={props.bubble}
+            champions={props.champions}
+            allUsers={props.allUsers}
+            onConfigChange={props.onConfigChampionChange}
           />
         </aside>
       </div>

@@ -5,6 +5,11 @@ const getAll = async () => {
   const bubblesResponse = await prisma.bubble.findMany({
     include: {
       labels: true,
+      champions: {
+        include: {
+          champion: true,
+        }
+      },
       likes: {
         include: {
           author: {
@@ -35,7 +40,10 @@ const getAll = async () => {
   const serializedBubbles = bubblesResponse.map(bubble => ({
     ...bubble,
     createdAt: bubble.createdAt.toString(),
-
+    champions: bubble.champions.map(champion => ({
+      ...champion,
+      assignedAt: champion.assignedAt.toString()
+    })),
     comments: bubble.comments.map(comment => ({
       ...comment,
       createdAt: comment.createdAt.toString(),
@@ -49,6 +57,11 @@ const getById = async (id: string) => {
   const bubble = await prisma.bubble.findUnique({
     include: {
       labels: true,
+      champions: {
+        include: {
+          champion: true,
+        }
+      },
       likes: {
         include: {
           author: {
@@ -82,7 +95,10 @@ const getById = async (id: string) => {
   const serializedBubble = {
     ...bubble,
     createdAt: bubble.createdAt.toString(),
-
+    champions: bubble.champions.map(champion => ({
+      ...champion,
+      assignedAt: champion.assignedAt.toString()
+    })),
     comments: bubble.comments.map(comment => ({
       ...comment,
       createdAt: comment.createdAt.toString(),
