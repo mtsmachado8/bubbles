@@ -1,6 +1,5 @@
 .labelsPage {
   width: 100%;
-  height: 100%;
 
   display: flex;
   flex-direction: column;
@@ -16,7 +15,7 @@
   justify-content: center;
   text-align: center;
   width: 100%;
-  margin-bottom: -15px;
+  margin-bottom: -20px;
 
 }
 
@@ -55,7 +54,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-left: 20px;
+  
 }
 
 .labelsPage .labelsContent .labelName p {

@@ -1,6 +1,6 @@
 .bubbleContainer {
   width: 96%;
-  height: 150px;
+  height: 160px;
   background-color: var(--color-object-background);
   box-shadow: 1px 1px 5px -3px var(--color-text-contrast);
   border-radius: 10px;
@@ -70,36 +70,42 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 5px;
-  width: 100%;
-  height: 40px;
 }
 
-.champion {
-
+.champions {
+  margin-left: -70px;
   margin-right: auto;
   color:var(--color-text-contrast);
   display: flex;
   align-items: center;
 }
 
-.championImage {
+.championsImages {
   display: flex;
+  margin-left: 5px;
+  align-items: center;
+  flex-direction: row-reverse;
 }
 
-.imageChampion {
+.championsImages:hover > .imagesChampions:not(:last-child) {
+  transform: translateX(20px);
+  margin: 5px;
+}
 
-  display: flex;
+.championsImages > .imagesChampions:not(:last-child) {
+  transition: margin-left 0.5s ease-in-out;
+}
+
+.imagesChampions {
   justify-content: center;
   align-items: center;
-  height: 40px;
-  width: 40px;
-  margin: 8px ;
+  height: 35px;
+  width: 35px;
+  margin-right: -20px; /* Aproximar as imagens */
   overflow: hidden;
   border-radius: 50%;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
-
 
 .textContent .reactions .date {
   font-size: 11px;

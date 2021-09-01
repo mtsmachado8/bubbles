@@ -5,6 +5,9 @@ import styles from './_bubbleListItem.module.css';
 import Reactions from "../Reactions/Reactions";
 import Avatar from "../Avatar/Avatar";
 import { FilledBubble, FilledChampion } from "../../infra/types";
+import Champions from "../Champions/Champions";
+import users from "../../pages/api/users";
+import bubbles from "../../pages/api/bubbles";
 
 type Props = {
   champions: FilledChampion[];
@@ -26,8 +29,6 @@ const BubbleListItem: React.FC<Props> = (props: Props) => {
   const newLabelsArray = props.bubble.labels?.slice(0, 3);
   const newChampionArray = props.bubble.champions;
 
-  //console.log(newChampionArray)
-  
   return (
     <div onClick={props.onClick} className={styles.bubbleContainer}>
       <div className={styles.image}>
@@ -52,12 +53,11 @@ const BubbleListItem: React.FC<Props> = (props: Props) => {
         </div>
 
         <div className={styles.reactions}>
-          <div className={styles.champion}>
-            <p> Champions: </p>
-            <div className={styles.championImage}>
+          <div className={styles.champions}>
+            {!!newChampionArray.length && <p>Champions:</p>}
+            <div className={styles.championsImages}>
               {newChampionArray.map(champion => (
-                <div className={styles.championName} key={champion.champion.id}>
-                  <div className={styles.imageChampion}>
+                  <div className={styles.imagesChampions}>
                     <Avatar
                       alt='User Avatar'
                       key={image}
@@ -65,7 +65,6 @@ const BubbleListItem: React.FC<Props> = (props: Props) => {
                       src={champion.champion.avatarUrl ?? '/anonymous-image.png'}
                     />
                   </div>
-                </div>
               ))}
             </div>
           </div>

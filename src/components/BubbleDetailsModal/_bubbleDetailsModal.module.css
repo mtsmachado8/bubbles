@@ -4,6 +4,12 @@
   height: 100%;
 }
 
+@media screen and (min-width: 800px) {
+  .content {
+    margin: 1em 2em;
+  }
+} 
+
 .detailsContent {
   height: 100%;
   width: 100%;
@@ -89,6 +95,7 @@
     top: 33px;
     left: 120px;
   }
+
 
   .detailsContent .newComment {
     padding-left: 0;
