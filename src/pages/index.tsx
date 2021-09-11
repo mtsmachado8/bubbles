@@ -5,7 +5,8 @@ import Link from 'next/link';
 
 import { getAll as getAllBubbles } from './api/bubbles/_repository';
 import { getAll as getAllLabels } from './api/labels/_repository';
-import { Bubble, Label, Comment, Like } from "@prisma/client";
+import { getAll as getAllUsers } from './api/users/_repository';
+import { Bubble, Label, Comment, Like, User } from "@prisma/client";
 import AuthContext from "../infra/contexts/AuthContext";
 import useFetch from "../infra/hooks/swr";
 
@@ -24,9 +25,12 @@ import postBubble from '../infra/services/postBubble';
 import postLabels from '../infra/services/postLabels';
 
 import styles from './_home.module.css';
+import alteredChampions from "../infra/services/alteredChampion";
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubbles = await getAllBubbles();
+  const users = await getAllUsers();
+ 
   const labels = await getAllLabels();
   const stateLabels = labels
     .filter(label => label.isState)
@@ -37,6 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       initialBubblesData: bubbles,
       initialLabelsData: labels,
+      initialUsersData: users,
       stateLabels
     },
   };
@@ -46,6 +51,7 @@ type FilledComment = Comment & {
   author: {
     avatarUrl: string;
     name: string;
+    color: string;
   };
 };
 
@@ -57,6 +63,7 @@ type FilledLike = Like & {
 
 type FilledBubble = Bubble & {
   labels: Label[];
+  champions: User[];
   comments: FilledComment[];
   likes: FilledLike[];
   author: {
@@ -65,12 +72,13 @@ type FilledBubble = Bubble & {
 };
 
 type Props = {
+  initialUsersData: User[];
   initialBubblesData: FilledBubble[];
   initialLabelsData: Label[];
   stateLabels: String[];
 };
 
-const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, stateLabels }: Props ) => {
+const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, stateLabels, initialUsersData }: Props ) => {
   const [ currentLabelState, setCurrentLabelState ] = useState<Number>(1)
 
   const shouldShowBubble = bubble => {
@@ -126,8 +134,7 @@ const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, sta
       }
     };
     
-
-
+    
     if(labelsData != undefined) {
       setLabels(labelsData);
     };
@@ -150,6 +157,10 @@ const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, sta
 
   const alteredLabel = (id, selectedLabel) => {
     alteredLabels(id , selectedLabel, oppenedBubble.id);
+  };
+
+  const alteredChampion = (bubbleId, championId, isSelected) => {
+    alteredChampions(bubbleId, championId, isSelected);
   };
 
   const alteredLike = (likeId: Number, bubbleId: Number) => {
@@ -183,11 +194,15 @@ const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, sta
           ))}
           {isBubbleDetailsVisible &&
             <BubbleDetailsModal
+              allUsers={initialUsersData}
+              champions={oppenedBubble.champions}
+              onSubmitNewChampion={() => {}}
               onClose={() => {setIsBubbleDetailsVisible(false); Router.push('/'); setOppenedBubble(null)}}
               bubble={oppenedBubble}
               allLabels={labels}
               onSubmitNewLabel={postLabel}
-              onConfigChange={alteredLabel}
+              onConfigChampionChange={alteredChampion}
+              onConfigLabelChange={alteredLabel}
               onSubmitNewComment={postComment}
               alteredLike={alteredLike}
             />

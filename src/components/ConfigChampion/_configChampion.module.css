@@ -1,0 +1,135 @@
+.configChampionContent {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  width: 280px;
+  height: 340px;
+
+  position: absolute;
+  background-color: var(--color-background);
+  border-radius: 5px;
+
+  right: 20px;
+  top: 50px;
+  
+  box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.7);
+}
+
+.configChampionContent .square {
+  width: 15px;
+  height: 15px;
+  bottom: 333px;
+  right: 30%;
+  transform: rotate(45deg);
+  position: absolute;
+  flex-direction: column;
+  background-color: var(--color-object-background);
+}
+
+.configChampionContent .title {
+  width: 100%;
+  height: 25px;
+  background-color: var(--color-object-background);
+  
+}
+
+.configChampionContent .title p {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(127, 29, 219);
+  margin: 5px;
+  text-align: left;
+}
+
+.configChampionContent .championsContent {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.configChampionContent .championsContent::-webkit-scrollbar-track {
+  background-color: var(--color-background);
+  border-radius: 15px;
+}
+
+.configChampionContent .championsContent::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 25px;
+  background-color: var(--color-background);
+}
+
+.configChampionContent .championsContent::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 15px;
+}
+
+.configChampionContent .championsContent .champion {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  background-color: var(--color-object-background);
+  max-width: 100%;
+  min-height: 70px;
+  margin: 2px 0 0;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.configChampionContent .championsContent .champion .unselectedChampion {
+  width: 8px;
+}
+
+.configChampionContent .championsContent .champion .unselectedChampion svg {
+  display: none;
+}
+
+
+.configChampionContent .championsContent .champion .championDetails {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.configChampionContent .championsContent .champion .championDetails .championName {
+  display: -webkit-box;
+  text-overflow:  ellipsis;
+  overflow: hidden;
+  align-items: center;
+  width: 100%;
+  margin-left: auto;
+}
+
+.image {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 46px;
+  width: 46px;
+  margin: 10px 15px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+}
+
+.configChampionContent .championsContent .champion .championDetails .championName .championColor {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin: 5px 8px 5px 15px;
+}
+
+.configChampionContent .championsContent .champion .championDetails .championName p {
+  margin: 20px;
+  font-size: 14px;
+  text-align: left;
+  margin-left: -30px;
+}
+
+.configChampionContent .championsContent .champion .championDetails p {
+  margin: 0;
+  margin-left: 15px;
+  font-size: 12px;
+}

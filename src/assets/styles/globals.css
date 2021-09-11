@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
 
 :root {
-  --color-primary: #000;
+  --color-primary: rgba(174, 10, 180, 0.815);
   --color-primary-light: #6e7378;
   --color-primary-lighter: #6e7378;
 
@@ -40,4 +40,5 @@ a {
 * {
   box-sizing: border-box;
   word-break: break-all;
+  
 }

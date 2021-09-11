@@ -2,13 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { getCaretCoordinates, setCaretToEnd } from "./helpers";
 import SelectMenu from "./SelectMenu";
 import ContentEditable from './ContentEditable';
+import { Block } from "../../infra/types";
 
-type Block = {
-  id: string,
-  html: string,
-  tag: string, // 'h1' | 'h2' | 'h3' | 'p'
-  placeholder: string
-}
 
 type Props = {
   block: Block,

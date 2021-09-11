@@ -1,8 +1,14 @@
 .content {
   display: flex;
-  width: 100%;
+  width: 98%;
   height: 100%;
 }
+
+@media screen and (min-width: 800px) {
+  .content {
+    margin: 1em 2em;
+  }
+} 
 
 .detailsContent {
   height: 100%;
@@ -68,8 +74,9 @@
   border: none;
 }
 
-.labelsContent {
-  display: none;
+.toolsContent {
+  display: flex;
+  flex-direction: column;
   padding-top: 20px;
 }
 
@@ -88,6 +95,7 @@
     top: 33px;
     left: 120px;
   }
+
 
   .detailsContent .newComment {
     padding-left: 0;

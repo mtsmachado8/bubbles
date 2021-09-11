@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url = "***"
+  url      = "***"
 }
 
 generator client {
@@ -11,8 +11,8 @@ generator client {
 }
 
 model Bubble {
-  id          Int      @default(autoincrement()) @id
-  createdAt   DateTime @default(now())
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
   title       String
   description String
   content     String
@@ -23,15 +23,16 @@ model Bubble {
 }
 
 model User {
-  id        Int      @default(autoincrement()) @id
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   name      String?
   avatarUrl String
   bubbles   Bubble[]
+  comments  Comment[]
 }
 
 model Label {
-  id          Int      @default(autoincrement()) @id
+  id          Int      @id @default(autoincrement())
   name        String   @unique
   description String?
   Bubbles     Bubble[]
@@ -39,10 +40,11 @@ model Label {
 }
 
 model Comment {
-  id          Int      @default(autoincrement()) @id
-  author      User?    @relation(fields: [authorId], references: [id])
-  authorId    Int?
-  content     String
-  createdAt   DateTime @default(now())
-  bubble      Bubble
+  id        Int      @id @default(autoincrement())
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+  content   String
+  createdAt DateTime @default(now())
+  bubble    Bubble   @relation(fields: [bubbleId], references: [id])
+  bubbleId  Int
 }

@@ -2,7 +2,7 @@ import api from './api';
 import { trigger } from '../hooks/swr';
 import { toast } from 'react-toastify';
 
-import { User, Bubble } from '@prisma/client';
+import { Bubble, User } from '@prisma/client';
 
 const postBubble = async ({title, description, content}: Bubble, author: User) => {
   try {
