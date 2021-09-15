@@ -21,6 +21,12 @@ First, install dependencies
 ```bash
 yarn
 ```
+
+Then run docker-compose to init postgres locally(make sure you have dockeer installed):
+```
+docker-compose up
+```
+
 Then run your migrations to dabase (heroku for now)
 
 ```bash
@@ -43,7 +49,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
 ## Database
-You can start the database locally by using
+You can start the database locally by using docker compose.
+First make sure you have docker installed on your machine
+Then run:
 ```
 docker-compose up
 ```
