@@ -33,7 +33,6 @@ type FilledLabels = Label & {
 type FilledBubble = Bubble & {
   labels: Label[];
   champions: FilledChampion[];
-  
   likes: FilledLike[];
   comments: FilledComment[];
   author: {

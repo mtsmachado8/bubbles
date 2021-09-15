@@ -26,6 +26,7 @@ import postLabels from '../infra/services/postLabels';
 
 import styles from './_home.module.css';
 import alteredChampions from "../infra/services/alteredChampion";
+import { FilledBubble } from "../infra/types";
 
 export const getStaticProps: GetStaticProps = async () => {
   const bubbles = await getAllBubbles();
@@ -44,30 +45,6 @@ export const getStaticProps: GetStaticProps = async () => {
       initialUsersData: users,
       stateLabels
     },
-  };
-};
-
-type FilledComment = Comment & {
-  author: {
-    avatarUrl: string;
-    name: string;
-    color: string;
-  };
-};
-
-type FilledLike = Like & {
-  author: {
-    email: string;
-  };
-};
-
-type FilledBubble = Bubble & {
-  labels: Label[];
-  champions: User[];
-  comments: FilledComment[];
-  likes: FilledLike[];
-  author: {
-      avatarUrl: string;
   };
 };
 
