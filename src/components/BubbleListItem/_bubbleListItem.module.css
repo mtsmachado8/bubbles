@@ -1,6 +1,6 @@
 .bubbleContainer {
   width: 96%;
-  height: 160px;
+  height: 96%;
   background-color: var(--color-object-background);
   box-shadow: 1px 1px 5px -3px var(--color-text-contrast);
   border-radius: 10px;
@@ -93,7 +93,7 @@
 }
 
 .championsImages > .imagesChampions:not(:last-child) {
-  transition: margin-left 0.5s ease-in-out;
+  transition: 1s ease-in-out;
 }
 
 .imagesChampions {

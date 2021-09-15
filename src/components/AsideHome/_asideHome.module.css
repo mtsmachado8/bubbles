@@ -43,6 +43,13 @@
   font-size: 14px;
 }
 
+.bubble img {
+  height: 400px;
+  width: 250px;
+  top: 0;
+  margin-left: 0;
+}
+
 .asideHome .buttonContent {
   display: flex;
 }

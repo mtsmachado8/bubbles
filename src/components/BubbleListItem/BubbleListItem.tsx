@@ -10,14 +10,9 @@ import users from "../../pages/api/users";
 import bubbles from "../../pages/api/bubbles";
 
 type Props = {
-  champions: FilledChampion[];
-  allUsers: User[];
   bubble: FilledBubble;
   onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
   alteredLike: (likeId: Number, bubbleId: Number) => void,
-
-  onSubmitNewChampion: Function;
-  onConfigChange: Function;
 };
 
 const BubbleListItem: React.FC<Props> = (props: Props) => {

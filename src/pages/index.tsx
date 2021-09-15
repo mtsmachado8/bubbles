@@ -161,8 +161,8 @@ const HomePage: NextPage<Props> = ( { initialBubblesData, initialLabelsData, sta
                 <BubbleListItem
                   onClick={() => {
                     setIsBubbleDetailsVisible(true);
-                    setOppenedBubble(bubble)}
-                  }
+                    setOppenedBubble(bubble)
+                  }}
                   bubble={bubble}
                   alteredLike={alteredLike}
                 />

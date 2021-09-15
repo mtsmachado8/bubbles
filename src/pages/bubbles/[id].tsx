@@ -33,7 +33,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const bubble = await getBubbleById(params.id as string);
   const users = await getAllUsers();
-  console.log(JSON.stringify(bubble[0],null,2))
   const labels = await getAllLabels();
   
   return { 
@@ -55,7 +54,7 @@ type Props = {
 const BubblePage: React.FC<Props> = (props: Props) => {
   const [ bubble, setBubble ] = useState<FilledBubble>(props.initialBubbleData)
   const [ labels, setLabels ] = useState<Label[]>(props.initialLabelsData)
-  const [ users, setUsers ]  = useState<User[]>(props.initialAllUsersData)
+  const [ users ]  = useState<User[]>(props.initialAllUsersData)
 
   const { data: bubbleData } = useFetch(`/bubbles/${props.initialBubbleData.id}`);
   const { data: labelsData } = useFetch('/labels');
