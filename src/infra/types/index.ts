@@ -47,5 +47,4 @@ export type {
   FilledChampion,
   FilledLabels,
   Block
-
 }
