@@ -80,6 +80,10 @@
   align-items: center;
 }
 
+.champions > p {
+  font-size: 16px;
+}
+
 .championsImages {
   display: flex;
   margin-left: 5px;
