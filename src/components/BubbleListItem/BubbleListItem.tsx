@@ -22,7 +22,7 @@ const BubbleListItem: React.FC<Props> = (props: Props) => {
     : '/anonymous-image.png';
 
   const newLabelsArray = props.bubble.labels?.slice(0, 3);
-  const newChampionArray = props.bubble.champions;
+  const newChampionArray = props.bubble.champions.reverse();
 
   return (
     <div onClick={props.onClick} className={styles.bubbleContainer}>

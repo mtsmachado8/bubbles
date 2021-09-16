@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import styles from './_modal.module.css';
 
@@ -9,6 +9,16 @@ type Props = {
 }
 
 const Modal: React.FC<Props> = ({children, onClose, id = 'modal'}: Props) => {
+  useEffect(() => {
+    window.addEventListener('keydown', (e) => {
+      console.log(e)
+      if((e.key=='Escape'||e.key=='Esc'||e.keyCode==27)){
+        e.preventDefault();
+        onClose(e)
+      }
+    });
+  }, [])
+
   const handleOutsideClick = (e) => {
     if(e.target.id === id) onClose(e);
   }
